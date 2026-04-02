@@ -27,12 +27,12 @@ Neat Admin Template is a production-ready enterprise admin system template built
 - 🔐 **Permission Management** - Complete route and operation permission control
 - 📱 **Responsive Layout** - Supports desktop and mobile devices
 - 🎯 **TypeScript** - Full type definitions for excellent DX
-- ⚡ **Performance Optimized** - Route lazy loading, code splitting, Web Vitals monitoring
+- ⚡ **Performance Optimized** - Route lazy loading, code splitting
 - 🛠️ **Developer Experience** - ESLint + Prettier for consistent code style
 
 ### Technical Highlights
 
-- **State Management** - Zustand 5.x + zustand-kit, lightweight and easy to use
+- **State Management** - zustand + zustand-kit, lightweight and easy to use
 - **Routing** - React Router 7.x with data preloading support
 - **Request Handling** - Axios + ahooks
 - **Styling** - SCSS + BEM naming convention, maintainable style architecture
@@ -48,7 +48,6 @@ Neat Admin Template is a production-ready enterprise admin system template built
   "Routing": "React Router 7.7.1",
   "HTTP Client": "Axios 1.11.0",
   "Hooks Library": "ahooks 3.9.0",
-  "Form Solution": "React Hook Form 7.71.1",
   "i18n": "i18next 25.3.2 + react-i18next 15.6.1",
   "Styling": "SCSS + BEM",
   "Build Tools": "Custom Build Scripts"
@@ -68,7 +67,7 @@ Neat Admin Template is a production-ready enterprise admin system template built
 
 ```bash
 # Clone repository
-git clone --depth 1 https://github.com/leonwgc/ant-admin-template.git my-admin-project
+git clone --depth 1 https://github.com/leonwgc/neat-admin-template.git my-admin-project
 
 # Enter directory
 cd my-admin-project
@@ -161,7 +160,6 @@ neat-admin-template/
 │   │   └── index.ts          # i18n config
 │   ├── utils/                 # Utilities
 │   │   ├── routeGenerator.tsx # Route generator
-│   │   ├── errorMonitor.ts   # Error monitor
 │   │   └── ...
 │   ├── scss/                  # Global styles
 │   ├── config.menu.tsx        # Menu config (route source)
@@ -173,13 +171,8 @@ neat-admin-template/
 │   ├── req.ts                 # Request wrapper
 │   ├── i18n.ts                # i18n initialization
 │   └── App.tsx                # App entry
-├── .github/
-│   └── instructions/          # Development standards
-│       ├── 00-dev.instructions.md
-│       ├── 01-mcp.neat.instructions.md
-│       └── 02-mcp.ant.instructions.md
 ├── pack.js                    # Dev server
-├── build.js                   # Build script
+├── build.js                   # Build script for docs
 └── package.json
 ```
 
@@ -233,7 +226,7 @@ Create style file:
 Add menu item in `src/config.menu.tsx`:
 
 ```tsx
-import { ShopOutlined } from '@ant-design/icons';  // Menu icons
+import { ShopOutlined } from '@derbysoft/neat-design-icons';
 
 {
   key: 'product',
@@ -549,34 +542,10 @@ const canDelete = userInfo?.operations.includes('user:delete');
 }
 ```
 
-### Error Monitoring
-
-Complete error monitoring system:
-
-- **Error Boundary** - Catch component rendering errors
-- **Global Error Handler** - Catch unhandled errors and promise rejections
-- **Error Reporting** - Auto report to backend
-- **Performance Monitoring** - Web Vitals metrics collection
-
-Detailed docs: [ERROR_MONITOR.md](ERROR_MONITOR.md)
-
 ### Performance Optimization
 
 - ✅ Route lazy loading
 - ✅ Code splitting
-- ✅ Image lazy loading
-- ✅ Request deduplication
-- ✅ Debounce/throttle
-- ✅ Web Vitals monitoring
-
-Detailed docs: [WEB_VITALS_GUIDE.md](WEB_VITALS_GUIDE.md)
-
-## 📚 Documentation
-
-- [Automatic Routing](src/utils/README.md) - Route generator detailed docs
-- [Internationalization](src/locales/README.md) - i18n system usage guide
-- [Global Search](GLOBAL_SEARCH.md) - Global search functionality
-- [Zustand State Management](zustand.md) - Zustand usage guide
 
 ## 🤝 Contributing
 
