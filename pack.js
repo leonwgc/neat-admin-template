@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-require-imports
-const { run } = require('packrs');
+const { run } = require('@derbysoft/pack');
 
 run({
   port: 3002,

@@ -1,6 +1,6 @@
 <div align="center">
   <h1>Ant Admin Template</h1>
-  <p>基于 React + TypeScript + Ant Design 的企业级后台管理模板</p>
+  <p>基于 React + TypeScript + Neat Design 的企业级后台管理模板</p>
 
   **[English](./README.md) | 简体中文**
 
@@ -17,13 +17,13 @@
 
 ## 📖 项目简介
 
-Ant Admin Template 是一个开箱即用的企业级后台管理系统模板，采用 React 18 + TypeScript 构建，基于 Ant Design 5.x 提供现代化的 UI 体验。项目内置**自动路由生成系统**、**国际化支持**、**权限管理**等核心功能，遵循最佳实践和代码规范，帮助您快速构建高质量的管理后台。
+Ant Admin Template 是一个开箱即用的企业级后台管理系统模板，采用 React 18 + TypeScript 构建，基于 Neat Design 提供现代化的 UI 体验。项目内置**自动路由生成系统**、**国际化支持**、**权限管理**等核心功能，遵循最佳实践和代码规范，帮助您快速构建高质量的管理后台。
 
 ## ✨ 特性
 
 ### 核心特性
 - 🚀 **自动路由生成** - 菜单配置驱动路由，无需手动维护，告别重复配置
-- 🎨 **Ant Design UI** - 基于 Ant Design 5.x 的企业级组件库，提供更丰富的组件和样式
+- 🎨 **Neat Design UI** - 基于 Neat Design 的企业级组件库，提供更丰富的组件和样式
 - 🌍 **国际化支持** - 集成 i18next，支持中英文切换，TypeScript 类型安全
 - 🔐 **权限管理** - 完整的路由权限和操作权限控制体系
 - 📱 **响应式布局** - 支持桌面端和移动端，自适应各种屏幕尺寸
@@ -44,8 +44,8 @@ Ant Admin Template 是一个开箱即用的企业级后台管理系统模板，�
 ```json
 {
   "核心框架": "React 18.3.1 + TypeScript",
-  "UI组件库": "Ant Design 5.x",
-  "状态管理": "Zustand 5.0.9 + zustand-kit",
+  "UI组件库": "Neat Design",
+  "状态管理": "zustand-kit",
   "路由方案": "React Router 7.7.1",
   "请求处理": "Axios 1.11.0",
   "Hooks库": "ahooks 3.9.0",
@@ -571,7 +571,7 @@ const canDelete = userInfo?.operations.includes('user:delete');
 
 项目集成了 MCP（Model Context Protocol）服务，提供智能文档查询：
 
-### Ant Design 组件查询
+### Neat Design 组件查询
 
 ```typescript
 // 查询组件列表
@@ -602,16 +602,6 @@ mcp_ahooks_get_hook_info({ name: "useAntdTable" })
 
 详细文档：[.github/instructions/01-mcp.neat.instructions.md](.github/instructions/01-mcp.neat.instructions.md)
 
-## 📚 相关文档
-
-- [开发规范](.github/instructions/00-dev.instructions.md) - 完整的代码规范和最佳实践
-- [Ant Design MCP 服务](.github/instructions/01-mcp.neat.instructions.md) - Ant Design 组件查询指南
-- [自动路由系统](src/utils/README.md) - 路由生成器详细文档
-- [国际化配置](src/locales/README.md) - i18n 系统使用指南
-- [错误监控](ERROR_MONITOR.md) - 错误监控和上报系统
-- [性能优化](WEB_VITALS_GUIDE.md) - Web Vitals 性能监控指南
-- [全局搜索](GLOBAL_SEARCH.md) - 全局搜索功能说明
-- [Zustand 状态管理](zustand.md) - Zustand 使用指南
 
 ## 🤝 贡献指南
 

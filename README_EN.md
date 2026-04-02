@@ -1,6 +1,6 @@
 <div align="center">
   <h1>Ant Admin Template</h1>
-  <p>Enterprise-level Admin Template based on React + TypeScript + Ant Design</p>
+  <p>Enterprise-level Admin Template based on React + TypeScript + Neat Design</p>
 
   **English | [简体中文](./README.md)**
 
@@ -17,13 +17,13 @@
 
 ## 📖 Introduction
 
-Ant Admin Template is a production-ready enterprise admin system template built with React 18 + TypeScript, based on Ant Design 5.x for modern UI experience. The project features **automatic route generation**, **i18n support**, **permission management**, and follows best practices to help you build high-quality admin dashboards quickly.
+Ant Admin Template is a production-ready enterprise admin system template built with React 18 + TypeScript, based on Neat Design for modern UI experience. The project features **automatic route generation**, **i18n support**, **permission management**, and follows best practices to help you build high-quality admin dashboards quickly.
 
 ## ✨ Features
 
 ### Core Features
 - 🚀 **Automatic Route Generation** - Menu-driven routing, no manual maintenance needed
-- 🎨 **Ant Design UI** - Enterprise-level component library based on Ant Design 5.x
+- 🎨 **Neat Design UI** - Enterprise-level component library based on Neat Design
 - 🌍 **Internationalization** - Built-in i18next, supports Chinese/English with TypeScript safety
 - 🔐 **Permission Management** - Complete route and operation permission control
 - 📱 **Responsive Layout** - Supports desktop and mobile devices
@@ -44,8 +44,8 @@ Ant Admin Template is a production-ready enterprise admin system template built 
 ```json
 {
   "Core Framework": "React 18.3.1 + TypeScript",
-  "UI Library": "Ant Design 5.x",
-  "State Management": "Zustand 5.0.9 + zustand-kit",
+  "UI Library": "Neat Design",
+  "State Management": "zustand-kit",
   "Routing": "React Router 7.7.1",
   "HTTP Client": "Axios 1.11.0",
   "Hooks Library": "ahooks 3.9.0",
@@ -569,12 +569,8 @@ Detailed docs: [WEB_VITALS_GUIDE.md](WEB_VITALS_GUIDE.md)
 
 ## 📚 Documentation
 
-- [Development Standards](.github/instructions/00-dev.instructions.md) - Complete code standards and best practices
-- [Ant Design MCP Services](.github/instructions/01-mcp.neat.instructions.md) - Ant Design component query guide
 - [Automatic Routing](src/utils/README.md) - Route generator detailed docs
 - [Internationalization](src/locales/README.md) - i18n system usage guide
-- [Error Monitoring](ERROR_MONITOR.md) - Error monitoring and reporting system
-- [Performance Optimization](WEB_VITALS_GUIDE.md) - Web Vitals monitoring guide
 - [Global Search](GLOBAL_SEARCH.md) - Global search functionality
 - [Zustand State Management](zustand.md) - Zustand usage guide
 
