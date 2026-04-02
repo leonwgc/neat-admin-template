@@ -1,16 +1,16 @@
 // eslint-disable-next-line @typescript-eslint/no-require-imports
-const { build } = require('packrs');
+const { build } = require('@derbysoft/pack');
 
 build({
   dist: './docs',
   rsConfig: {
     output: {
       cleanDistPath: false,
-      assetPrefix: '/ant-admin-template/',
+      assetPrefix: '/neat-admin-template/',
     },
     html: {
       template: './index.html',
-      title: 'Ant Admin',
+      title: 'Neat Admin',
       favicon: './public/favicon.ico',
     },
     resolve: {
@@ -23,7 +23,6 @@ build({
     },
     tools: {
       rspack: (config, { rspack }) => {
-        // 使用 IgnorePlugin 忽略文档文件和许可证文件
         config.plugins = config.plugins || [];
         config.plugins.push(
           new rspack.IgnorePlugin({
