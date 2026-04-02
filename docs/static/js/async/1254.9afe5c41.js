@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkneat_admin_template=self.webpackChunkneat_admin_template||[]).push([["1254"],{73733(t,e,a){t.exports=a.p+"static/font/Roboto-Thin.e16e7df8.ttf"}}]);

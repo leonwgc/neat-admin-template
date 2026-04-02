@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkneat_admin_template=self.webpackChunkneat_admin_template||[]).push([["3193"],{24784(e,t,a){a.r(t),a.d(t,{uploadImage:()=>n});let n=async e=>new Promise(t=>{setTimeout(()=>{t(URL.createObjectURL(e))},1e3)})}}]);

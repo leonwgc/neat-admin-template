@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkneat_admin_template=self.webpackChunkneat_admin_template||[]).push([["7269"],{97732(e,t,_){_.r(t),_.d(t,{default:()=>a});let a={VIEW_USER:"view_user",CREATE_USER:"create_user",UPDATE_USER:"update_user",DELETE_USER:"delete_user"}}}]);

@@ -1,5 +1,4 @@
 import axios, { AxiosError, InternalAxiosRequestConfig } from 'axios';
-import { globalRequestDeduplicator } from './utils/requestDeduplicator';
 
 const getGateWayPath = () => {
   switch (process.env.NODE_ENV) {
@@ -96,51 +95,5 @@ req.interceptors.response.use(
     return Promise.reject(error);
   },
 );
-
-/**
- * 带去重的请求方法
- * 防止相同请求在短时间内重复发送
- */
-export const requestWithDedup = {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  get: <T = any>(url: string, config?: any) => {
-    return globalRequestDeduplicator.execute(
-      url,
-      'GET',
-      () => req.get<T>(url, config).then((res) => res.data),
-      config?.params,
-    );
-  },
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  post: <T = any>(url: string, data?: any, config?: any) => {
-    return globalRequestDeduplicator.execute(
-      url,
-      'POST',
-      () => req.post<T>(url, data, config).then((res) => res.data),
-      data,
-    );
-  },
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  put: <T = any>(url: string, data?: any, config?: any) => {
-    return globalRequestDeduplicator.execute(
-      url,
-      'PUT',
-      () => req.put<T>(url, data, config).then((res) => res.data),
-      data,
-    );
-  },
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  delete: <T = any>(url: string, config?: any) => {
-    return globalRequestDeduplicator.execute(
-      url,
-      'DELETE',
-      () => req.delete<T>(url, config).then((res) => res.data),
-      config?.params,
-    );
-  },
-};
 
 export default req;
