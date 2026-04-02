@@ -1,4 +1,4 @@
-import { useGlobalState } from 'zustand-kit';
+import { useGlobalState } from '@derbysoft/zustand-kit';
 
 type UserInfo = {
   userId: string;

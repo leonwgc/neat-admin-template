@@ -3,7 +3,7 @@
  * @author leon.wang
  */
 import React, { useState } from 'react';
-import { Layout, Space, Flex, Avatar, Divider } from '@derbysoft/neat-design';
+import { Layout, Space, Flex, Avatar } from '@derbysoft/neat-design';
 import type { MenuProps } from '@derbysoft/neat-design';
 import {
   MenuOutlined,
@@ -21,11 +21,9 @@ import { useTranslation } from 'react-i18next';
 
 import MobileMenus from './MobileMenus';
 import { GlobalSearch } from 'components/GlobalSearch';
-import { AccountSwitcher } from 'components/AccountSwitcher';
 import { changeLanguage, type Language } from '~/i18n';
-import logo from './DerbySoftLogo';
-import './Header.scss';
 import DerbySoftLogo from './DerbySoftLogo';
+import './Header.scss';
 
 const Header: React.FC<React.HTMLAttributes<HTMLElement>> = (props) => {
   const [open, { setTrue, setFalse }] = useBoolean(false);
@@ -153,9 +151,7 @@ const Header: React.FC<React.HTMLAttributes<HTMLElement>> = (props) => {
               <div className="pop-user-actions">{menu}</div>
             )}
           >
-            <Avatar style={{ cursor: 'pointer', userSelect: 'none' }}>
-              LW
-            </Avatar>
+            <Avatar style={{ cursor: 'pointer', userSelect: 'none' }}>D</Avatar>
           </Dropdown>
         </Space>
       </Layout.Header>
