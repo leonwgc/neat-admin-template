@@ -298,8 +298,8 @@ mcp_neat-design-m_get_use_create_styles_guide()
    - ✅ Register all namespaces with \`as const\`
 
 4. **Wrong icon library**
-   - ❌ Using \`@ant-design/icons\` in page content
-   - ✅ Use \`@derbysoft/neat-design-icons\` in pages
+   - ❌ Using `@ant-design/icons` anywhere
+   - ✅ Use `@derbysoft/neat-design-icons` for all icons
 
 5. **Missing MCP query**
    - ❌ Using components without checking docs
@@ -336,14 +336,14 @@ mcp_neat-design-m_get_use_create_styles_guide()
 **Using Neat Design**:
 - [ ] MCP service queried first
 - [ ] Import from \`@derbysoft/neat-design\`
-- [ ] Icons from correct library (menu vs page)
+- [ ] Icons from `@derbysoft/neat-design-icons`
 
 ---
 
 ## Tech Stack Summary
 - **React** 18.3.1 + TypeScript
 - **UI**: @derbysoft/neat-design 2.2.2 (based on Ant Design 5.x)
-- **Icons**: @derbysoft/neat-design-icons, @ant-design/icons (menu only)
+- **Icons**: @derbysoft/neat-design-icons (all icons)
 - **Illustrations**: @derbysoft/neat-design-illustrations
 - **State**: Zustand 5.0.9 + zustand-kit
 - **Router**: React Router 7.7.1

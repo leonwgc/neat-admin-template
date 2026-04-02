@@ -40,7 +40,7 @@ applyTo: '**'
 #### 基本要求
 - **函数式组件**: 使用 `const Component: FC<Props> = () => {}` 格式
 - **类型注解**: 所有 Props、State、函数参数必须定义类型
-- **图标使用**: 菜单图标使用 `@ant-design/icons`，页面内图标优先使用 `@derbysoft/neat-design-icons`
+- **图标使用**: 全部使用 `@derbysoft/neat-design-icons`（包括菜单图标）
 - **文件头注释**: 每个文件顶部必须添加：
   ```typescript
   /**
@@ -404,7 +404,7 @@ export const UserContactCard: FC<UserContactCardProps> = ({ user }) => {
    #### 第 1 步：在菜单配置中添加路由
    ```tsx
    // src/config.menu.tsx
-   import { UserOutlined } from '@ant-design/icons';  // 菜单图标
+   import { UserOutlined } from '@derbysoft/neat-design-icons';  // 菜单图标
    import i18n from './i18n';
 
    const t = (key: string) => i18n.t(key);  // 翻译函数
@@ -465,7 +465,7 @@ export const UserContactCard: FC<UserContactCardProps> = ({ user }) => {
      key: string;              // 菜单唯一标识
      label: string | { (): string };  // 菜单显示文本，支持 getter 函数实现动态翻译
      route?: string;           // 路由路径（必须以 /app/ 开头）
-     icon?: ReactNode;         // 菜单图标（使用 @ant-design/icons）
+     icon?: ReactNode;         // 菜单图标（使用 @derbysoft/neat-design-icons）
      permissions?: string[];   // 权限列表
      hidden?: boolean;         // true: 不在菜单显示但路由存在
      children?: MenuItem[];    // 子菜单
@@ -558,7 +558,7 @@ export const UserContactCard: FC<UserContactCardProps> = ({ user }) => {
 
    ```tsx
    // 1️⃣ config.menu.tsx - 添加菜单项
-   import { ShopOutlined } from '@ant-design/icons';
+   import { ShopOutlined } from '@derbysoft/neat-design-icons';
 
    {
      key: 'products',

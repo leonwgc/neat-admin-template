@@ -3,13 +3,10 @@
  * @author leon.wang
  */
 import {
-  ExperimentOutlined,
-  FormOutlined,
-  ApiOutlined,
-  AppstoreOutlined,
-  CodeOutlined,
   BarChartOutlined,
-} from '@ant-design/icons';
+  WidgetOutlined,
+  TableOutlined,
+} from '@derbysoft/neat-design-icons';
 import { MenuProps } from '@derbysoft/neat-design';
 import i18n from './i18n';
 
@@ -65,7 +62,7 @@ export const menus: MenuItem[] = [
     get label() {
       return t('menu.forms');
     },
-    icon: <FormOutlined />,
+    icon: <TableOutlined />,
     permissions: [],
     children: [
       {
@@ -84,7 +81,7 @@ export const menus: MenuItem[] = [
     get label() {
       return t('menu.components');
     },
-    icon: <AppstoreOutlined />,
+    icon: <WidgetOutlined />,
     permissions: [],
     children: [
       {

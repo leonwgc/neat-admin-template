@@ -25,6 +25,7 @@ import { AccountSwitcher } from 'components/AccountSwitcher';
 import { changeLanguage, type Language } from '~/i18n';
 import logo from './DerbySoftLogo';
 import './Header.scss';
+import DerbySoftLogo from './DerbySoftLogo';
 
 const Header: React.FC<React.HTMLAttributes<HTMLElement>> = (props) => {
   const [open, { setTrue, setFalse }] = useBoolean(false);
@@ -105,9 +106,7 @@ const Header: React.FC<React.HTMLAttributes<HTMLElement>> = (props) => {
     <div className="neat-header">
       <Layout.Header {...props}>
         <Flex align="center" gap={16}>
-          <img src={logo} alt="Logo" style={{ height: 32 }} />
-          <Divider alignment="vertical" className="hide-on-mobile" />
-          <AccountSwitcher />
+          <DerbySoftLogo />
         </Flex>
 
         <Space size={8}>
