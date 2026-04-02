@@ -2,8 +2,6 @@
   <h1>Neat Admin Template</h1>
   <p>Enterprise-level Admin Template based on React + TypeScript + Neat Design</p>
 
-  **English | [简体中文](./README.md)**
-
   <p>
     <a href="#features">Features</a> •
     <a href="#quick-start">Quick Start</a> •
@@ -22,6 +20,7 @@ Neat Admin Template is a production-ready enterprise admin system template built
 ## ✨ Features
 
 ### Core Features
+
 - 🚀 **Automatic Route Generation** - Menu-driven routing, no manual maintenance needed
 - 🎨 **Neat Design UI** - Enterprise-level component library based on Neat Design
 - 🌍 **Internationalization** - Built-in i18next, supports Chinese/English with TypeScript safety
@@ -32,6 +31,7 @@ Neat Admin Template is a production-ready enterprise admin system template built
 - 🛠️ **Developer Experience** - ESLint + Prettier for consistent code style
 
 ### Technical Highlights
+
 - **State Management** - Zustand 5.x + zustand-kit, lightweight and easy to use
 - **Routing** - React Router 7.x with data preloading support
 - **Request Handling** - Axios + ahooks
@@ -207,7 +207,7 @@ const ProductList: FC = () => {
   );
 };
 
-export default ProductList;  // Must use default export
+export default ProductList; // Must use default export
 ```
 
 Create style file:
@@ -217,7 +217,7 @@ Create style file:
  * @file pages/Product/ProductList.scss
  * @author leon.wang
  */
-@import 'scss/common.scss';  // Must import
+@import 'scss/common.scss'; // Must import
 
 .product-list {
   padding: 20px;
@@ -275,13 +275,13 @@ export const routeComponentMap: RouteComponentMap = {
 
 ```tsx
 interface MenuItem {
-  key: string;                          // Unique identifier
-  label: string | { (): string };       // Menu text (use getter for dynamic translation)
-  route?: string;                       // Route path (must start with /app/)
-  icon?: ReactNode;                     // Menu icon (@ant-design/icons)
-  permissions?: string[];               // Permission list
-  hidden?: boolean;                     // true: route exists but menu hidden
-  children?: MenuItem[];                // Sub-menus
+  key: string; // Unique identifier
+  label: string | { (): string }; // Menu text (use getter for dynamic translation)
+  route?: string; // Route path (must start with /app/)
+  icon?: ReactNode; // Menu icon (@ant-design/icons)
+  permissions?: string[]; // Permission list
+  hidden?: boolean; // true: route exists but menu hidden
+  children?: MenuItem[]; // Sub-menus
 }
 ```
 
@@ -317,7 +317,7 @@ const zh = {
   ...commonZh,
   pages: {
     user: userZh,
-    product: productZh,  // ← Add
+    product: productZh, // ← Add
   },
 };
 ```
@@ -328,10 +328,10 @@ const zh = {
 // src/locales/index.ts
 export const resources = {
   zh: {
-    common: zh,
-    'pages.product': zh.pages.product,  // ← Register namespace
+    'common': zh,
+    'pages.product': zh.pages.product, // ← Register namespace
   },
-} as const;  // ← as const for TypeScript type inference
+} as const; // ← as const for TypeScript type inference
 ```
 
 4. **Use in component**
@@ -443,7 +443,7 @@ export const Component: FC<ComponentProps> = ({ title, onSubmit }) => {
   return <div>{title}</div>;
 };
 
-export default Component;  // Export both named and default
+export default Component; // Export both named and default
 ```
 
 #### UI Component Usage
@@ -459,6 +459,7 @@ import { EmailOutlined } from '@ant-design/icons';
 ```
 
 **Rules:**
+
 - Icons: `@derbysoft/neat-design-icons`
 - UI components: `@derbysoft/neat-design` (DO NOT use antd directly)
 
@@ -469,16 +470,18 @@ import { EmailOutlined } from '@ant-design/icons';
  * @file components/ContactInfo/ContactInfo.scss
  * @author leon.wang
  */
-@import 'scss/common.scss';  // ✅ Must import
+@import 'scss/common.scss'; // ✅ Must import
 
 .contact-info {
   padding: 16px;
 
-  &__item {           // BEM Element
+  &__item {
+    // BEM Element
     display: flex;
   }
 
-  &--active {         // BEM Modifier
+  &--active {
+    // BEM Modifier
     background: #f0f0f0;
   }
 }
@@ -512,6 +515,7 @@ config.menu.tsx → routeGenerator.tsx → RouteConfig.tsx → RouteGuard.tsx
 ```
 
 **Advantages:**
+
 - 📌 Single source of truth: Menu config drives routes and navigation
 - 📌 No duplication: Routes defined only once
 - 📌 Type safety: Full TypeScript type support
@@ -540,7 +544,9 @@ import useUserInfo from '~/global/useUserInfo';
 const [userInfo] = useUserInfo();
 const canDelete = userInfo?.operations.includes('user:delete');
 
-{canDelete && <Button>Delete</Button>}
+{
+  canDelete && <Button>Delete</Button>;
+}
 ```
 
 ### Error Monitoring
