@@ -1,0 +1,67 @@
+/**
+ * @file components/AccountSwitcher/AccountSwitcher.scss
+ * @author leon.wang
+ */
+@import 'scss/common.scss';
+
+.account-switcher {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  height: 36px;
+  padding: 0 12px;
+  background: #ffffff;
+  border: 1px solid #d9d9d9;
+  border-radius: 8px;
+  color: #1b2c34;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  outline: none;
+  user-select: none;
+  width: 240px;
+
+  &__icon {
+    font-size: 16px;
+    color: #647075;
+    flex-shrink: 0;
+    flex: 0;
+  }
+
+  &__name {
+    flex: 1;
+    text-align: left;
+  }
+
+  &__arrow {
+    flex: 0;
+    font-size: 12px;
+    color: #939ba1;
+    transition: transform 0.2s ease;
+  }
+
+  &:hover {
+    border-color: $theme-primary;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+
+    .account-switcher__icon {
+      color: $theme-primary;
+    }
+  }
+
+  &--open {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12);
+    color: $theme-secondary;
+
+    .account-switcher__arrow {
+      transform: rotate(180deg);
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .account-switcher {
+    display: none;
+  }
+}

@@ -1,0 +1,133 @@
+/**
+ * @file src/pages/Components/ImageUploadExample.scss
+ * @author leon.wang
+ */
+
+@import 'scss/common.scss';
+
+.image-upload-example {
+
+  max-width: 1200px;
+  margin: 0 auto;
+
+  &__title {
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 32px;
+    color: #1a1a1a;
+  }
+
+  &__section {
+    margin-bottom: 24px;
+
+    .ant-card {
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    }
+  }
+
+  &__desc {
+    font-size: 14px;
+    color: #666666;
+    margin-bottom: 16px;
+    line-height: 1.6;
+  }
+
+  &__table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 16px;
+
+    th,
+    td {
+      padding: 12px 16px;
+      text-align: left;
+      border: 1px solid #e8e8e8;
+      font-size: 14px;
+    }
+
+    th {
+      background: #fafafa;
+      font-weight: 600;
+      color: #1a1a1a;
+    }
+
+    td {
+      color: #666666;
+
+      &:nth-child(3) {
+        font-family: 'Courier New', Courier, monospace;
+        color: #d63384;
+        font-size: 13px;
+      }
+    }
+
+    tbody tr:hover {
+      background: #fafafa;
+    }
+  }
+
+  &__features {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    li {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 0;
+      font-size: 14px;
+      color: #666666;
+      border-bottom: 1px solid #f0f0f0;
+
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+  }
+
+  &__code {
+    background: #f5f5f5;
+    padding: 16px;
+    border-radius: 4px;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 13px;
+    white-space: pre-wrap;
+    color: #1a1a1a;
+    border: 1px solid #e8e8e8;
+    line-height: 1.8;
+    overflow-x: auto;
+  }
+
+  h3 {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 24px 0 16px 0;
+    color: #1a1a1a;
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .image-upload-example {
+    padding: 16px;
+
+    &__title {
+      font-size: 24px;
+    }
+
+    &__table {
+      font-size: 12px;
+
+      th,
+      td {
+        padding: 8px;
+      }
+    }
+
+    &__code {
+      font-size: 11px;
+    }
+  }
+}

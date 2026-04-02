@@ -1,0 +1,31 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "~/*": ["src/*"],
+      "scss/*": ["./src/scss/*"],
+      "components/*": ["./src/components/*"]
+    },
+    "module": "esnext",
+    "outDir": "./dist",
+    "target": "es2020",
+    "lib": ["es2020", "esnext", "dom"],
+    "jsx": "preserve",
+    "moduleResolution": "bundler",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "allowJs": true,
+    "noImplicitAny": false,
+    "resolveJsonModule": true,
+    // performance
+    "incremental": true,
+    "skipLibCheck": true,
+
+    // interoperability
+    "esModuleInterop": true,
+    "isolatedModules": true,
+    "allowSyntheticDefaultImports": true
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "build", "dist"]
+}

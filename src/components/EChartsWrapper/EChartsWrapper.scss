@@ -1,0 +1,13 @@
+/**
+ * @file components/EChartsWrapper/EChartsWrapper.scss
+ * @author leon.wang
+ */
+@import 'scss/common.scss';
+
+.echarts-wrapper {
+  width: 100%;
+
+  & > div {
+    width: 100% !important;
+  }
+}

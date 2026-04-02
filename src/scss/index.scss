@@ -1,0 +1,293 @@
+@import './common.scss';
+
+/* ==============================================
+   Dark Mode - CSS Filter Implementation
+   ============================================== */
+
+html {
+  transition:
+    filter 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body {
+  transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  @include smooth-font;
+}
+
+// html 反转 0.92 = 降低 8% 亮度
+// 图片反转 1.0 + 提升亮度 9%（1/0.92 ≈ 1.09）
+// 最终效果：图片恢复接近原始亮度和颜色
+html[data-theme='dark'] {
+  /* 反转颜色并调整色相，保持图片等内容正常显示 */
+  filter: invert(0.92) hue-rotate(180deg); /* 降低反转程度，让背景不过深 */
+
+  /* 将图片、视频、Logo 等媒体元素再次反转回来 */
+  img,
+  video,
+  iframe,
+  [data-theme-exclude],
+  .ant-image,
+  .ds-image,
+  picture {
+    filter: invert(1) hue-rotate(180deg) brightness(1.09); /* 补偿 0.92 的亮度损失 */
+  }
+
+  /* Avatar 组件通常需要保持原色 */
+  .ant-avatar,
+  .ds-avatar {
+    filter: invert(1) hue-rotate(180deg) brightness(1.09);
+  }
+}
+
+/* Thin 100 */
+@font-face {
+  font-family: 'Roboto';
+  src: url('./Roboto/Roboto-Thin.ttf');
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Thin 100 italic */
+@font-face {
+  font-family: 'Roboto';
+  src: url('./Roboto/Roboto-ThinItalic.ttf');
+  font-weight: 100;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* Light 300 */
+@font-face {
+  font-family: 'Roboto';
+  src: url('./Roboto/Roboto-Light.ttf');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Light 300 italic */
+@font-face {
+  font-family: 'Roboto';
+  src: url('./Roboto/Roboto-LightItalic.ttf');
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* Regular 400 */
+@font-face {
+  font-family: 'Roboto';
+  src: url('./Roboto/Roboto-Regular.ttf');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Regular 400 italic */
+@font-face {
+  font-family: 'Roboto';
+  src: url('./Roboto/Roboto-Italic.ttf');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* Medium 500 */
+@font-face {
+  font-family: 'Roboto';
+  src: url('./Roboto/Roboto-Medium.ttf');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Medium 500 italic */
+@font-face {
+  font-family: 'Roboto';
+  src: url('./Roboto/Roboto-MediumItalic.ttf');
+  font-weight: 500;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* Bold 700 */
+@font-face {
+  font-family: 'Roboto';
+  src: url('./Roboto/Roboto-Bold.ttf');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Bold 700 italic */
+@font-face {
+  font-family: 'Roboto';
+  src: url('./Roboto/Roboto-BoldItalic.ttf');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* Black 900 */
+@font-face {
+  font-family: 'Roboto';
+  src: url('./Roboto/Roboto-Black.ttf');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Black 900 italic */
+@font-face {
+  font-family: 'Roboto';
+  src: url('./Roboto/Roboto-BlackItalic.ttf');
+  font-weight: 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+::selection {
+  color: #fff;
+  background: #8d98b3;
+}
+
+::-webkit-input-placeholder {
+  color: #c5c5c5;
+}
+
+:-moz-placeholder {
+  color: #c5c5c5;
+}
+
+::-moz-placeholder {
+  color: #c5c5c5;
+}
+
+:-ms-input-placeholder {
+  color: #c5c5c5;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #c5c5c5;
+}
+
+textarea {
+  font-family:
+    'helvetica neue', 'hiragino sans gb', 'stheiti', 'microsoft yahei',
+    \5FAE\8F6F\96C5\9ED1, tahoma, sans-serif;
+}
+
+// remove firefox button dashed outline
+button::-moz-focus-inner,
+input[type='reset']::-moz-focus-inner,
+input[type='button']::-moz-focus-inner,
+input[type='submit']::-moz-focus-inner,
+input[type='file'] > input[type='button']::-moz-focus-inner {
+  border: none;
+}
+
+:root {
+  /* 顶部导航栏的默认高度 */
+  --nav-height: 56px;
+
+  /* 左侧菜单的默认宽度 */
+  --menu-width: 256px;
+
+  // ModuleHeader 的默认高度
+  --module-header-height: 82px;
+
+  // ModuleFilter 的默认高度
+  --module-filter-height: 72px;
+
+  // ModuleSideFilter 的宽度
+  --module-side-filter-width: 24px;
+
+  --background-color: #fff;
+}
+
+// @media (max-width: 768px) {
+//   :root {
+//     // 顶部导航栏的默认高度
+//     --nav-height: 76px;
+//   }
+// }
+
+body {
+  font-family:
+    'Roboto',
+    -apple-system,
+    'Microsoft YaHei',
+    'Helvetica Neue',
+    Arial,
+    sans-serif !important;
+  margin: 0;
+  padding: 0;
+  background-color: var(--background-color);
+  font-size: $theme-font-size-medium;
+  min-width: 375px;
+  overflow: auto;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  outline: none;
+}
+
+.hidden-input {
+  display: none;
+}
+
+.float-fix {
+  @include float-fix;
+}
+
+.invisible {
+  @include invisible;
+}
+
+.text-nowrap {
+  @include text-nowrap;
+}
+
+.dsicon {
+  font-weight: 400;
+
+  .rotate-180 {
+    transform: rotate(180deg);
+  }
+}
+
+/**
+  * 隐藏 g2 默认的 Tooltip
+  */
+.g2-tooltip {
+  display: none !important;
+}
+
+/**
+  * Bizcharts Tooltip 默认去除背景和阴影
+  */
+.bizcharts-tooltip {
+  display: block !important;
+  background: none !important;
+  box-shadow: none !important;
+  pointer-events: none !important;
+  user-select: none !important;
+}
+
+/**
+  * 降低 allInOneHelpWidget 的 z-index，放在 OneTrust 背后
+  */
+.fixed-help-widget {
+  z-index: 2147483644;
+}
+
+/**
+ * 更改google Cookie logo 的位置
+  */
+#ot-sdk-btn-floating.ot-floating-button {
+  bottom: 64px;
+}

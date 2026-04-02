@@ -1,0 +1,46 @@
+@import 'scss/common.scss';
+
+.form-profile {
+  background: #fff;
+  border-radius: 8px;
+
+  .responsive-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(336px, 1fr));
+    gap: 0 36px;
+  }
+
+  &__form {
+  }
+
+  &__section {
+    margin-bottom: 32px;
+  }
+
+  &__section-title {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    color: #222;
+  }
+
+  &__actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 16px;
+    margin-top: 32px;
+  }
+
+  &__update-btn {
+    min-width: 120px;
+  }
+
+  &__icon-delete {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    background: url('data:image/svg+xml;utf8,<svg fill="none" height="16" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg"><path d="M12 4L4 12M4 4l8 8" stroke="%23BFBFBF" stroke-linecap="round" stroke-width="1.5"/></svg>')
+      center center no-repeat;
+    cursor: pointer;
+  }
+}

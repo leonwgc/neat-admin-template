@@ -1,0 +1,97 @@
+/**
+ * @file src/pages/Hooks/UseResponsiveExample.scss
+ * @author leon.wang
+ */
+
+@import 'scss/common.scss';
+
+.use-responsive-example {
+
+
+  &__title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 24px;
+    color: #1890ff;
+  }
+
+  &__section {
+    margin-bottom: 24px;
+  }
+
+  &__desc {
+    margin-bottom: 16px;
+    color: #666;
+  }
+
+  &__layout {
+    margin-top: 16px;
+  }
+
+  &__box {
+
+    border-radius: 8px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+
+    h3 {
+      margin: 0 0 8px 0;
+      color: white;
+    }
+
+    p {
+      margin-bottom: 16px;
+      opacity: 0.9;
+    }
+
+    &--xs {
+      background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    }
+
+    &--sm {
+      background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    }
+
+    &--md {
+      background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+    }
+
+    &--lg {
+      background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+    }
+
+    &--xl {
+      background: linear-gradient(135deg, #30cfd0 0%, #330867 100%);
+    }
+
+    &--xxl {
+      background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+    }
+  }
+
+  &__code {
+    background: #f5f5f5;
+    padding: 16px;
+    border-radius: 4px;
+    overflow-x: auto;
+    white-space: pre;
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  &__features {
+    list-style: none;
+    padding: 0;
+
+    li {
+      margin-bottom: 12px;
+      padding-left: 8px;
+      line-height: 1.8;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+}

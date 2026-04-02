@@ -1,0 +1,115 @@
+/**
+ * @file scss/common.scss
+ * @author leon.wang
+ * @description 项目通用 SCSS 变量定义和 Mixin 引入
+ * 包含：主题变量（颜色、字体、尺寸、z-index）和所有 Mixins（从 mixins.scss 引入）
+ */
+
+// ===========================
+// 字体变量 (Font Variables)
+// ===========================
+$theme-font-size-small: 12px;
+$theme-font-size-medium: 14px;
+$theme-font-size-large: 16px;
+$theme-font-size-header-4: 24px;
+$theme-font-size-header-5: 20px;
+
+$theme-font-size-body-large: 16px;
+
+$theme-font-weight-bold: 700;
+$theme-font-weight-semibold: 600;
+$theme-font-weight-medium: 500;
+$theme-font-weight-regular: 400;
+
+// ===========================
+// 主色变量 (Primary Colors)
+// ===========================
+$theme-primary: #00131c;
+$theme-secondary: #647075;
+$theme-highlight: #0d7ee0;
+$theme-success-bg: #2abd13;
+$theme-bg-hover: #efffff;
+
+// ===========================
+// 过渡与动画 (Transitions)
+// ===========================
+$theme-color-transition-percent: 8%;
+$theme-transition-duration: 250ms;
+$transition-duration: 0.2s;
+
+// ===========================
+// 组件颜色 (Component Colors)
+// ===========================
+$theme-btn-hover: #00578b;
+$theme-field: #313538;
+$theme-nav: #fff;
+$theme-border: #ddd;
+$theme-light-border: #e7e7e7;
+$theme-label: #999;
+$theme-list-item-hover: #ebfaff;
+$theme-table-head: #666;
+
+// ===========================
+// 背景色 (Background Colors)
+// ===========================
+$theme-dark-grey: #f4f4f4;
+$theme-light-grey: #fafafa;
+$theme-light-bg: #f2f7fa;
+
+// ===========================
+// 状态颜色 (Status Colors)
+// ===========================
+$theme-info: #2db7f5;
+$theme-success: #87d068;
+$theme-warning: #fa0;
+$theme-error: #e23a3a;
+
+// 状态颜色背景和边框
+$theme-success-border: #e3f6db;
+$theme-error-bg: #fff0e9;
+$theme-error-border: #fcd9c7;
+$theme-info-bg: #edf9ff;
+$theme-info-border: #cdedfc;
+$theme-warning-bg: #fff8e9;
+$theme-warning-border: #f9e3b6;
+
+// 特殊状态颜色
+$theme-forbidden-bg: #761616;
+$theme-forbidden-border: #601616;
+$theme-decrease: #fe3e3e;
+$theme-modal: transparentize(#08161e, 0.2);
+$theme-dark-bg: #4c4c4c;
+$theme-dark-border: #323944;
+
+// ===========================
+// 表单字段颜色 (Field Colors)
+// ===========================
+$theme-field-label: #999;
+$theme-field-label-placeholder: #ccc;
+$theme-field-left-icon: #ddd;
+$theme-field-clear-icon: #ccc;
+
+// ===========================
+// Z-Index 层级 (Z-Index Layers)
+// ===========================
+$tip-z-index: 99;
+$toast-z-index: 98;
+$dialog-z-index: 95;
+$pop-z-index: 92;
+$full-screen-z-index: 91;
+$menu-z-index: 90;
+$nav-z-index: 89;
+
+// ===========================
+// 尺寸变量 (Size Variables)
+// ===========================
+$minWidth: 320px;
+$appMenuPortableWidth: 0.8;
+
+// ===========================
+// 引入所有 Mixins (Import Mixins)
+// ===========================
+// 从独立的 mixins.scss 文件中引入所有 mixins
+// 包含：布局、文本、阴影、动画、响应式、工具、效果、图片、Grid、重置等 60+ 个 mixins
+// 详细文档: /app/css/scss-mixins
+@import './mixins.scss';

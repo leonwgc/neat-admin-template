@@ -1,0 +1,59 @@
+.fixed-help-widget.bottom-right {
+    right: -8px;
+
+    .fixed-help-widget-button {
+        width: 40px;
+        height: 40px;
+
+        .fixed-help-widget-button-content {
+            width: 56px;
+            height: 56px;
+            line-height: 56px;
+
+            .icon-box {
+                width: 18px;
+                height: 18px;
+
+                .button-icon {
+                    width: 18px;
+                    height: 18px;
+                }
+            }
+        }
+    }
+
+}
+
+.fixed-help-widget.bottom-right{
+
+    &:hover {
+        bottom: 1px;
+        border: 20px solid transparent;
+
+        .fixed-help-widget-button {
+            width: 64px !important;
+            height: 64px !important;
+
+            .fixed-help-widget-button-content {
+                width: 64px !important;
+                height: 64px !important;
+                line-height: 64px !important;
+
+                .icon-box {
+                    width: 24px !important;
+                    height: 24px !important;
+
+                    .button-icon {
+                        width: 24px !important;
+                        height: 24px !important;
+
+                        &.close-icon{
+                            top: 0;
+                            left: 0;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

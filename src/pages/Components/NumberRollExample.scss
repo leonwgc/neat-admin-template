@@ -1,0 +1,117 @@
+/**
+ * @file pages/Components/NumberRollExample.scss
+ * @author leon.wang
+ */
+@import 'scss/common.scss';
+
+.number-roll-example {
+  padding: 24px;
+  max-width: 900px;
+
+  &__title {
+    font-size: 22px;
+    font-weight: 600;
+    margin: 0 0 8px;
+    color: var(--color-text, #333);
+  }
+
+  &__desc {
+    color: var(--color-text-secondary, #666);
+    margin: 0 0 24px;
+    font-size: 14px;
+  }
+
+  &__card {
+    margin-bottom: 24px;
+  }
+
+  &__demo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 32px 0 24px;
+  }
+
+  &__controls {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+
+  &__slider-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  &__slider-label {
+    font-size: 13px;
+    color: var(--color-text-secondary, #888);
+    white-space: nowrap;
+  }
+
+  // Different sizes section
+  &__sizes {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 8px 0;
+  }
+
+  &__size-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  &__size-label {
+    width: 48px;
+    font-size: 12px;
+    color: var(--color-text-secondary, #888);
+    flex-shrink: 0;
+  }
+
+  // Variants section
+  &__variants {
+    padding: 4px 0;
+  }
+
+  &__variant-row {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 4px 0;
+  }
+
+  &__variant-label {
+    width: 120px;
+    font-size: 13px;
+    color: var(--color-text-secondary, #888);
+    flex-shrink: 0;
+  }
+
+  // Dashboard section
+  &__dashboard {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 16px;
+    padding: 8px 0;
+  }
+
+  &__stat-card {
+    background: var(--color-fill-quaternary, #fafafa);
+    border: 1px solid var(--color-border, #f0f0f0);
+    border-radius: 8px;
+    padding: 20px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-start;
+  }
+
+  &__stat-label {
+    font-size: 13px;
+    color: var(--color-text-secondary, #888);
+  }
+}

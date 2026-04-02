@@ -1,0 +1,25 @@
+.app-drawer__menus--mobile {
+  .ant-drawer-header-title {
+    display: flex;
+    justify-content: space-between;
+
+    .ant-drawer-close {
+      order: 1;
+    }
+  }
+
+  .ant-drawer-body {
+    padding: 0;
+
+    .ant-menu {
+      border: none;
+    }
+  }
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .app-drawer__menus--mobile {
+    display: block;
+  }
+}

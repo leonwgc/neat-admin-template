@@ -1,0 +1,818 @@
+/**
+ * @file scss/mixins.scss
+ * @author leon.wang
+ * @description SCSS Mixins collection - All reusable mixins for the project
+ */
+
+// ============================================
+// Layout Mixins
+// ============================================
+
+// Invisible element (for accessibility)
+@mixin invisible {
+  position: absolute;
+  font: inherit;
+  background: transparent;
+  z-index: -1;
+  opacity: 0;
+  -webkit-appearance: none;
+  appearance: none;
+  resize: none;
+  outline: none;
+  overflow: hidden;
+  padding: 0;
+  width: 0;
+  height: 0;
+  cursor: none;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+// Clearfix
+@mixin float-fix {
+  &::before,
+  &::after {
+    display: table;
+    content: '';
+  }
+  &::after {
+    clear: both;
+  }
+}
+
+// Flex center alignment
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+// Flex vertical center
+@mixin flex-v-center {
+  display: flex;
+  align-items: center;
+}
+
+// Flex horizontal center
+@mixin flex-h-center {
+  display: flex;
+  justify-content: center;
+}
+
+// Flex space between
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+// Flex column
+@mixin flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+// Absolute center positioning
+@mixin absolute-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+// Absolute vertical center
+@mixin absolute-v-center {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+// Absolute horizontal center
+@mixin absolute-h-center {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+// Full size cover
+@mixin full-cover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+// Center block element
+@mixin center-block {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+// Quick size setter
+@mixin size($width, $height: $width) {
+  width: $width;
+  height: $height;
+}
+
+// Create circle
+@mixin circle($size) {
+  @include size($size);
+  border-radius: 50%;
+}
+
+// ============================================
+// Text Mixins
+// ============================================
+
+// Single line text ellipsis
+@mixin text-nowrap {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+// Multi-line text ellipsis
+@mixin text-ellipsis($lines) {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: $lines;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-all;
+}
+
+// Truncate text (alias for text-nowrap)
+@mixin truncate {
+  @include text-nowrap;
+}
+
+// Text gradient
+@mixin text-gradient($gradient) {
+  background: $gradient;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+// Force word break
+@mixin break-word {
+  word-wrap: break-word;
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+// Smooth font rendering
+@mixin smooth-font {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+// Placeholder styling
+@mixin placeholder {
+  &::-webkit-input-placeholder {
+    @content;
+  }
+  &:-moz-placeholder {
+    @content;
+  }
+  &::-moz-placeholder {
+    @content;
+  }
+  &:-ms-input-placeholder {
+    @content;
+  }
+}
+
+// Custom selection color
+@mixin selection($bg-color, $text-color: white) {
+  &::selection {
+    background-color: $bg-color;
+    color: $text-color;
+  }
+
+  &::-moz-selection {
+    background-color: $bg-color;
+    color: $text-color;
+  }
+}
+
+// ============================================
+// Shadow Mixins
+// ============================================
+
+// Shadow (外阴影)
+@mixin shadow($depth) {
+  @if $depth == 1 {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  } @else if $depth == 2 {
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15), 0 2px 4px rgba(0, 0, 0, 0.12);
+  } @else if $depth == 3 {
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15), 0 3px 6px rgba(0, 0, 0, 0.1);
+  } @else if $depth == 4 {
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.15), 0 5px 10px rgba(0, 0, 0, 0.05);
+  } @else if $depth == 5 {
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  } @else {
+    box-shadow: none;
+  }
+}
+
+// Shadow inset (内阴影)
+@mixin shadow-inset($depth) {
+  @if $depth == 1 {
+    box-shadow: inset rgba(0, 0, 0, 0.05) 0 3px 1px,
+      inset rgba(0, 0, 0, 0.1) 0 1px 1px, inset rgba(0, 0, 0, 0.05) 0px -3px 1px,
+      inset rgba(0, 0, 0, 0.1) 0px -1px 1px;
+  } @else if $depth == 2 {
+    box-shadow: inset rgba(0, 0, 0, 0.1) 0 4px 3px,
+      inset rgba(0, 0, 0, 0.12) 0 1px 3px, inset rgba(0, 0, 0, 0.1) 0px -4px 3px,
+      inset rgba(0, 0, 0, 0.12) 0px -1px 3px;
+  } @else if $depth == 3 {
+    box-shadow: inset rgba(0, 0, 0, 0.12) 0 5px 6px,
+      inset rgba(0, 0, 0, 0.12) 0 2px 6px,
+      inset rgba(0, 0, 0, 0.12) 0px -5px 6px,
+      inset rgba(0, 0, 0, 0.12) 0px -2px 6px;
+  } @else if $depth == 4 {
+    box-shadow: inset rgba(0, 0, 0, 0.15) 0 7px 10px,
+      inset rgba(0, 0, 0, 0.2) 0 3px 9px,
+      inset rgba(0, 0, 0, 0.15) 0px -7px 10px,
+      inset rgba(0, 0, 0, 0.2) 0px -3px 9px;
+  } @else if $depth == 5 {
+    box-shadow: inset rgba(0, 0, 0, 0.2) 0 10px 30px,
+      inset rgba(0, 0, 0, 0.2) 0 6px 12px,
+      inset rgba(0, 0, 0, 0.2) 0px -10px 30px,
+      inset rgba(0, 0, 0, 0.2) 0px -6px 12px;
+  } @else if $depth == 6 {
+    box-shadow: inset rgba(0, 0, 0, 0.25) 0 14px 45px,
+      inset rgba(0, 0, 0, 0.22) 0 10px 15px,
+      inset rgba(0, 0, 0, 0.25) 0px -14px 45px,
+      inset rgba(0, 0, 0, 0.22) 0px -10px 15px;
+  } @else if $depth == 7 {
+    box-shadow: inset rgba(0, 0, 0, 0.3) 0 19px 60px,
+      inset rgba(0, 0, 0, 0.22) 0 15px 20px,
+      inset rgba(0, 0, 0, 0.3) 0px -19px 60px,
+      inset rgba(0, 0, 0, 0.22) 0px -15px 20px;
+  } @else {
+    box-shadow: none;
+  }
+}
+
+// ============================================
+// Animation Mixins
+// ============================================
+
+// Smooth transition
+@mixin transition($properties...) {
+  @if length($properties) == 0 {
+    transition: all $theme-transition-duration ease;
+  } @else {
+    $transitions: ();
+    @each $property in $properties {
+      $transitions: append(
+        $transitions,
+        $property $theme-transition-duration ease,
+        comma
+      );
+    }
+    transition: $transitions;
+  }
+}
+
+// Hover lift effect
+@mixin hover-lift($distance: 4px) {
+  transition: transform $theme-transition-duration ease,
+    box-shadow $theme-transition-duration ease;
+  &:hover {
+    transform: translateY(-$distance);
+    @include shadow(3);
+  }
+}
+
+// Card hover effect
+@mixin card-hover($shadow-depth: 3) {
+  @include transition(transform, box-shadow);
+  cursor: pointer;
+
+  &:hover {
+    transform: translateY(-2px);
+    @include shadow($shadow-depth);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+// Fade in animation
+@mixin fade-in($duration: 0.3s) {
+  animation: fade-in $duration ease-in;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+// Slide in animation
+@mixin slide-in($direction: 'up', $distance: 20px, $duration: 0.3s) {
+  @if $direction == 'up' {
+    animation: slide-in-up $duration ease-out;
+  } @else if $direction == 'down' {
+    animation: slide-in-down $duration ease-out;
+  } @else if $direction == 'left' {
+    animation: slide-in-left $duration ease-out;
+  } @else if $direction == 'right' {
+    animation: slide-in-right $duration ease-out;
+  }
+}
+
+@keyframes slide-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-in-down {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-in-left {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+// Skeleton loading animation
+@mixin skeleton-loading($bg: #f0f0f0, $highlight: #f8f8f8) {
+  background: linear-gradient(90deg, $bg 25%, $highlight 50%, $bg 75%);
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.5s ease-in-out infinite;
+}
+
+@keyframes skeleton-loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+// Spinner animation
+@mixin spinner($size: 40px, $border-width: 4px, $color: $theme-highlight) {
+  @include size($size);
+  border: $border-width solid rgba($color, 0.2);
+  border-top-color: $color;
+  border-radius: 50%;
+  animation: spinner-rotate 0.8s linear infinite;
+}
+
+@keyframes spinner-rotate {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// Pulse animation
+@mixin pulse($duration: 1.5s) {
+  animation: pulse $duration ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+// Shake animation
+@mixin shake($duration: 0.5s) {
+  animation: shake $duration ease-in-out;
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  10%,
+  30%,
+  50%,
+  70%,
+  90% {
+    transform: translateX(-10px);
+  }
+  20%,
+  40%,
+  60%,
+  80% {
+    transform: translateX(10px);
+  }
+}
+
+// Bounce animation
+@mixin bounce($duration: 1s) {
+  animation: bounce $duration ease-in-out infinite;
+}
+
+@keyframes bounce {
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-20px);
+  }
+  60% {
+    transform: translateY(-10px);
+  }
+}
+
+// Scale animation
+@mixin scale($from: 0.95, $to: 1, $duration: 0.3s) {
+  animation: scale-animation $duration ease-out;
+
+  @keyframes scale-animation {
+    from {
+      transform: scale($from);
+    }
+    to {
+      transform: scale($to);
+    }
+  }
+}
+
+// Rotate animation
+@mixin rotate($duration: 2s) {
+  animation: rotate $duration linear infinite;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// ============================================
+// Responsive Mixins
+// ============================================
+
+// Mobile devices (≤767px)
+@mixin mobile {
+  @media (max-width: 767px) {
+    @content;
+  }
+}
+
+// Tablet devices (768-1023px)
+@mixin tablet {
+  @media (min-width: 768px) and (max-width: 1023px) {
+    @content;
+  }
+}
+
+// Desktop devices (≥1024px)
+@mixin desktop {
+  @media (min-width: 1024px) {
+    @content;
+  }
+}
+
+// Large desktop (≥1440px)
+@mixin large-desktop {
+  @media (min-width: 1440px) {
+    @content;
+  }
+}
+
+// ============================================
+// Utility Mixins
+// ============================================
+
+// Aspect ratio box
+@mixin aspect-ratio($width, $height) {
+  position: relative;
+  &::before {
+    content: '';
+    display: block;
+    width: 100%;
+    padding-top: ($height / $width) * 100%;
+  }
+  > * {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+}
+
+// Custom scrollbar
+@mixin scrollbar(
+  $size: 8px,
+  $thumb-color: #ccc,
+  $track-color: transparent,
+  $border-radius: 4px
+) {
+  &::-webkit-scrollbar {
+    width: $size;
+    height: $size;
+  }
+  &::-webkit-scrollbar-track {
+    background: $track-color;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: $thumb-color;
+    border-radius: $border-radius;
+    &:hover {
+      background: darken($thumb-color, 10%);
+    }
+  }
+}
+
+// Hide scrollbar
+@mixin hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+// User select
+@mixin user-select($value: none) {
+  -webkit-user-select: $value;
+  -moz-user-select: $value;
+  -ms-user-select: $value;
+  user-select: $value;
+}
+
+// Hardware acceleration
+@mixin hardware-acceleration {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+// Triangle
+@mixin triangle($direction, $size, $color) {
+  width: 0;
+  height: 0;
+  border: $size solid transparent;
+
+  @if $direction == 'up' {
+    border-bottom-color: $color;
+  } @else if $direction == 'down' {
+    border-top-color: $color;
+  } @else if $direction == 'left' {
+    border-right-color: $color;
+  } @else if $direction == 'right' {
+    border-left-color: $color;
+  }
+}
+
+// Overlay mask
+@mixin overlay($bg: rgba(0, 0, 0, 0.5), $z-index: 10) {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: $bg;
+  z-index: $z-index;
+}
+
+// Visually hidden (for accessibility)
+@mixin visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+// Custom focus outline
+@mixin focus-outline($color: $theme-highlight, $width: 2px, $offset: 2px) {
+  outline: $width solid $color;
+  outline-offset: $offset;
+}
+
+// Disable tap highlight on mobile
+@mixin no-tap-highlight {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+}
+
+// Flex gap fallback (for older browsers)
+@mixin flex-gap($gap, $direction: row) {
+  @if $direction == row {
+    margin-left: -$gap / 2;
+    margin-right: -$gap / 2;
+
+    > * {
+      margin-left: $gap / 2;
+      margin-right: $gap / 2;
+    }
+  } @else {
+    margin-top: -$gap / 2;
+    margin-bottom: -$gap / 2;
+
+    > * {
+      margin-top: $gap / 2;
+      margin-bottom: $gap / 2;
+    }
+  }
+}
+
+// Sticky positioning
+@mixin sticky($top: 0, $z-index: 10) {
+  position: sticky;
+  top: $top;
+  z-index: $z-index;
+}
+
+// ============================================
+// Effect Mixins
+// ============================================
+
+// Glass morphism effect
+@mixin glass-morphism($blur: 10px, $opacity: 0.1) {
+  backdrop-filter: blur($blur);
+  background: rgba(255, 255, 255, $opacity);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+// Backdrop blur effect
+@mixin backdrop-blur($blur: 10px) {
+  backdrop-filter: blur($blur);
+  -webkit-backdrop-filter: blur($blur);
+}
+
+// Linear gradient
+@mixin linear-gradient($direction, $color-stops...) {
+  background-image: linear-gradient($direction, $color-stops);
+}
+
+// Diagonal gradient background
+@mixin diagonal-gradient($start-color, $end-color, $angle: 45deg) {
+  background: linear-gradient($angle, $start-color 0%, $end-color 100%);
+}
+
+// Gradient border
+@mixin gradient-border($width, $gradient, $border-radius: 0) {
+  position: relative;
+  background: $gradient;
+  border-radius: $border-radius;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: $width;
+    left: $width;
+    right: $width;
+    bottom: $width;
+    background: white;
+    border-radius: $border-radius - $width;
+  }
+}
+
+// ============================================
+// Image Mixins
+// ============================================
+
+// Background cover image
+@mixin cover-background($url: null) {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  @if $url {
+    background-image: url($url);
+  }
+}
+
+// Background contain image
+@mixin contain-background($url: null) {
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  @if $url {
+    background-image: url($url);
+  }
+}
+
+// Image rendering optimization
+@mixin crisp-image {
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+}
+
+// ============================================
+// Grid Layout Mixins
+// ============================================
+
+// Grid layout shorthand
+@mixin grid-layout($columns, $gap: 16px) {
+  display: grid;
+  grid-template-columns: repeat($columns, 1fr);
+  gap: $gap;
+}
+
+// Auto-fit grid
+@mixin auto-grid($min-width: 250px, $gap: 16px) {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax($min-width, 1fr));
+  gap: $gap;
+}
+
+// Auto-fill grid
+@mixin auto-grid-fill($min-width: 250px, $gap: 16px) {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax($min-width, 1fr));
+  gap: $gap;
+}
+
+// ============================================
+// Reset Mixins
+// ============================================
+
+// Reset button
+@mixin reset-button {
+  border: none;
+  background: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  outline: none;
+  font: inherit;
+  color: inherit;
+  &:focus {
+    outline: none;
+  }
+}
+
+// Reset list
+@mixin reset-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+// Reset input
+@mixin reset-input {
+  border: none;
+  background: none;
+  padding: 0;
+  margin: 0;
+  outline: none;
+  font: inherit;
+  color: inherit;
+  -webkit-appearance: none;
+  appearance: none;
+}

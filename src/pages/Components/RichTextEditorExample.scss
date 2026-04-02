@@ -1,0 +1,79 @@
+/**
+ * @file pages/Components/RichTextEditorExample.scss
+ * @author leon.wang
+ */
+@import 'scss/common.scss';
+
+.rte-example {
+  padding: 24px;
+  max-width: 900px;
+
+  &__title {
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+
+  &__desc {
+    color: var(--color-text-secondary, #647075);
+    margin-bottom: 16px;
+    line-height: 1.7;
+
+    code {
+      background: var(--color-fill-secondary, #f5f5f5);
+      padding: 1px 6px;
+      border-radius: 4px;
+      font-size: 13px;
+    }
+  }
+
+  &__card {
+    margin-bottom: 4px;
+  }
+
+  &__actions {
+    margin-top: 12px;
+  }
+
+  &__hint {
+    margin-top: 10px;
+    font-size: 13px;
+    color: var(--color-text-secondary, #647075);
+
+    code {
+      background: var(--color-fill-secondary, #f5f5f5);
+      padding: 1px 5px;
+      border-radius: 3px;
+      font-size: 12px;
+    }
+  }
+
+  &__html-preview {
+    margin-top: 12px;
+    padding: 12px;
+    background: var(--color-fill-quaternary, #f9f9f9);
+    border: 1px solid var(--color-border, #e8eaed);
+    border-radius: 6px;
+    overflow: auto;
+    max-height: 200px;
+
+    pre {
+      margin: 0;
+      font-size: 12px;
+      white-space: pre-wrap;
+      word-break: break-all;
+      color: var(--color-text-secondary, #555);
+    }
+  }
+
+  &__feature-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  &__tag {
+    font-size: 13px;
+    padding: 2px 10px;
+  }
+}

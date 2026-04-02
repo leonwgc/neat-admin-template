@@ -1,0 +1,100 @@
+{
+  // ========== GitHub Copilot ==========
+  "github.copilot.chat.localeOverride": "en",
+  "github.copilot.chat.model": "claude-4.5-sonnet",
+
+  // ========== 编辑器基础配置 ==========
+  "files.autoSave": "onFocusChange",
+  "editor.formatOnSave": false,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true,
+  "editor.detectIndentation": false,
+  "files.eol": "\n",
+  "files.trimTrailingWhitespace": true,
+  "files.insertFinalNewline": true,
+
+  // ========== 文件排除（提升性能）==========
+  "files.exclude": {
+    "**/.git": true,
+    "**/.DS_Store": true,
+    "**/node_modules": true,
+    "**/dist": true,
+    "**/.cache": true
+  },
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/dist": true,
+    "**/.cache": true,
+    "**/package-lock.json": true
+  },
+
+  // ========== TypeScript ==========
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+  "typescript.preferences.importModuleSpecifier": "relative",
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "typescript.suggest.autoImports": true,
+  "typescript.preferences.quoteStyle": "single",
+  "javascript.preferences.quoteStyle": "single",
+
+  // TypeScript 性能优化
+  "typescript.disableAutomaticTypeAcquisition": true,
+  "typescript.tsserver.maxTsServerMemory": 4096,
+
+  // 禁用不必要的功能
+  "editor.hover.delay": 300,
+  "editor.quickSuggestionsDelay": 10,
+  "workbench.editor.enablePreview": false, // 双击才打开新标签
+  "workbench.editor.limit.enabled": true,
+  "workbench.editor.limit.value": 10, // 限制打开的编辑器数量
+
+  // ========== ESLint ==========
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
+  ],
+  "eslint.workingDirectories": [
+    {
+      "mode": "auto"
+    }
+  ],
+
+  // ========== 路径别名智能提示 ==========
+  "path-intellisense.mappings": {
+    "~": "${workspaceRoot}/src",
+    "scss": "${workspaceRoot}/src/scss",
+    "components": "${workspaceRoot}/src/components"
+  },
+
+  // ========== Git ==========
+  "git.enableSmartCommit": true,
+  "git.confirmSync": false,
+  "git.autofetch": true,
+  "git.ignoreLimitWarning": true,
+
+  // ========== CSS/SCSS ==========
+  "css.lint.unknownAtRules": "ignore",
+  "scss.lint.unknownAtRules": "ignore",
+
+  // ========== Emmet ==========
+  "emmet.includeLanguages": {
+    "typescript": "typescriptreact",
+    "javascript": "javascriptreact"
+  },
+  "emmet.triggerExpansionOnTab": true,
+
+  // ========== 其他优化 ==========
+  "editor.quickSuggestions": {
+    "strings": true
+  },
+  "editor.suggest.snippetsPreventQuickSuggestions": false,
+  "editor.minimap.enabled": false,
+  "editor.bracketPairColorization.enabled": true,
+  "editor.guides.bracketPairs": true
+}

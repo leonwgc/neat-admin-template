@@ -1,0 +1,72 @@
+/**
+ * @file pages/Components/ImageCropperExample.scss
+ * @author leon.wang
+ */
+@import 'scss/common.scss';
+
+.image-cropper-example {
+  padding: 24px;
+  max-width: 900px;
+
+  &__title {
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+
+  &__desc {
+    color: var(--color-text-secondary, #647075);
+    margin-bottom: 24px;
+
+    code {
+      background: var(--color-fill-secondary, #f5f5f5);
+      padding: 1px 6px;
+      border-radius: 4px;
+      font-size: 13px;
+    }
+  }
+
+  &__card {
+    margin-bottom: 4px;
+  }
+
+  &__hint {
+    margin-top: 8px;
+    font-size: 13px;
+    color: var(--color-text-secondary, #647075);
+  }
+
+  &__result {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  &__avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--color-border, #e8eaed);
+    display: block;
+  }
+
+  &__banner {
+    width: 320px;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 6px;
+    border: 1px solid var(--color-border, #e8eaed);
+    display: block;
+  }
+
+  &__free {
+    max-width: 240px;
+    max-height: 180px;
+    object-fit: contain;
+    border-radius: 6px;
+    border: 1px solid var(--color-border, #e8eaed);
+    display: block;
+  }
+}

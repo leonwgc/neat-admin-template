@@ -1,0 +1,160 @@
+/**
+ * @file src/layouts/AppLayout.scss
+ * @author leon.wang
+ */
+
+@import '../scss/common.scss';
+
+.app-layout {
+  // Header
+  &__header {
+    position: fixed;
+    top: 0;
+    z-index: 50;
+    width: 100%;
+    height: 56px;
+    padding: 0 16px;
+    line-height: 56px;
+    background-color: #fff;
+    border-bottom: 1px solid #dfe4e8;
+    box-shadow: 0 4px 4px rgba(112, 138, 151, 0.08);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .mobile-menus {
+      font-size: 18px;
+      display: none;
+    }
+  }
+
+  // Body (contains Sider + Main)
+  &__body {
+    display: flex;
+  }
+
+  // Main content area
+  &__main {
+    position: relative;
+    box-sizing: border-box;
+    min-height: 100vh;
+    padding: var(--nav-height) 0 40px var(--menu-width);
+    background: #fff;
+    transition: padding-left $theme-transition-duration ease-in-out;
+
+    &--no-sider {
+      padding-left: 0;
+    }
+  }
+
+  // Inner layout
+  &__inner {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    background-color: #fff;
+  }
+
+  &__inner-header {
+    padding: 8px 40px 16px;
+    background-color: #ffffff;
+    border-bottom: 1px solid #dfe4e8;
+    display: flex;
+    align-items: center;
+  }
+
+  &__inner-content {
+    padding: 0;
+    & > div {
+      padding: 24px;
+    }
+  }
+
+  // Loading state
+  &__loading {
+    position: absolute;
+    top: 56px;
+    left: 248px;
+    right: 0;
+    bottom: 50px;
+    width: 48px;
+    height: 48px;
+    margin: auto;
+    transition: left $theme-transition-duration ease-in-out;
+  }
+
+  // Modal overlay
+  &__modal {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+  }
+
+  // Modifiers
+  &--no-padding-bottom {
+    .app-layout__main {
+      padding-bottom: 0;
+    }
+  }
+
+  &--has-banner {
+    .app-layout__main {
+      padding-top: 56px;
+    }
+
+    .nav-menu {
+      height: 100%;
+    }
+
+    .module-header.fixed {
+      top: 56px;
+    }
+  }
+
+  &--footer-hidden {
+    .app-layout__main {
+      padding-bottom: 0;
+    }
+
+    .app-footer {
+      display: none;
+    }
+  }
+}
+
+// Menu collapsed state
+.nav-menu-collapsed {
+  .app-layout__main {
+    padding-left: 64px;
+  }
+
+  .app-layout__loading {
+    left: 64px;
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .hide-on-mobile {
+    display: none;
+  }
+  .app-layout {
+    &__header {
+      .mobile-menus {
+        display: block;
+      }
+    }
+
+    &__main {
+      padding-left: 0;
+    }
+
+    &__inner-content {
+      padding: 16px;
+      max-width: 100%;
+      overflow: hidden;
+    }
+  }
+}

@@ -1,0 +1,45 @@
+/**
+ * @file components/ImageCropper/ImageCropper.scss
+ * @author leon.wang
+ */
+@import 'scss/common.scss';
+
+.image-cropper {
+  &__canvas {
+    position: relative;
+    width: 100%;
+    height: 360px;
+    background: #1a1a1a;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  &__controls {
+    margin-top: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  &__controls-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  &__controls-label {
+    flex-shrink: 0;
+    width: 32px;
+    font-size: 13px;
+    color: var(--color-text-secondary, #647075);
+  }
+
+  &__zoom-icon {
+    flex-shrink: 0;
+    color: var(--color-text-secondary, #647075);
+  }
+
+  &__zoom-slider {
+    flex: 1;
+  }
+}

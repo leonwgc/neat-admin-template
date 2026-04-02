@@ -1,0 +1,44 @@
+/**
+ * @file src/layouts/Sider.scss
+ * @author leon.wang
+ */
+@import 'scss/common.scss';
+
+.app-sider {
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  height: calc(100vh - var(--nav-height));
+  margin-top: var(--nav-height);
+  z-index: 40;
+
+  &__content {
+    height: 100%;
+    padding-bottom: 64px;
+    overflow-y: scroll;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  &.ds-layout-sider {
+    padding: 0;
+  }
+
+  .ds-layout-sider-trigger {
+    visibility: hidden;
+  }
+
+  &:hover {
+    .ds-layout-sider-trigger {
+      visibility: visible;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .app-sider {
+    display: none;
+  }
+}

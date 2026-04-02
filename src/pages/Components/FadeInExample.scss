@@ -1,0 +1,62 @@
+/**
+ * @file src/pages/Components/FadeInExample.scss
+ * @author leon.wang
+ */
+
+@import 'scss/common.scss';
+
+.fade-in-example {
+
+
+  h2 {
+    margin-bottom: 24px;
+    font-size: 24px;
+    font-weight: 600;
+  }
+
+  &__demo-box {
+    text-align: center;
+
+    strong {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 14px;
+    }
+
+    p {
+      margin: 0;
+      color: #666;
+      font-size: 12px;
+    }
+  }
+
+  &__api-table {
+    width: 100%;
+    border-collapse: collapse;
+
+    th,
+    td {
+      padding: 12px;
+      border: 1px solid #e8e8e8;
+      text-align: left;
+    }
+
+    th {
+      background-color: #fafafa;
+      font-weight: 600;
+    }
+
+    td {
+      font-size: 14px;
+
+      &:nth-child(3) {
+        color: #c41d7f;
+        font-family: 'Courier New', monospace;
+      }
+
+      &:nth-child(4) {
+        color: #1890ff;
+      }
+    }
+  }
+}
