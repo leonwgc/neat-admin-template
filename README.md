@@ -522,10 +522,10 @@ Detailed docs: [src/utils/README.md](src/utils/README.md)
 
 ```tsx
 {
-  key: 'admin-panel',
-  label: 'Admin Panel',
-  route: '/app/admin',
-  permissions: ['admin', 'superuser'],  // Only these users can access
+  key: 'user-management',
+  label: 'User Management',
+  route: '/app/users',
+  permissions: ['user:read'],  // Only has these permissions will see this route
 }
 ```
 
