@@ -10,7 +10,7 @@ const Footer = ({ menuCollapsed }) => {
         </div>
       ) : (
         <FadeIn duration={300}>
-          <div>© PAST - FUTURE</div>
+          <div>© 2002 - 2026 德比软件 Inc.</div>
         </FadeIn>
       )}
     </div>

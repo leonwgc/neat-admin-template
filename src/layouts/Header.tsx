@@ -2,7 +2,7 @@
  * @file layouts/Header.tsx
  * @author leon.wang
  */
-import React, { useState } from 'react';
+import React from 'react';
 import { Layout, Space, Flex, Avatar } from '@derbysoft/neat-design';
 import type { MenuProps } from '@derbysoft/neat-design';
 import {
@@ -20,14 +20,12 @@ import { useBoolean } from 'ahooks';
 import { useTranslation } from 'react-i18next';
 
 import MobileMenus from './MobileMenus';
-import { GlobalSearch } from 'components/GlobalSearch';
 import { changeLanguage, type Language } from '~/i18n';
 import DerbySoftLogo from './DerbySoftLogo';
 import './Header.scss';
 
 const Header: React.FC<React.HTMLAttributes<HTMLElement>> = (props) => {
   const [open, { setTrue, setFalse }] = useBoolean(false);
-  const [searchOpen, setSearchOpen] = useState(false);
   const { t, i18n } = useTranslation();
 
   const currentLang = i18n.language as Language;
@@ -108,22 +106,6 @@ const Header: React.FC<React.HTMLAttributes<HTMLElement>> = (props) => {
         </Flex>
 
         <Space size={8}>
-          <button
-            className="header-search-btn"
-            onClick={() => setSearchOpen(true)}
-            aria-label={t('common:searchMenuTooltip')}
-          >
-            <SearchOutlined className="header-search-btn__icon" />
-            <span className="header-search-btn__text">
-              {t('common:search')}
-            </span>
-            <kbd className="header-search-btn__shortcut">
-              {navigator.platform.toLowerCase().includes('mac')
-                ? '⌘K'
-                : 'Ctrl+K'}
-            </kbd>
-          </button>
-
           <Dropdown
             menu={{ items: languageMenuItems, selectedKeys: [currentLang] }}
             placement="bottomRight"
@@ -156,7 +138,6 @@ const Header: React.FC<React.HTMLAttributes<HTMLElement>> = (props) => {
         </Space>
       </Layout.Header>
       <MobileMenus open={open} onClose={setFalse} />
-      <GlobalSearch open={searchOpen} onOpenChange={setSearchOpen} />
     </div>
   );
 };
