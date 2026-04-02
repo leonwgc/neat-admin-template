@@ -1,5 +1,5 @@
 {
-  "name": "ant-admin-template",
+  "name": "neat-admin-template",
   "version": "1.0.0",
   "description": "🚀 Enterprise-level admin template built with React 18 + TypeScript + Neat Design. Features automatic route generation, i18n, permission control, and responsive layout. Production-ready.",
   "scripts": {

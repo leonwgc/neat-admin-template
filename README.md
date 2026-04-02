@@ -2,7 +2,7 @@
   <h1>Neat Admin Template</h1>
   <p>Enterprise-level Admin Template based on React + TypeScript + Neat Design</p>
 
-  **English | [简体中文](./README_ZH.md)**
+  **English | [简体中文](./README.md)**
 
   <p>
     <a href="#features">Features</a> •
@@ -34,8 +34,7 @@ Neat Admin Template is a production-ready enterprise admin system template built
 ### Technical Highlights
 - **State Management** - Zustand 5.x + zustand-kit, lightweight and easy to use
 - **Routing** - React Router 7.x with data preloading support
-- **Form Handling** - React Hook Form + antd-form-builder, high-performance forms
-- **Request Handling** - Axios + ahooks, request deduplication and error handling
+- **Request Handling** - Axios + ahooks
 - **Styling** - SCSS + BEM naming convention, maintainable style architecture
 - **Build Tools** - Custom build scripts with multi-environment support
 
@@ -88,8 +87,8 @@ npm install
 
 ```bash
 # Clone to local
-git clone https://github.com/leonwgc/ant-admin-template.git
-cd ant-admin-template
+git clone https://github.com/leonwgc/neat-admin-template.git
+cd neat-admin-template
 
 # Install dependencies
 npm install
@@ -128,7 +127,7 @@ Configuration files are located in `build/env/`:
 ## 📁 Project Structure
 
 ```
-ant-admin-template/
+neat-admin-template/
 ├── build/                      # Build scripts
 │   ├── env/                   # Environment configs
 │   │   ├── config.qa.js
@@ -460,8 +459,7 @@ import { EmailOutlined } from '@ant-design/icons';
 ```
 
 **Rules:**
-- Menu icons: `@ant-design/icons`
-- Page icons: `@derbysoft/neat-design-icons`
+- Icons: `@derbysoft/neat-design-icons`
 - UI components: `@derbysoft/neat-design` (DO NOT use antd directly)
 
 #### SCSS Standards
@@ -560,6 +558,19 @@ Detailed docs: [ERROR_MONITOR.md](ERROR_MONITOR.md)
 
 - ✅ Route lazy loading
 - ✅ Code splitting
+- ✅ Image lazy loading
+- ✅ Request deduplication
+- ✅ Debounce/throttle
+- ✅ Web Vitals monitoring
+
+Detailed docs: [WEB_VITALS_GUIDE.md](WEB_VITALS_GUIDE.md)
+
+## 📚 Documentation
+
+- [Automatic Routing](src/utils/README.md) - Route generator detailed docs
+- [Internationalization](src/locales/README.md) - i18n system usage guide
+- [Global Search](GLOBAL_SEARCH.md) - Global search functionality
+- [Zustand State Management](zustand.md) - Zustand usage guide
 
 ## 🤝 Contributing
 
