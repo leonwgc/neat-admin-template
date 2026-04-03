@@ -1,10 +1,5 @@
 import { FC } from 'react';
-import {
-  Button,
-  Input,
-  Select,
-  Form as NeatForm,
-} from '@derbysoft/neat-design';
+import { Button, Input, Select, Form } from '@derbysoft/neat-design';
 import { useTranslation } from 'react-i18next';
 import './ResponsiveForm.scss';
 
@@ -20,9 +15,9 @@ interface FormValues {
   phoneNumber: string;
 }
 
-const Form: FC = () => {
+const ResponsiveForm: FC = () => {
   const { t } = useTranslation();
-  const [form] = NeatForm.useForm<FormValues>();
+  const [form] = Form.useForm<FormValues>();
 
   const countryOptions = [
     { label: t('pages.form:responsiveFormCountryChina'), value: 'China' },
@@ -36,13 +31,16 @@ const Form: FC = () => {
   ];
 
   const timeZoneOptions = [
-    { label: t('pages.form:responsiveFormTimeZoneShanghai'), value: 'Asia/Shanghai' },
+    {
+      label: t('pages.form:responsiveFormTimeZoneShanghai'),
+      value: 'Asia/Shanghai',
+    },
     // 可扩展更多时区
   ];
 
   return (
     <div className="form-profile">
-      <NeatForm
+      <Form
         form={form}
         layout="vertical"
         className="form-profile__form"
@@ -63,7 +61,7 @@ const Form: FC = () => {
             {t('pages.form:responsiveFormSectionBasicInfo')}
           </div>
           <div className="responsive-grid">
-            <NeatForm.Item
+            <Form.Item
               label={t('pages.form:responsiveFormFieldFirstName')}
               name="firstName"
               rules={[
@@ -74,8 +72,8 @@ const Form: FC = () => {
               ]}
             >
               <Input />
-            </NeatForm.Item>
-            <NeatForm.Item
+            </Form.Item>
+            <Form.Item
               label={t('pages.form:responsiveFormFieldLastName')}
               name="lastName"
               rules={[
@@ -86,14 +84,14 @@ const Form: FC = () => {
               ]}
             >
               <Input />
-            </NeatForm.Item>
-            <NeatForm.Item
+            </Form.Item>
+            <Form.Item
               label={t('pages.form:responsiveFormFieldPrimaryLanguage')}
               name="primaryLanguage"
             >
               <Select options={languageOptions} />
-            </NeatForm.Item>
-            <NeatForm.Item
+            </Form.Item>
+            <Form.Item
               label={t('pages.form:responsiveFormFieldCountry')}
               name="country"
               rules={[
@@ -104,13 +102,13 @@ const Form: FC = () => {
               ]}
             >
               <Select options={countryOptions} />
-            </NeatForm.Item>
-            <NeatForm.Item
+            </Form.Item>
+            <Form.Item
               label={t('pages.form:responsiveFormFieldTimeZone')}
               name="timeZone"
             >
               <Select options={timeZoneOptions} />
-            </NeatForm.Item>
+            </Form.Item>
           </div>
         </div>
 
@@ -124,9 +122,9 @@ const Form: FC = () => {
             {t('pages.form:responsiveFormBtnUpdate')}
           </Button>
         </div>
-      </NeatForm>
+      </Form>
     </div>
   );
 };
 
-export default Form;
+export default ResponsiveForm;
