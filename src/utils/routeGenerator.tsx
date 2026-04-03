@@ -93,9 +93,6 @@ export const getRouteElement = (
  * This is the central mapping that connects routes to page components
  */
 export const routeComponentMap: RouteComponentMap = {
-  // Dashboard
-  '/app/dashboard': lazyLoad('pages/Dashboard/Dashboard'),
-
   // Forms
   '/app/forms': lazyLoad('pages/Form/ResponsiveForm'),
 

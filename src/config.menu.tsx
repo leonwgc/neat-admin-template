@@ -2,11 +2,7 @@
  * @file src/config.menu.tsx
  * @author leon.wang
  */
-import {
-  BarChartOutlined,
-  WidgetOutlined,
-  TableOutlined,
-} from '@derbysoft/neat-design-icons';
+import { WidgetOutlined, TableOutlined } from '@derbysoft/neat-design-icons';
 import { MenuProps } from '@derbysoft/neat-design';
 import i18n from './i18n';
 
@@ -48,15 +44,6 @@ export type MenuItem = Required<MenuProps>['items'][number] & {
  * This structure is used to render navigation menus and control access based on permissions.
  */
 export const menus: MenuItem[] = [
-  {
-    key: 'dashboard',
-    get label() {
-      return t('menu.dashboard');
-    },
-    icon: <BarChartOutlined />,
-    route: '/app/dashboard',
-    permissions: [],
-  },
   {
     key: 'form',
     get label() {
