@@ -18,13 +18,6 @@
   "files.insertFinalNewline": true,
 
   // ========== 文件排除（提升性能）==========
-  "files.exclude": {
-    "**/.git": true,
-    "**/.DS_Store": true,
-    "**/node_modules": true,
-    "**/dist": true,
-    "**/.cache": true
-  },
   "search.exclude": {
     "**/node_modules": true,
     "**/dist": true,

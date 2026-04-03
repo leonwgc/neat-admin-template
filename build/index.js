@@ -25,6 +25,7 @@ build({
     html: {
       favicon: resolveRootPath('public/favicon.ico'),
       title: '',
+      template: resolveRootPath('index.html'),
     },
     tools: {
       rspack: {
