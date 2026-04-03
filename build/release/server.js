@@ -52,6 +52,11 @@ app.use(compression());
 app.use(history());
 
 /**
+ * 用于存活检测
+ */
+app.get('/status.ci', (req, res) => res.sendStatus(200));
+
+/**
  * 添加静态文件中间件，实现加载静态文件，并添加强制缓存的 header
  */
 app.use(
@@ -61,19 +66,14 @@ app.use(
         'Cache-Control',
         path.endsWith('index.html')
           ? 'no-cache, no-store, no_store, max-age=0, must-revalidate'
-          : 'max-age=2592000'
+          : 'max-age=2592000',
       ),
-  })
+  }),
 );
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 });
-
-/**
- * 用于存活检测
- */
-app.get('/status.ci', (req, res) => res.sendStatus(200));
 
 app.listen(port, (err) => {
   if (err) {
