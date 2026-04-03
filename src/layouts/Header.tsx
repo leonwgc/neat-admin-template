@@ -12,7 +12,6 @@ import {
   ControlOutlined,
   UserAddOutlined,
   LogoutOutlined,
-  SearchOutlined,
   DownOutlined,
 } from '@ant-design/icons';
 import { Dropdown } from 'antd';
@@ -53,9 +52,9 @@ const Header: React.FC<React.HTMLAttributes<HTMLElement>> = (props) => {
       key: 'user-info',
       label: (
         <div>
-          <div style={{ color: '#1B2C34' }}>Felicia Lawson</div>
+          <div style={{ color: '#1B2C34' }}>Leon X</div>
           <div style={{ fontSize: 12, color: '#647075' }}>
-            felicia.lawson@goooooogle.net
+            leon.x@derbysoft.net
           </div>
         </div>
       ),
