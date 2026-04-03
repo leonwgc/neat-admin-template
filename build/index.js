@@ -23,11 +23,24 @@ build({
   dist: resolveRootPath('dist/dist'),
   rsConfig: {
     html: {
-      // favicon: resolveRootPath('src/assets/icons/favicon.ico'),
+      favicon: resolveRootPath('public/favicon.ico'),
       title: '',
     },
     tools: {
-      rspack: { optimization: { nodeEnv: false } },
+      rspack: {
+        optimization: { nodeEnv: false },
+        module: {
+          rules: [
+            {
+              test: /\.(md|txt)$/,
+              type: 'asset/resource',
+              generator: {
+                emit: false,
+              },
+            },
+          ],
+        },
+      },
     },
     source: {
       define: {

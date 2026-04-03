@@ -7,7 +7,7 @@
     "build": "node build",
     "package": "node build",
     "clean": "rimraf dist",
-    "doc": "node build.js",
+    "doc": "node doc.js",
     "package:qa": "cross-env NODE_ENV=qa npm run package",
     "package:uat": "cross-env NODE_ENV=uat npm run package",
     "package:prod": "cross-env NODE_ENV=production npm run package",
