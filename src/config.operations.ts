@@ -1,8 +1,12 @@
 const operations = {
-  VIEW_USER: 'view_user',
-  CREATE_USER: 'create_user',
-  UPDATE_USER: 'update_user',
-  DELETE_USER: 'delete_user',
+  formRead: 'formRead',
+  formWrite: 'formWrite',
+  imageUploadRead: 'imageUploadRead',
+  imageUploadWrite: 'imageUploadWrite',
+  imageCropRead: 'imageCropRead',
+  imageCropWrite: 'imageCropWrite',
 };
+
+export const allOperations = Object.values(operations);
 
 export default operations;

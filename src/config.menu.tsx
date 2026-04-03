@@ -5,6 +5,7 @@
 import { WidgetOutlined, TableOutlined } from '@derbysoft/neat-design-icons';
 import { MenuProps } from '@derbysoft/neat-design';
 import i18n from './i18n';
+import operations from './config.operations';
 
 /** Get translated label */
 const t = (key) => i18n.t(key);
@@ -58,7 +59,7 @@ export const menus: MenuItem[] = [
           return t('menu.responsiveForm');
         },
         route: '/app/forms',
-        permissions: [],
+        permissions: [operations.formRead],
       },
     ],
   },
@@ -77,7 +78,7 @@ export const menus: MenuItem[] = [
           return t('menu.imageUpload');
         },
         route: '/app/components/image-upload',
-        permissions: [],
+        permissions: [operations.imageUploadRead],
       },
       {
         key: 'image-cropper',
@@ -85,7 +86,7 @@ export const menus: MenuItem[] = [
           return t('menu.imageCropper');
         },
         route: '/app/components/image-cropper',
-        permissions: [],
+        permissions: [operations.imageCropRead],
       },
     ],
   },
