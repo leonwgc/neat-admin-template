@@ -4,6 +4,8 @@
  */
 
 const fs = require('fs');
+const yargs = require('yargs/yargs');
+const { hideBin } = require('yargs/helpers');
 
 // Statics
 const config = require('./config.js');
@@ -14,7 +16,14 @@ const { copyRecursionSync, installDependencies } = require('./utils.js');
 
 const { build } = require('@derbysoft/pack');
 
-const env = process.env.NODE_ENV;
+const argv = yargs(hideBin(process.argv))
+  .option('env', {
+    alias: 'e',
+    type: 'string',
+    description: 'Build environment',
+  })
+  .parse();
+const env = argv.env || 'production';
 
 console.log(`Building ${env} Package...`);
 
@@ -28,24 +37,19 @@ build({
       template: resolveRootPath('index.html'),
     },
     tools: {
-      rspack: {
-        optimization: { nodeEnv: false },
-        module: {
-          rules: [
-            {
-              test: /\.(md|txt)$/,
-              type: 'asset/resource',
-              generator: {
-                emit: false,
-              },
-            },
-          ],
-        },
+      rspack: (config, { rspack }) => {
+        config.plugins = config.plugins || [];
+        config.plugins.push(
+          new rspack.IgnorePlugin({
+            resourceRegExp: /\.(md|txt)$/,
+          }),
+        );
+        return config;
       },
     },
     source: {
       define: {
-        'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
+        'process.env.ENV': JSON.stringify(env),
       },
     },
     performance: {
@@ -65,7 +69,7 @@ build({
     copyRecursionSync('build/release', config.rootDirectory);
     fs.copyFileSync(
       `build/env/config.${env}.js`,
-      `${config.rootDirectory}/config.js`
+      `${config.rootDirectory}/config.js`,
     );
     // 安装 npm 依赖
     console.log('Installing Dependencies...');
