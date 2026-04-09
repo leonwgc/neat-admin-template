@@ -6,6 +6,7 @@
     "start": "node pack.js",
     "clean": "rimraf dist",
     "doc": "node doc.js",
+    "lint": "eslint --ext .ts,.tsx src",
     "build:qa": "npm i && npm run clean && node build --env=qa",
     "build:uat": "npm i && npm run clean && node build --env=uat",
     "build:prod": "npm i && npm run clean && node build --env=production"
