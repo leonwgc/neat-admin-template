@@ -1,20 +1,31 @@
 import React from 'react';
-import { Button, Result } from '@derbysoft/neat-design';
+import { Button } from '@derbysoft/neat-design';
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
+import { ErrorForbiddenDefaultLarge } from '@derbysoft/neat-design-illustrations';
+import './NoPermission.scss';
 
 const NoPermission: React.FC = () => {
   const nav = useNavigate();
+  const { t } = useTranslation();
+
   return (
-    <Result
-      status="403"
-      title="403"
-      subTitle="Sorry, you are not authorized to access this page."
-      extra={
-        <Button type="primary" onClick={() => nav('/app')}>
-          Go Home
-        </Button>
-      }
-    />
+    <section className="no-permission">
+      <ErrorForbiddenDefaultLarge />
+
+      <div className="no-permission__title">{t('noPermissionTitle')}</div>
+      <div className="no-permission__description">
+        {t('noPermissionDescription')}
+      </div>
+
+      <Button
+        type="primary"
+        className="no-permission__btn"
+        onClick={() => nav('/app')}
+      >
+        {t('backHome')}
+      </Button>
+    </section>
   );
 };
 

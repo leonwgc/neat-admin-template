@@ -15,6 +15,9 @@ export default {
   signOut: 'Sign Out',
   yes: 'Yes',
   no: 'No',
+  noPermissionTitle: 'You do not have permission to view this page',
+  noPermissionDescription: 'Please contact your administrator',
+  backHome: 'Back Home',
 
   // Global Search
   search: 'Search',

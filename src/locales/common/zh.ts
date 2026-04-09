@@ -15,6 +15,9 @@ export default {
   signOut: '退出登录',
   yes: '确认',
   no: '取消',
+  noPermissionTitle: '你没有权限浏览此网页',
+  noPermissionDescription: '请联系你的管理员',
+  backHome: '返回主页',
 
   // 全局搜索
   search: '搜索',
