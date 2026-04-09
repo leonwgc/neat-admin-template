@@ -7,12 +7,7 @@ import { Layout, Space, Flex, Avatar } from '@derbysoft/neat-design';
 import type { MenuProps } from '@derbysoft/neat-design';
 import {
   MenuOutlined,
-  GlobalOutlined,
-  BankOutlined,
-  ControlOutlined,
-  UserAddOutlined,
   LogoutOutlined,
-  DownOutlined,
 } from '@ant-design/icons';
 import { Dropdown } from 'antd';
 import { useBoolean } from 'ahooks';
@@ -34,19 +29,6 @@ const Header: React.FC<React.HTMLAttributes<HTMLElement>> = (props) => {
     // No need to reload - components will re-render automatically
   };
 
-  const languageMenuItems = [
-    {
-      key: 'zh',
-      label: '简体中文',
-      onClick: () => handleLanguageChange('zh'),
-    },
-    {
-      key: 'en',
-      label: 'English',
-      onClick: () => handleLanguageChange('en'),
-    },
-  ];
-
   const userMenuItems: MenuProps['items'] = [
     {
       key: 'user-info',
@@ -64,32 +46,18 @@ const Header: React.FC<React.HTMLAttributes<HTMLElement>> = (props) => {
       type: 'divider',
     },
     {
-      key: 'companies',
-      label: t('common:companies'),
-      icon: <BankOutlined />,
-      onClick: () => {
-        // Navigate to companies
-      },
+      key: 'language-zh',
+      label: '简体中文',
+      onClick: () => handleLanguageChange('zh'),
     },
     {
-      key: 'admin-console',
-      label: t('common:adminConsole'),
-      icon: <ControlOutlined />,
-      onClick: () => {
-        // Navigate to admin console
-      },
-    },
-    {
-      key: 'invite-user',
-      label: t('common:inviteUser'),
-      icon: <UserAddOutlined />,
-      onClick: () => {
-        // Open invite user modal
-      },
+      key: 'language-en',
+      label: 'English',
+      onClick: () => handleLanguageChange('en'),
     },
     {
       key: 'sign-out',
-      label: t('common:signOut'),
+      label: t('signOut'),
       icon: <LogoutOutlined />,
       onClick: () => {
         // Sign out
@@ -105,25 +73,11 @@ const Header: React.FC<React.HTMLAttributes<HTMLElement>> = (props) => {
         </Flex>
 
         <Space size={8}>
-          <Dropdown
-            menu={{ items: languageMenuItems, selectedKeys: [currentLang] }}
-            placement="bottomRight"
-          >
-            <button
-              className="header-lang-btn"
-              aria-label={t('common:switchLanguage')}
-            >
-              <GlobalOutlined className="header-lang-btn__icon" />
-              <span className="header-lang-btn__text">
-                {currentLang === 'zh' ? '简体中文' : 'English'}
-              </span>
-              <DownOutlined className="header-lang-btn__arrow" />
-            </button>
-          </Dropdown>
           <MenuOutlined className="mobile-menus" onClick={setTrue} />
           <Dropdown
             menu={{
               items: userMenuItems,
+              selectedKeys: [`language-${currentLang}`],
               style: { width: 320, padding: 0 },
             }}
             placement="bottomRight"
