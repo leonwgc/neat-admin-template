@@ -1,1 +1,1 @@
-export const defaultRoute = '/app/forms';
+export const defaultRoute = '/app/forms/table';

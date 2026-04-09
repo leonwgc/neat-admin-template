@@ -1,11 +1,10 @@
 /**
- * @file: src/modules/Plan/containers/PlanList.js
- * @author leon.wang(leon.wang@derbysoft.net)
+ * @file: src/pages/Table/index.tsx
+ * @author leon.wang
  */
 
-import { TableColumnsType } from 'antd';
+import { TableColumnsType, Table } from '@derbysoft/neat-design';
 import dayjs from 'dayjs';
-import Table from 'src/components/AntTable/AntTable';
 import { useAntdTable } from 'ahooks';
 import { useTranslation } from 'react-i18next';
 import { getDataList } from './api';
