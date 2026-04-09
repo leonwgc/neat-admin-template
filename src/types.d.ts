@@ -26,6 +26,18 @@ interface WebpackRequireContext {
   <T = unknown>(id: string): T;
 }
 
+interface WebpackContextOptions {
+  recursive?: boolean;
+  regExp?: RegExp;
+}
+
+interface ImportMeta {
+  webpackContext(
+    directory: string,
+    options?: WebpackContextOptions,
+  ): WebpackRequireContext;
+}
+
 interface NodeRequire {
   context(
     directory: string,
