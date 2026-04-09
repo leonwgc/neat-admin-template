@@ -1,5 +1,3 @@
-// ds data structures
-
 type ObjectType = Record<string, unknown>;
 
 type ListObjectType = {
