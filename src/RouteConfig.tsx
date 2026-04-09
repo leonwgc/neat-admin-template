@@ -56,7 +56,7 @@ const RouteConfig = () => {
                     errorTitle="页面加载失败"
                     errorSubtitle="该页面遇到了问题，您可以尝试重新加载或返回首页"
                     showHome
-                    onGoHome={() => navigate('/app/css')}
+                    onGoHome={() => (location.href = defaultRoute)}
                   >
                     {element}
                   </ErrorBoundary>

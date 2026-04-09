@@ -3,7 +3,8 @@
  * @author leon.wang
  */
 import React, { Component, ReactNode, ErrorInfo } from 'react';
-import { Button, Result } from '@derbysoft/neat-design';
+import { Button } from '@derbysoft/neat-design';
+import { ErrorMainteinanceDefaultMedium } from '@derbysoft/neat-design-illustrations';
 import { ReloadOutlined, HomeOutlined } from '@ant-design/icons';
 import './ErrorBoundary.scss';
 
@@ -39,7 +40,10 @@ export interface ErrorBoundaryState {
  * Catches JavaScript errors anywhere in the child component tree
  * and displays a fallback UI instead of crashing the whole app
  */
-export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
+export class ErrorBoundary extends Component<
+  ErrorBoundaryProps,
+  ErrorBoundaryState
+> {
   static defaultProps = {
     errorTitle: '页面出错了',
     errorSubtitle: '抱歉，页面遇到了一些问题',
@@ -102,19 +106,11 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
         () => {
           // Execute navigation callback after state reset
           this.props.onGoHome!();
-        }
+        },
       );
     } else {
       window.location.href = this.props.homePath || '/';
     }
-  };
-
-  handleReset = (): void => {
-    this.setState({
-      hasError: false,
-      error: null,
-      errorInfo: null,
-    });
   };
 
   render(): ReactNode {
@@ -139,28 +135,29 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
 
       // Default fallback UI
       return (
-        <div className="error-boundary">
-          <Result
-            status="error"
-            title={errorTitle}
-            subTitle={errorSubtitle}
-            extra={
-              <div className="error-boundary__actions">
-                {showReload && (
-                  <Button type="primary" icon={<ReloadOutlined />} onClick={this.handleReload}>
-                    重新加载
-                  </Button>
-                )}
-                {showHome && (
-                  <Button icon={<HomeOutlined />} onClick={this.handleGoHome}>
-                    返回首页
-                  </Button>
-                )}
-                <Button onClick={this.handleReset}>重试</Button>
-              </div>
-            }
-          />
-        </div>
+        <section className="error-boundary">
+          <ErrorMainteinanceDefaultMedium className="error-boundary__illustration" />
+
+          <div className="error-boundary__title">{errorTitle}</div>
+          <div className="error-boundary__description">{errorSubtitle}</div>
+
+          <div className="error-boundary__actions">
+            {showReload && (
+              <Button
+                type="primary"
+                icon={<ReloadOutlined />}
+                onClick={this.handleReload}
+              >
+                重新加载
+              </Button>
+            )}
+            {showHome && (
+              <Button icon={<HomeOutlined />} onClick={this.handleGoHome}>
+                返回首页
+              </Button>
+            )}
+          </div>
+        </section>
       );
     }
 
