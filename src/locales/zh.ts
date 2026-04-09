@@ -4,10 +4,8 @@
  */
 
 import commonZh from './common/zh';
-import formZh from './pages/form/zh';
-import componentsZh from './pages/components/zh';
-import dashboardZh from './pages/dashboard/zh';
-import tableZh from './pages/table/zh';
+import formZh from '~/pages/Form/locales/zh';
+import tableZh from '~/pages/Table/locales/zh';
 
 /**
  * 中文翻译
@@ -20,8 +18,6 @@ const zh = {
   // 页面专属翻译，使用命名空间
   pages: {
     form: formZh,
-    components: componentsZh,
-    dashboard: dashboardZh,
     table: tableZh,
   },
 };

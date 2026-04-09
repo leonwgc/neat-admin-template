@@ -4,10 +4,8 @@
  */
 
 import commonEn from './common/en';
-import formEn from './pages/form/en';
-import componentsEn from './pages/components/en';
-import dashboardEn from './pages/dashboard/en';
-import tableEn from './pages/table/en';
+import formEn from '../pages/Form/locales/en';
+import tableEn from '../pages/Table/locales/en';
 
 /**
  * English translations
@@ -20,8 +18,6 @@ const en = {
   // Page-specific translations, using namespaces
   pages: {
     form: formEn,
-    components: componentsEn,
-    dashboard: dashboardEn,
     table: tableEn,
   },
 };
