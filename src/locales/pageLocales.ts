@@ -13,11 +13,10 @@ interface LocaleModule {
   default: Record<string, unknown>;
 }
 
-const pageLocalesContext = require.context(
-  '../pages',
-  true,
-  /\/locales\/(en|zh)\.ts$/,
-);
+const pageLocalesContext = import.meta.webpackContext('../pages', {
+  recursive: true,
+  regExp: /\/locales\/(en|zh)\.ts$/,
+});
 
 const toNamespacePath = (filePath: string): string[] => {
   const normalizedPath = filePath.replace(/^\.\//, '');
