@@ -144,10 +144,7 @@
 }
 
 .pop-user-actions {
-  .ds-dropdown-menu-item:first-child {
-    padding: 16px;
-  }
-  .ds-dropdown-menu-item:not(:first-child) {
+  .ds-dropdown-menu-item {
     margin: 8px 16px;
   }
 }

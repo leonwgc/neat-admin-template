@@ -5,10 +5,7 @@
 import React from 'react';
 import { Layout, Space, Flex, Avatar } from '@derbysoft/neat-design';
 import type { MenuProps } from '@derbysoft/neat-design';
-import {
-  MenuOutlined,
-  LogoutOutlined,
-} from '@ant-design/icons';
+import { MenuOutlined, LogoutOutlined } from '@ant-design/icons';
 import { Dropdown } from 'antd';
 import { useBoolean } from 'ahooks';
 import { useTranslation } from 'react-i18next';
@@ -30,21 +27,6 @@ const Header: React.FC<React.HTMLAttributes<HTMLElement>> = (props) => {
   };
 
   const userMenuItems: MenuProps['items'] = [
-    {
-      key: 'user-info',
-      label: (
-        <div>
-          <div style={{ color: '#1B2C34' }}>Leon X</div>
-          <div style={{ fontSize: 12, color: '#647075' }}>
-            leon.x@derbysoft.net
-          </div>
-        </div>
-      ),
-      disabled: true,
-    },
-    {
-      type: 'divider',
-    },
     {
       key: 'language-zh',
       label: '简体中文',
@@ -78,7 +60,6 @@ const Header: React.FC<React.HTMLAttributes<HTMLElement>> = (props) => {
             menu={{
               items: userMenuItems,
               selectedKeys: [`language-${currentLang}`],
-              style: { width: 320, padding: 0 },
             }}
             placement="bottomRight"
             trigger={['hover']}
