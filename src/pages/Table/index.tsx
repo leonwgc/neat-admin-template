@@ -15,7 +15,7 @@ import { useTranslation } from 'react-i18next';
 import { getDataList } from './api';
 
 export default function List() {
-  const { t } = useTranslation('pages.table');
+  const { t } = useTranslation();
 
   const { tableProps } = useAntdTable(getDataList, {
     defaultPageSize: 10,
@@ -23,24 +23,24 @@ export default function List() {
 
   const columns: TableColumnsType = [
     {
-      title: t('columns.name'),
+      title: t('pages.table.name'),
       dataIndex: ['name', 'last'],
       fixed: 'left',
     },
     {
-      title: t('columns.email'),
+      title: t('pages.table.email'),
       dataIndex: 'email',
     },
     {
-      title: t('columns.phone'),
+      title: t('pages.table.phone'),
       dataIndex: 'phone',
     },
     {
-      title: t('columns.gender'),
+      title: t('pages.table.gender'),
       dataIndex: 'gender',
     },
     {
-      title: t('columns.dateTime'),
+      title: t('pages.table.dateTime'),
       dataIndex: 'createdAt',
       render: (value) => dayjs(value).format('YYYY-MM-DD HH:mm:ss'),
     },

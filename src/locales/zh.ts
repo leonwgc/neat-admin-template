@@ -4,8 +4,10 @@
  */
 
 import commonZh from './common/zh';
-import formZh from '~/pages/Form/locales/zh';
-import tableZh from '~/pages/Table/locales/zh';
+import { buildPageLocalesTree, loadPageLocaleEntries } from './pageLocales';
+
+export const zhPageLocaleEntries = loadPageLocaleEntries('zh');
+const zhPageLocales = buildPageLocalesTree(zhPageLocaleEntries);
 
 /**
  * 中文翻译
@@ -16,10 +18,7 @@ const zh = {
   ...commonZh,
 
   // 页面专属翻译，使用命名空间
-  pages: {
-    form: formZh,
-    table: tableZh,
-  },
+  pages: zhPageLocales,
 };
 
 export default zh;

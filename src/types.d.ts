@@ -20,3 +20,18 @@ declare namespace NodeJS {
 }
 
 declare const process: NodeJS.Process;
+
+interface WebpackRequireContext {
+  keys(): string[];
+  <T = unknown>(id: string): T;
+}
+
+interface NodeRequire {
+  context(
+    directory: string,
+    useSubdirectories?: boolean,
+    regExp?: RegExp,
+  ): WebpackRequireContext;
+}
+
+declare const require: NodeRequire;

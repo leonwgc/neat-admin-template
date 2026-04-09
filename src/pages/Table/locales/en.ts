@@ -4,11 +4,9 @@
  */
 
 export default {
-  columns: {
-    name: 'Name',
-    email: 'Email',
-    phone: 'Phone',
-    gender: 'Gender',
-    dateTime: 'Date Time',
-  },
+  name: 'Name',
+  email: 'Email',
+  phone: 'Phone',
+  gender: 'Gender',
+  dateTime: 'Date Time',
 };

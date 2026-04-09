@@ -5,21 +5,36 @@
 
 import zh from './zh';
 import en from './en';
+import { enPageLocaleEntries } from './en';
+import { zhPageLocaleEntries } from './zh';
 
 /** 默认命名空间 */
 export const defaultNS = 'common';
+
+const buildPageNamespaceResources = (
+  entries: Array<{ namespace: string; locale: Record<string, unknown> }>,
+) => {
+  return entries.reduce<Record<string, Record<string, unknown>>>(
+    (accumulator, entry) => {
+      accumulator[entry.namespace] = entry.locale;
+      return accumulator;
+    },
+    {},
+  );
+};
+
+const enPageNamespaces = buildPageNamespaceResources(enPageLocaleEntries);
+const zhPageNamespaces = buildPageNamespaceResources(zhPageLocaleEntries);
 
 /** i18n 资源配置 */
 export const resources = {
   en: {
     [defaultNS]: en,
-    'pages.form': en.pages.form, // 注册命名空间
-    'pages.table': en.pages.table,
+    ...enPageNamespaces,
   },
   zh: {
     [defaultNS]: zh,
-    'pages.form': zh.pages.form, // 注册命名空间
-    'pages.table': zh.pages.table,
+    ...zhPageNamespaces,
   },
 } as const;
 

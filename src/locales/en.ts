@@ -4,8 +4,10 @@
  */
 
 import commonEn from './common/en';
-import formEn from '../pages/Form/locales/en';
-import tableEn from '../pages/Table/locales/en';
+import { buildPageLocalesTree, loadPageLocaleEntries } from './pageLocales';
+
+export const enPageLocaleEntries = loadPageLocaleEntries('en');
+const enPageLocales = buildPageLocalesTree(enPageLocaleEntries);
 
 /**
  * English translations
@@ -16,10 +18,7 @@ const en = {
   ...commonEn,
 
   // Page-specific translations, using namespaces
-  pages: {
-    form: formEn,
-    table: tableEn,
-  },
+  pages: enPageLocales,
 };
 
 export default en;
