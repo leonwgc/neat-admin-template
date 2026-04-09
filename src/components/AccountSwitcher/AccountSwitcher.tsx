@@ -8,8 +8,8 @@ import type { MenuProps } from '@derbysoft/neat-design';
 import { ArrowDownOutlined, HotelOutlined } from '@derbysoft/neat-design-icons';
 import { Dropdown } from '@derbysoft/neat-design';
 
-import './AccountSwitcher.scss';
 import classNames from 'classnames';
+import './AccountSwitcher.scss';
 
 export interface Account {
   /** Account ID */

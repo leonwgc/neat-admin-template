@@ -2,8 +2,8 @@ import React, { useCallback } from 'react';
 import { Avatar, Drawer, DrawerProps } from '@derbysoft/neat-design';
 import Menus from './Menus';
 import { menus } from '~/config.menu';
-import './MobileMenus.scss';
 import useUserInfo from '../global/useUserInfo';
+import './MobileMenus.scss';
 
 const MobileMenus: React.FC<DrawerProps> = (props) => {
   const onMenuClick = useCallback(() => {

@@ -3,8 +3,8 @@ import { FC, useEffect, useState } from 'react';
 import { useLocalStorageState } from 'ahooks';
 import Menus from './Menus';
 import { menus } from '~/config.menu';
-import './Sider.scss';
 import Footer from './Footer';
+import './Sider.scss';
 
 type Props = SiderProps & {
   loading?: boolean;
