@@ -3,7 +3,7 @@
  * @author leon.wang
  */
 
-import { Route, Routes, useNavigate } from 'react-router';
+import { Route, Routes } from 'react-router';
 import App from './layouts/App';
 import { lazy, Suspense } from 'react';
 import Redirect from './components/Redirect';
@@ -31,8 +31,6 @@ const menuRoutes = extractRoutesFromMenus(menus);
  * @returns {JSX.Element} The routes of the application.
  */
 const RouteConfig = () => {
-  const navigate = useNavigate();
-
   return (
     <Suspense>
       <Routes>
