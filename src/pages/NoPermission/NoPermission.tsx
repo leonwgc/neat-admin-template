@@ -3,6 +3,7 @@ import { Button } from '@derbysoft/neat-design';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
 import { ErrorForbiddenDefaultLarge } from '@derbysoft/neat-design-illustrations';
+import { defaultRoute } from '../../config';
 import './NoPermission.scss';
 
 const NoPermission: React.FC = () => {
@@ -21,7 +22,7 @@ const NoPermission: React.FC = () => {
       <Button
         type="primary"
         className="no-permission__btn"
-        onClick={() => nav('/app')}
+        onClick={() => nav(defaultRoute)}
       >
         {t('backHome')}
       </Button>
