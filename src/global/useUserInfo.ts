@@ -12,8 +12,8 @@ const useUserInfo = () => {
   // TODO: In a real application, user info would be fetched from an API or derived from authentication state
   return useGlobalState<UserInfo | null>('UserInfo', {
     userId: '1',
-    username: 'Admin',
-    nickname: 'Flash',
+    username: 'Leon',
+    nickname: 'LW',
     operations: [
       operations.formRead,
       operations.imageUploadRead,

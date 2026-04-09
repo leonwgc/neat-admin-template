@@ -5,7 +5,7 @@
 import React from 'react';
 import { Layout, Space, Flex, Avatar } from '@derbysoft/neat-design';
 import type { MenuProps } from '@derbysoft/neat-design';
-import { MenuOutlined, LogoutOutlined } from '@ant-design/icons';
+import { MenuOutlined } from '@derbysoft/neat-design-icons';
 import { Dropdown } from 'antd';
 import { useBoolean } from 'ahooks';
 import { useTranslation } from 'react-i18next';
@@ -13,6 +13,7 @@ import { useTranslation } from 'react-i18next';
 import MobileMenus from './MobileMenus';
 import { changeLanguage, type Language } from '~/i18n';
 import DerbySoftLogo from './DerbySoftLogo';
+import useUserInfo from '../global/useUserInfo';
 import './Header.scss';
 
 const Header: React.FC<React.HTMLAttributes<HTMLElement>> = (props) => {
@@ -20,6 +21,7 @@ const Header: React.FC<React.HTMLAttributes<HTMLElement>> = (props) => {
   const { t, i18n } = useTranslation();
 
   const currentLang = i18n.language as Language;
+  const [userInfo] = useUserInfo();
 
   const handleLanguageChange = async (lang: Language) => {
     await changeLanguage(lang);
@@ -40,7 +42,7 @@ const Header: React.FC<React.HTMLAttributes<HTMLElement>> = (props) => {
     {
       key: 'sign-out',
       label: t('signOut'),
-      icon: <LogoutOutlined />,
+
       onClick: () => {
         // Sign out
       },
@@ -67,7 +69,9 @@ const Header: React.FC<React.HTMLAttributes<HTMLElement>> = (props) => {
               <div className="pop-user-actions">{menu}</div>
             )}
           >
-            <Avatar style={{ cursor: 'pointer', userSelect: 'none' }}>D</Avatar>
+            <Avatar style={{ cursor: 'pointer', userSelect: 'none' }}>
+              {userInfo?.nickname?.[0] || 'D'}
+            </Avatar>
           </Dropdown>
         </Space>
       </Layout.Header>
