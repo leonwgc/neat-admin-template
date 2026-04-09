@@ -280,19 +280,22 @@ interface MenuItem {
 
 ### Internationalization
 
-#### Adding New Translations
+#### Adding New Translations (Auto Discovery)
 
-1. **Create translation files**
+Page locales are now auto-discovered from `src/pages/**/locales`.
+You do **not** need to manually import page locale files in `src/locales/en.ts`, `src/locales/zh.ts`, or register namespaces in `src/locales/index.ts`.
+
+1. **Create translation files under page directory**
 
 ```typescript
-// src/locales/pages/product/zh.ts
+// src/pages/Product/locales/zh.ts
 export default {
   productTitle: '产品列表',
   productColName: '产品名称',
   productBtnAdd: '添加产品',
 };
 
-// src/locales/pages/product/en.ts
+// src/pages/Product/locales/en.ts
 export default {
   productTitle: 'Product List',
   productColName: 'Product Name',
@@ -300,49 +303,49 @@ export default {
 };
 ```
 
-2. **Import translations**
-
-```typescript
-// src/locales/zh.ts
-import productZh from './pages/product/zh';
-
-const zh = {
-  ...commonZh,
-  pages: {
-    user: userZh,
-    product: productZh, // ← Add
-  },
-};
-```
-
-3. **Register namespace**
-
-```typescript
-// src/locales/index.ts
-export const resources = {
-  zh: {
-    'common': zh,
-    'pages.product': zh.pages.product, // ← Register namespace
-  },
-} as const; // ← as const for TypeScript type inference
-```
-
-4. **Use in component**
+2. **Use translations in page/component**
 
 ```tsx
+import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 
 const ProductPage: FC = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation('pages.product');
 
   return (
     <div>
-      <h1>{t('pages.product:productTitle')}</h1>
-      <Button>{t('pages.product:productBtnAdd')}</Button>
+      <h1>{t('productTitle')}</h1>
+      <button>{t('productBtnAdd')}</button>
     </div>
   );
 };
 ```
+
+You can also use full key path style:
+
+```tsx
+t('pages.product:productTitle');
+```
+
+#### Namespace Mapping Rule
+
+- File path `src/pages/Product/locales/en.ts` maps to namespace `pages.product`
+- File path `src/pages/Form/locales/zh.ts` maps to namespace `pages.form`
+- Nested page folders also work (example: `src/pages/Order/Detail/locales/en.ts` -> `pages.order.detail`)
+
+#### Missing Locale File Behavior
+
+- If a page has no `en.ts` and no `zh.ts`, page keys under that namespace are missing
+- If only one language exists, switching to the other language falls back to `fallbackLng` (current default is `zh`)
+- If key is missing in both current language and fallback language, i18next displays the key itself
+
+To avoid mixed-language UI, keep key sets aligned between `en.ts` and `zh.ts`.
+
+#### Troubleshooting: Menu Switches But Page Text Does Not
+
+- Confirm page locale files are placed under `src/pages/<PageName>/locales/en.ts` and `src/pages/<PageName>/locales/zh.ts`
+- Confirm component uses matching namespace (for example `useTranslation('pages.table')`)
+- Confirm translation keys exist in both language files
 
 ### State Management
 
