@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkneat_admin_template=self.webpackChunkneat_admin_template||[]).push([["855"],{2666(e,t,a){a.r(t),a.d(t,{renderTableDate:()=>r,renderTableValue:()=>m});var n=a(74353),l=a.n(n);let r=function(e){let t=arguments.length>1&&void 0!==arguments[1]?arguments[1]:"YYYY-MM-DD HH:mm";return e?l()(e).format(t):"--"},m=e=>e||"--"}}]);
