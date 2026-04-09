@@ -12,6 +12,7 @@
     "lib": ["es2020", "esnext", "dom"],
     "jsx": "preserve",
     "moduleResolution": "bundler",
+    "ignoreDeprecations": "6.0",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "allowJs": true,
