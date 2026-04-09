@@ -1,3 +1,8 @@
+/**
+ * @file src/layouts/DerbySoftLogo.tsx
+ * @author leon.wang
+ */
+
 const DerbySoftLogo = () => (
   <svg
     width="139"

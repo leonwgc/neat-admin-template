@@ -1,3 +1,8 @@
+/**
+ * @file src/global/useUserInfo.ts
+ * @author leon.wang
+ */
+
 import { useGlobalState } from '@derbysoft/zustand-kit';
 import operations from '../config.operations';
 

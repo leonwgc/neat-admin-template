@@ -1,4 +1,9 @@
 /**
+ * @file src/components/ImageUpload/TaskExecutor.ts
+ * @author leon.wang
+ */
+
+/**
  * Manages the execution of asynchronous tasks with a limit on the maximum number of concurrent tasks.
  *
  * @param maxConcurrent - The maximum number of tasks that can run concurrently.

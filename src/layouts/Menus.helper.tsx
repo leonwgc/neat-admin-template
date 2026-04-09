@@ -1,3 +1,8 @@
+/**
+ * @file src/layouts/Menus.helper.tsx
+ * @author leon.wang
+ */
+
 import cloneDeep from 'lodash/cloneDeep';
 import { MenuItem } from '~/config.menu';
 

@@ -1,3 +1,8 @@
+/**
+ * @file src/pages/Table/api.ts
+ * @author leon.wang
+ */
+
 import { data } from './mock';
 
 export const getDataList = async ({ current, pageSize }) => {

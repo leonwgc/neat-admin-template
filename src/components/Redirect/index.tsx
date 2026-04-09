@@ -1,4 +1,9 @@
 /**
+ * @file src/components/Redirect/index.tsx
+ * @author leon.wang
+ */
+
+/**
  * @file: src/components/Redirect/index.tsx
  * @author leon.wang
  */

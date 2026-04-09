@@ -1,3 +1,8 @@
+/**
+ * @file src/layouts/Sider.tsx
+ * @author leon.wang
+ */
+
 import { Layout, SiderProps } from '@derbysoft/neat-design';
 import { FC, useEffect, useState } from 'react';
 import { useLocalStorageState } from 'ahooks';

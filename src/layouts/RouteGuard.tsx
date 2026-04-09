@@ -1,3 +1,8 @@
+/**
+ * @file src/layouts/RouteGuard.tsx
+ * @author leon.wang
+ */
+
 import React, { ReactNode, useMemo } from 'react';
 import { useLocation, Navigate } from 'react-router';
 import { hasPermission } from './Menus.helper';

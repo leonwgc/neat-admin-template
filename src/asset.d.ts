@@ -1,3 +1,8 @@
+/**
+ * @file src/asset.d.ts
+ * @author leon.wang
+ */
+
 declare module '*.scss' {
   const value: unknown;
   export default value;

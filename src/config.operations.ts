@@ -1,3 +1,8 @@
+/**
+ * @file src/config.operations.ts
+ * @author leon.wang
+ */
+
 const operations = {
   formRead: 'formRead',
   formWrite: 'formWrite',

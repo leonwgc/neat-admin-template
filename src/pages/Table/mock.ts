@@ -1,3 +1,8 @@
+/**
+ * @file src/pages/Table/mock.ts
+ * @author leon.wang
+ */
+
 export const data = {
   pageSize: 10,
   pageNum: 0,

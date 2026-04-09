@@ -1,3 +1,8 @@
+/**
+ * @file src/pages/NoPermission/NoPermission.tsx
+ * @author leon.wang
+ */
+
 import React from 'react';
 import { Button } from '@derbysoft/neat-design';
 import { useTranslation } from 'react-i18next';

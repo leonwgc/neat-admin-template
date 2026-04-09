@@ -1,3 +1,8 @@
+/**
+ * @file src/layouts/App.tsx
+ * @author leon.wang
+ */
+
 import React, { useState } from 'react';
 import { Layout, Skeleton } from '@derbysoft/neat-design';
 import { Outlet } from 'react-router';

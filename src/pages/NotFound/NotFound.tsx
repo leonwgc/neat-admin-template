@@ -1,3 +1,8 @@
+/**
+ * @file src/pages/NotFound/NotFound.tsx
+ * @author leon.wang
+ */
+
 import React from 'react';
 import { Button, Result } from '@derbysoft/neat-design';
 import { useNavigate } from 'react-router';

@@ -1,3 +1,8 @@
+/**
+ * @file src/components/ImageUpload/api.ts
+ * @author leon.wang
+ */
+
 export const uploadImage = async (file: File): Promise<string> => {
   // Simulate an API call to upload the image
   return new Promise((resolve) => {

@@ -1,3 +1,8 @@
+/**
+ * @file src/layouts/Footer.tsx
+ * @author leon.wang
+ */
+
 import FadeIn from '../components/FadeIn';
 import './Footer.scss';
 

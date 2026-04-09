@@ -1,3 +1,8 @@
+/**
+ * @file src/config.route.ts
+ * @author leon.wang
+ */
+
 import { menus } from './config.menu';
 
 const getRoutes = (items) => {

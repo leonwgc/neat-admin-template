@@ -1,3 +1,8 @@
+/**
+ * @file src/types.d.ts
+ * @author leon.wang
+ */
+
 declare module '*.png' {
   const value: string;
   export default value;
