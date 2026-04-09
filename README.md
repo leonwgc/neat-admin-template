@@ -7,572 +7,423 @@
     <a href="#quick-start">Quick Start</a> •
     <a href="#tech-stack">Tech Stack</a> •
     <a href="#project-structure">Project Structure</a> •
-    <a href="#development-guide">Development Guide</a>
+    <a href="#development-guide">Development Guide</a> •
+    <a href="#internationalization">Internationalization</a>
   </p>
 </div>
 
 ---
 
-## 📖 Introduction
+## Introduction
 
-Neat Admin Template is a production-ready enterprise admin system template built with React 18 + TypeScript, based on Neat Design for modern UI experience. The project features **automatic route generation**, **i18n support**, **permission management**, and follows best practices to help you build high-quality admin dashboards quickly.
+Neat Admin Template is a production-ready enterprise admin system template built with React 18 + TypeScript and Neat Design.
 
-## ✨ Features
+Current implementation highlights:
 
-### Core Features
+- Menu-driven route extraction with centralized route-to-component mapping
+- i18next + react-i18next with TypeScript typing
+- Auto discovery of page locales from src/pages/**/locales
+- Permission-aware menu and route guard workflow
+- Responsive layout for desktop/mobile
 
-- 🚀 **Automatic Route Generation** - Menu-driven routing, no manual maintenance needed
-- 🎨 **Neat Design UI** - Enterprise-level component library based on Neat Design
-- 🌍 **Internationalization** - Built-in i18next, supports Chinese/English with TypeScript safety
-- 🔐 **Permission Management** - Complete route and operation permission control
-- 📱 **Responsive Layout** - Supports desktop and mobile devices
-- 🎯 **TypeScript** - Full type definitions for excellent DX
-- ⚡ **Performance Optimized** - Route lazy loading, code splitting
-- 🛠️ **Developer Experience** - ESLint + Prettier for consistent code style
+## Features
 
-### Technical Highlights
+- React 18 + TypeScript project scaffold for admin systems
+- Neat Design component system and icon set
+- SPA routing
+- Menu config as route source of truth
+- Route lazy loading for page modules
+- i18n (zh/en) with runtime language switching and persistence
+- Permission operation constants and user permission checks
+- SCSS + BEM style organization
+- ESLint-based static checks
 
-- **State Management** - zustand + zustand-kit, lightweight and easy to use
-- **Routing** - React Router 7.x with data preloading support
-- **Request Handling** - Axios + ahooks
-- **Styling** - SCSS + BEM naming convention, maintainable style architecture
-- **Build Tools** - Custom build scripts with multi-environment support
+## Tech Stack
 
-## 🔧 Tech Stack
+Core dependencies:
 
-```json
-{
-  "Core Framework": "React 18.3.1 + TypeScript",
-  "UI Library": "Neat Design",
-  "State Management": "zustand-kit",
-  "Routing": "React Router 7.7.1",
-  "HTTP Client": "Axios 1.11.0",
-  "Hooks Library": "ahooks 3.9.0",
-  "i18n": "i18next 25.3.2 + react-i18next 15.6.1",
-  "Styling": "SCSS + BEM",
-  "Build Tools": "Custom Build Scripts"
-}
-```
+- React 18.3.1
+- TypeScript
+- React Router 7.7.1
+- i18next 25.x + react-i18next 15.x
+- zustand 5.x + @derbysoft/zustand-kit
+- axios + ahooks
+- @derbysoft/neat-design + @derbysoft/neat-design-icons
 
-## 🚀 Quick Start
+Build/dev tools:
+
+- @derbysoft/pack
+- ESLint 9
+- rimraf
+
+## Quick Start
 
 ### Prerequisites
 
-- Node.js >= 16.x
-- npm >= 8.x
+- Node.js >= 16
+- npm >= 8
 
-### Installation
-
-#### Option 1: Clone the Repository
+### Install
 
 ```bash
-# Clone repository
-git clone --depth 1 https://github.com/leonwgc/neat-admin-template.git my-admin-project
-
-# Enter directory
-cd my-admin-project
-
-# Remove Git history (optional)
-rm -rf .git
-
-# Initialize new repository (optional)
-git init
-
-# Install dependencies
 npm install
 ```
 
-#### Option 2: Direct Use
+### Run Locally
 
 ```bash
-# Clone to local
-git clone https://github.com/leonwgc/neat-admin-template.git
-cd neat-admin-template
-
-# Install dependencies
-npm install
-```
-
-### Development
-
-```bash
-# Start dev server (default port 3002)
 npm start
+```
 
-# Visit http://localhost:3002
+Default local URL:
+
+- http://localhost:3000
+
+### Quality Check
+
+```bash
+npm run lint
 ```
 
 ### Build
 
 ```bash
-# Build for QA environment
 npm run build:qa
-
-# Build for UAT environment
 npm run build:uat
-
-# Build for production
 npm run build:prod
 ```
 
-### Configuration
+### Generate docs site bundle
 
-Configuration files are located in `build/env/`:
-
-- `config.qa.js` - QA environment config
-- `config.uat.js` - UAT environment config
-- `config.production.js` - Production environment config
-
-## 📁 Project Structure
-
+```bash
+npm run doc
 ```
+
+## Scripts
+
+From package.json:
+
+- npm start: start dev server via pack.js
+- npm run clean: remove dist
+- npm run doc: generate docs bundle
+- npm run lint: run eslint on src
+- npm run build:qa: install deps + clean + build with qa env
+- npm run build:uat: install deps + clean + build with uat env
+- npm run build:prod: install deps + clean + build with production env
+
+## Project Structure
+
+```text
 neat-admin-template/
-├── build/                      # Build scripts
-│   ├── env/                   # Environment configs
+├── build/                          # Build system and env configs
+│   ├── env/
 │   │   ├── config.qa.js
 │   │   ├── config.uat.js
 │   │   └── config.production.js
-│   ├── config.js              # Build configuration
-│   └── utils.js               # Build utilities
+│   ├── config.js
+│   ├── index.js
+│   └── utils.js
+├── docs/                           # Built docs output
+├── public/
 ├── src/
-│   ├── components/            # Shared components
-│   │   ├── ErrorBoundary/    # Error boundary
-│   │   ├── GlobalSearch/     # Global search
-│   │   └── ...
-│   ├── pages/                 # Page components
-│   │   ├── User/             # User management
-│   │   ├── Form/             # Form examples
-│   │   └── ...
-│   ├── layouts/               # Layout components
-│   │   ├── App.tsx           # Main layout
-│   │   ├── Header.tsx        # Header
-│   │   ├── Sider.tsx         # Sidebar
-│   │   ├── Menus.tsx         # Menu
-│   │   └── RouteGuard.tsx    # Route guard
-│   ├── hooks/                 # Custom hooks
-│   │   ├── useNavTo.tsx      # Navigation hook
-│   │   ├── useDsRequest.tsx  # Data request hook
-│   │   ├── useDsTable.tsx    # Table data hook
-│   │   └── ...
-│   ├── locales/               # Internationalization
-│   │   ├── zh.ts             # Chinese
-│   │   ├── en.ts             # English
-│   │   └── index.ts          # i18n config
-│   ├── utils/                 # Utilities
-│   │   ├── routeGenerator.tsx # Route generator
-│   │   └── ...
-│   ├── scss/                  # Global styles
-│   ├── config.menu.tsx        # Menu config (route source)
-│   ├── config.route.ts        # Route config (auto-generated)
-│   ├── config.operations.ts   # Operation permissions
-│   ├── RouteConfig.tsx        # Route configuration (auto-generated)
-│   ├── global/                # Global state hooks
-   │   └── useUserInfo.ts    # User state example
-│   ├── req.ts                 # Request wrapper
-│   ├── i18n.ts                # i18n initialization
-│   └── App.tsx                # App entry
-├── pack.js                    # Dev server
-├── build.js                   # Build script for docs
-└── package.json
+│   ├── components/
+│   │   ├── ErrorBoundary/
+│   │   ├── FadeIn/
+│   │   ├── ImageCropper/
+│   │   ├── ImageUpload/
+│   │   └── Redirect/
+│   ├── global/
+│   │   └── useUserInfo.ts
+│   ├── hooks/
+│   │   └── useNavTo.tsx
+│   ├── layouts/
+│   │   ├── App.tsx
+│   │   ├── Header.tsx
+│   │   ├── Sider.tsx
+│   │   ├── Menus.tsx
+│   │   ├── MobileMenus.tsx
+│   │   └── RouteGuard.tsx
+│   ├── locales/
+│   │   ├── common/
+│   │   │   ├── en.ts
+│   │   │   └── zh.ts
+│   │   ├── en.ts
+│   │   ├── zh.ts
+│   │   ├── pageLocales.ts          # Page locale auto discovery
+│   │   └── index.ts
+│   ├── pages/
+│   │   ├── Components/
+│   │   ├── Form/
+│   │   ├── Table/
+│   │   ├── NoPermission/
+│   │   └── NotFound/
+│   ├── scss/
+│   ├── utils/
+│   │   └── routeGenerator.tsx
+│   ├── config.menu.tsx
+│   ├── config.operations.ts
+│   ├── config.route.ts
+│   ├── config.ts
+│   ├── i18n.ts
+│   ├── RouteConfig.tsx
+│   ├── App.tsx
+│   └── index.tsx
+├── doc.js
+├── pack.js
+├── package.json
+└── tsconfig.json
 ```
 
-## 📝 Development Guide
+## Routing Architecture
 
-### Adding New Pages (3 Steps)
+The current routing flow is:
 
-#### Step 1: Create Page Component
+- config.menu.tsx defines menu tree and route paths
+- utils/routeGenerator.tsx extracts routes from menu config
+- utils/routeGenerator.tsx maps path to page component via routeComponentMap
+- RouteConfig.tsx renders routes dynamically from extracted menu routes
+
+Important note:
+
+- Route extraction is automatic from menu
+- You still need to maintain routeComponentMap entries for each route path
+
+Example route map:
 
 ```tsx
-/**
- * @file pages/Product/ProductList.tsx
- * @author leon.wang
- */
-import React, { FC } from 'react';
-import { Button, Table } from '@derbysoft/neat-design';
-import './ProductList.scss';
-
-const ProductList: FC = () => {
-  return (
-    <div className="product-list">
-      <h2>Product List</h2>
-      <Table />
-    </div>
-  );
-};
-
-export default ProductList; // Must use default export
-```
-
-Create style file:
-
-```scss
-/**
- * @file pages/Product/ProductList.scss
- * @author leon.wang
- */
-@import 'scss/common.scss'; // Must import
-
-.product-list {
-  padding: 20px;
-
-  &__header {
-    margin-bottom: 16px;
-  }
-}
-```
-
-#### Step 2: Configure Menu (Route Source)
-
-Add menu item in `src/config.menu.tsx`:
-
-```tsx
-import { ShopOutlined } from '@derbysoft/neat-design-icons';
-
-{
-  key: 'product',
-  get label() { return t('menu.products'); },  // Use getter for dynamic translation
-  icon: <ShopOutlined />,
-  permissions: [],
-  children: [
-    {
-      key: 'product-list',
-      get label() { return t('menu.productList'); },
-      route: '/app/products',        // Define route path
-      permissions: [],
-    },
-    {
-      key: 'product-detail',
-      get label() { return t('menu.productDetail'); },
-      route: '/app/products/:id',
-      hidden: true,  // Hidden from menu, but route exists
-    },
-  ],
-}
-```
-
-#### Step 3: Register Component Mapping
-
-Add in `src/utils/routeGenerator.tsx`:
-
-```tsx
-export const routeComponentMap: RouteComponentMap = {
-  // ...existing routes
-  '/app/products': lazyLoad('pages/Product/ProductList'),
-  '/app/products/:id': lazyLoad('pages/Product/ProductDetail'),
+export const routeComponentMap = {
+  '/app/forms': lazyLoad('pages/Form/ResponsiveForm'),
+  '/app/forms/table': lazyLoad('pages/Table'),
 };
 ```
 
-**Done!** Routes are auto-generated, no need to manually edit `RouteConfig.tsx`.
+## Development Guide
 
-### Menu Configuration
+### Add a New Page
 
-```tsx
-interface MenuItem {
-  key: string; // Unique identifier
-  label: string | { (): string }; // Menu text (use getter for dynamic translation)
-  route?: string; // Route path (must start with /app/)
-  icon?: ReactNode; // Menu icon (@ant-design/icons)
-  permissions?: string[]; // Permission list
-  hidden?: boolean; // true: route exists but menu hidden
-  children?: MenuItem[]; // Sub-menus
-}
-```
+This project is not file-system auto routing. The complete flow is:
 
-### Internationalization
+1. Create page component under src/pages
+2. Add page locales under src/pages/<Module>/locales/en.ts and zh.ts
+3. Add menu text keys in src/locales/common/en.ts and src/locales/common/zh.ts
+4. Add permission key in src/config.operations.ts (if page needs operation control)
+5. Add menu route in src/config.menu.tsx
+6. Add route-component mapping in src/utils/routeGenerator.tsx
 
-#### Adding New Translations (Auto Discovery)
+End-to-end example: add a new page under Components module
 
-Page locales are now auto-discovered from `src/pages/**/locales`.
-You do **not** need to manually import page locale files in `src/locales/en.ts`, `src/locales/zh.ts`, or register namespaces in `src/locales/index.ts`.
-
-1. **Create translation files under page directory**
-
-```typescript
-// src/pages/Product/locales/zh.ts
-export default {
-  productTitle: '产品列表',
-  productColName: '产品名称',
-  productBtnAdd: '添加产品',
-};
-
-// src/pages/Product/locales/en.ts
-export default {
-  productTitle: 'Product List',
-  productColName: 'Product Name',
-  productBtnAdd: 'Add Product',
-};
-```
-
-2. **Use translations in page/component**
+Step A: create page component
 
 ```tsx
-import { FC } from 'react';
+// src/pages/Components/FilePreviewExample.tsx
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 
-const ProductPage: FC = () => {
-  const { t } = useTranslation('pages.product');
+const FilePreviewExample: React.FC = () => {
+  const { t } = useTranslation('pages.components');
 
-  return (
-    <div>
-      <h1>{t('productTitle')}</h1>
-      <button>{t('productBtnAdd')}</button>
-    </div>
-  );
+  return <div>{t('filePreview.title')}</div>;
+};
+
+export default FilePreviewExample;
+```
+
+Step B: add page locale files (auto discovered)
+
+```tsx
+// src/pages/Components/locales/en.ts
+export default {
+  imageUpload: {
+    // existing keys
+  },
+  imageCropper: {
+    // existing keys
+  },
+  filePreview: {
+    title: 'File Preview',
+  },
+};
+
+// src/pages/Components/locales/zh.ts
+export default {
+  imageUpload: {
+    // existing keys
+  },
+  imageCropper: {
+    // existing keys
+  },
+  filePreview: {
+    title: '文件预览',
+  },
 };
 ```
 
-You can also use full key path style:
+Step C: add menu label keys in common locale
 
 ```tsx
-t('pages.product:productTitle');
-```
-
-#### Namespace Mapping Rule
-
-- File path `src/pages/Product/locales/en.ts` maps to namespace `pages.product`
-- File path `src/pages/Form/locales/zh.ts` maps to namespace `pages.form`
-- Nested page folders also work (example: `src/pages/Order/Detail/locales/en.ts` -> `pages.order.detail`)
-
-#### Missing Locale File Behavior
-
-- If a page has no `en.ts` and no `zh.ts`, page keys under that namespace are missing
-- If only one language exists, switching to the other language falls back to `fallbackLng` (current default is `zh`)
-- If key is missing in both current language and fallback language, i18next displays the key itself
-
-To avoid mixed-language UI, keep key sets aligned between `en.ts` and `zh.ts`.
-
-#### Troubleshooting: Menu Switches But Page Text Does Not
-
-- Confirm page locale files are placed under `src/pages/<PageName>/locales/en.ts` and `src/pages/<PageName>/locales/zh.ts`
-- Confirm component uses matching namespace (for example `useTranslation('pages.table')`)
-- Confirm translation keys exist in both language files
-
-### State Management
-
-#### Global State (zustand-kit)
-
-Create a custom hook in `src/global/` using `useGlobalState`. See `src/global/useUserInfo.ts` as reference:
-
-```tsx
-// src/global/useUserInfo.ts
-import { useGlobalState } from 'zustand-kit';
-
-type UserInfo = {
-  userId: string;
-  username: string;
-  nickname: string;
-  operations: string[];
-};
-
-const useUserInfo = () => {
-  return useGlobalState<UserInfo | null>('UserInfo', {
-    userId: '1',
-    username: 'Admin',
-    nickname: 'Flash',
-    operations: [],
-  });
-};
-
-export default useUserInfo;
-```
-
-Usage in components:
-
-```tsx
-import useUserInfo from '~/global/useUserInfo';
-
-const [userInfo, setUserInfo] = useUserInfo();
-```
-
-**Use cases**: User info, permissions, theme, and other cross-page shared data
-
-**Convention**: All global state hooks are placed in `src/global/`
-
-#### Local State
-
-Use `useState` or ahooks for: form inputs, table data, modals, page-specific data
-
-### Code Standards
-
-#### File Header (Required)
-
-```typescript
-/**
- * @file relative/path/from/src
- * @author leon.wang
- */
-```
-
-#### Import Order
-
-```typescript
-// 1. React core
-import React, { FC, useState } from 'react';
-
-// 2. Third-party libraries
-import { Button, Table } from '@derbysoft/neat-design';
-import { useRequest } from 'ahooks';
-
-// 3. Project modules
-import { useNavTo } from '~/hooks/useNavTo';
-import req from '~/req';
-
-// 4. Styles (last)
-import './Component.scss';
-```
-
-#### Component Development
-
-```tsx
-export interface ComponentProps {
-  /** Prop description */
-  title?: string;
-  /** Callback function */
-  onSubmit?: (data: any) => void;
+// src/locales/common/en.ts
+menu: {
+  // existing keys
+  filePreview: 'File Preview',
 }
 
-/**
- * Component description (use English)
- * Used for displaying product information
- */
-export const Component: FC<ComponentProps> = ({ title, onSubmit }) => {
-  return <div>{title}</div>;
-};
-
-export default Component; // Export both named and default
-```
-
-#### UI Component Usage
-
-```tsx
-// ✅ Correct
-import { Button, Form, Input } from '@derbysoft/neat-design';
-import { EmailOutlined } from '@derbysoft/neat-design-icons';
-
-// ❌ Wrong
-import { Button } from 'antd';
-import { EmailOutlined } from '@ant-design/icons';
-```
-
-**Rules:**
-
-- Icons: `@derbysoft/neat-design-icons`
-- UI components: `@derbysoft/neat-design` (DO NOT use antd directly)
-
-#### SCSS Standards
-
-```scss
-/**
- * @file components/ContactInfo/ContactInfo.scss
- * @author leon.wang
- */
-@import 'scss/common.scss'; // ✅ Must import
-
-.contact-info {
-  padding: 16px;
-
-  &__item {
-    // BEM Element
-    display: flex;
-  }
-
-  &--active {
-    // BEM Modifier
-    background: #f0f0f0;
-  }
+// src/locales/common/zh.ts
+menu: {
+  // existing keys
+  filePreview: '文件预览',
 }
 ```
 
-### Path Aliases
-
-```typescript
-"~/*"          → "src/*"
-"scss/*"       → "src/scss/*"
-"components/*" → "src/components/*"
-```
-
-Usage example:
+Step D: add permission operation (optional but recommended)
 
 ```tsx
-import { useNavTo } from '~/hooks/useNavTo';
-import { ContactInfo } from 'components/ContactInfo';
-import 'scss/common.scss';
+// src/config.operations.ts
+const operations = {
+  // existing keys
+  filePreviewRead: 'filePreviewRead',
+};
 ```
 
-## 🎯 Core Features
-
-### Automatic Route Generation
-
-The project adopts a **menu-driven routing** design philosophy:
-
-```
-config.menu.tsx → routeGenerator.tsx → RouteConfig.tsx → RouteGuard.tsx
-  (Menu Config)     (Component Map)      (Auto Routes)     (Guard)
-```
-
-**Advantages:**
-
-- 📌 Single source of truth: Menu config drives routes and navigation
-- 📌 No duplication: Routes defined only once
-- 📌 Type safety: Full TypeScript type support
-- 📌 Permission integration: Routes automatically inherit menu permissions
-
-Detailed docs: [src/utils/README.md](src/utils/README.md)
-
-### Permission Management
-
-#### Route Permissions
+Step E: register menu route
 
 ```tsx
+// src/config.menu.tsx (inside components children)
 {
-  key: 'user-management',
-  label: 'User Management',
-  route: '/app/users',
-  permissions: ['user:read'],  // Only has these permissions will see this route
+  key: 'file-preview',
+  get label() {
+    return t('menu.filePreview');
+  },
+  route: '/app/components/file-preview',
+  permissions: [operations.filePreviewRead],
 }
 ```
 
-#### Operation Permissions
+Step F: map route to component
 
 ```tsx
-import useUserInfo from '~/global/useUserInfo';
-
-const [userInfo] = useUserInfo();
-const canDelete = userInfo?.operations.includes('user:delete');
-
-{
-  canDelete && <Button>Delete</Button>;
-}
+// src/utils/routeGenerator.tsx
+'/app/components/file-preview': lazyLoad('pages/Components/FilePreviewExample'),
 ```
 
-### Performance Optimization
+After these steps, route extraction (from menu) and page locale loading (from src/pages/**/locales) both work automatically.
 
-- ✅ Route lazy loading
-- ✅ Code splitting
+### Permission Model
 
-## 🤝 Contributing
+Operation constants are managed in src/config.operations.ts.
 
-Issues and Pull Requests are welcome!
+Example:
 
-### Commit Convention
-
-Follow [Conventional Commits](https://www.conventionalcommits.org/):
-
-```bash
-feat: Add new feature
-fix: Fix bug
-docs: Update documentation
-style: Code formatting
-refactor: Code refactoring
-perf: Performance optimization
-test: Testing related
-chore: Build/toolchain updates
+```tsx
+permissions: [operations.formRead]
 ```
 
-## 📄 License
+Permission checks are typically based on user operation list in src/global/useUserInfo.ts and enforced in menu/guard logic.
+
+### Styling
+
+- Use SCSS and BEM naming
+- Import shared styles from src/scss
+
+## Internationalization
+
+### Current i18n Implementation
+
+- i18n setup is in src/i18n.ts
+- Supported languages: zh and en
+- default language: zh
+- language detection priority:
+  1) URL query (lang)
+  2) localStorage (app_language)
+  3) browser language
+  4) zh
+
+### Locale Sources
+
+- Common/global translations:
+  - src/locales/common/en.ts
+  - src/locales/common/zh.ts
+- Page translations (auto discovered):
+  - src/pages/**/locales/en.ts
+  - src/pages/**/locales/zh.ts
+
+### Auto Discovery Rule
+
+Page locale namespace is derived from path:
+
+- src/pages/Form/locales/en.ts -> pages.form
+- src/pages/Table/locales/zh.ts -> pages.table
+- src/pages/Order/Detail/locales/en.ts -> pages.order.detail
+
+No manual import is needed in src/locales/en.ts or src/locales/zh.ts for page locales.
+No manual namespace registration is needed in src/locales/index.ts for page locales.
+
+### Usage Patterns
+
+Recommended:
+
+```tsx
+const { t } = useTranslation('pages.table');
+t('columns.name');
+```
+
+Also supported:
+
+```tsx
+t('pages.table:columns.name');
+```
+
+### Missing Locale File Behavior
+
+- If both en.ts and zh.ts are missing for a page namespace, page keys are missing
+- If one language file is missing, i18next falls back to fallbackLng (zh)
+- If key is missing in both current language and fallback language, key text is rendered
+
+Recommendation:
+
+- Keep en.ts and zh.ts keys aligned for every page locale module
+
+### Troubleshooting: Menu Switches Language But Page Text Does Not
+
+Check these items in order:
+
+1. locale files are in exact path pattern: src/pages/<Page>/locales/en.ts and zh.ts
+2. component namespace matches file path namespace (for example pages.table)
+3. keys exist in both en.ts and zh.ts
+4. app is using i18n.t/useTranslation from react-i18next correctly
+
+## State Management
+
+- Global state pattern uses @derbysoft/zustand-kit
+- Example hook: src/global/useUserInfo.ts
+- Use local hooks for page-level state in src/hooks
+
+## Path Aliases
+
+From tsconfig.json:
+
+- ~/* -> src/*
+- scss/* -> src/scss/*
+- components/* -> src/components/*
+
+## Contributing
+
+Issues and Pull Requests are welcome.
+
+Recommended commit types:
+
+- feat
+- fix
+- docs
+- style
+- refactor
+- perf
+- test
+- chore
+
+## License
 
 ISC
 
-## 👤 Author
+## Author
 
 leon.wang
