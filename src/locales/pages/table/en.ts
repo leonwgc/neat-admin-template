@@ -9,5 +9,6 @@ export default {
     email: 'Email',
     phone: 'Phone',
     gender: 'Gender',
+    dateTime: 'Date Time',
   },
 };

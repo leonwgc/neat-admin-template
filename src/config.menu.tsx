@@ -54,19 +54,19 @@ export const menus: MenuItem[] = [
     permissions: [],
     children: [
       {
-        key: 'form1',
-        get label() {
-          return t('menu.responsiveForm');
-        },
-        route: '/app/forms',
-        permissions: [operations.formRead],
-      },
-      {
         key: 'forms-table',
         get label() {
           return t('menu.table');
         },
         route: '/app/forms/table',
+        permissions: [operations.formRead],
+      },
+      {
+        key: 'form1',
+        get label() {
+          return t('menu.responsiveForm');
+        },
+        route: '/app/forms',
         permissions: [operations.formRead],
       },
     ],

@@ -10,6 +10,7 @@ export const data = {
       email: 'olivia.bennett@example.com',
       phone: '13800138001',
       gender: 'female',
+      createdAt: '2026-03-20T09:15:12',
     },
     {
       productId: 'USR-0002',
@@ -17,6 +18,7 @@ export const data = {
       email: 'liam.carter@example.com',
       phone: '13800138002',
       gender: 'male',
+      createdAt: '2026-03-20T10:22:45',
     },
     {
       productId: 'USR-0003',
@@ -24,6 +26,7 @@ export const data = {
       email: 'emma.hayes@example.com',
       phone: '13800138003',
       gender: 'female',
+      createdAt: '2026-03-21T08:40:03',
     },
     {
       productId: 'USR-0004',
@@ -31,6 +34,7 @@ export const data = {
       email: 'noah.turner@example.com',
       phone: '13800138004',
       gender: 'male',
+      createdAt: '2026-03-21T11:05:27',
     },
     {
       productId: 'USR-0005',
@@ -38,6 +42,7 @@ export const data = {
       email: 'ava.mitchell@example.com',
       phone: '13800138005',
       gender: 'female',
+      createdAt: '2026-03-22T14:18:59',
     },
     {
       productId: 'USR-0006',
@@ -45,6 +50,7 @@ export const data = {
       email: 'ethan.reed@example.com',
       phone: '13800138006',
       gender: 'male',
+      createdAt: '2026-03-22T16:31:22',
     },
     {
       productId: 'USR-0007',
@@ -52,6 +58,7 @@ export const data = {
       email: 'sophia.morris@example.com',
       phone: '13800138007',
       gender: 'female',
+      createdAt: '2026-03-23T09:47:36',
     },
     {
       productId: 'USR-0008',
@@ -59,6 +66,7 @@ export const data = {
       email: 'mason.cooper@example.com',
       phone: '13800138008',
       gender: 'male',
+      createdAt: '2026-03-23T13:12:08',
     },
     {
       productId: 'USR-0009',
@@ -66,6 +74,7 @@ export const data = {
       email: 'isabella.foster@example.com',
       phone: '13800138009',
       gender: 'female',
+      createdAt: '2026-03-24T07:58:41',
     },
     {
       productId: 'USR-0010',
@@ -73,6 +82,7 @@ export const data = {
       email: 'logan.parker@example.com',
       phone: '13800138010',
       gender: 'male',
+      createdAt: '2026-03-24T12:26:54',
     },
     {
       productId: 'USR-0011',
@@ -80,6 +90,7 @@ export const data = {
       email: 'mia.brooks@example.com',
       phone: '13800138011',
       gender: 'female',
+      createdAt: '2026-03-25T10:09:15',
     },
     {
       productId: 'USR-0012',
@@ -87,6 +98,7 @@ export const data = {
       email: 'lucas.ward@example.com',
       phone: '13800138012',
       gender: 'male',
+      createdAt: '2026-03-25T15:44:29',
     },
     {
       productId: 'USR-0013',
@@ -94,6 +106,7 @@ export const data = {
       email: 'charlotte.price@example.com',
       phone: '13800138013',
       gender: 'female',
+      createdAt: '2026-03-26T08:33:07',
     },
     {
       productId: 'USR-0014',
@@ -101,6 +114,7 @@ export const data = {
       email: 'james.kelly@example.com',
       phone: '13800138014',
       gender: 'male',
+      createdAt: '2026-03-26T11:57:48',
     },
     {
       productId: 'USR-0015',
@@ -108,6 +122,7 @@ export const data = {
       email: 'amelia.rivera@example.com',
       phone: '13800138015',
       gender: 'female',
+      createdAt: '2026-03-27T09:21:33',
     },
     {
       productId: 'USR-0016',
@@ -115,6 +130,7 @@ export const data = {
       email: 'henry.bell@example.com',
       phone: '13800138016',
       gender: 'male',
+      createdAt: '2026-03-27T17:03:56',
     },
   ],
 };

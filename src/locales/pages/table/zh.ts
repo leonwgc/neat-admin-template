@@ -9,5 +9,6 @@ export default {
     email: '邮箱',
     phone: '手机号',
     gender: '性别',
+    dateTime: '日期时间',
   },
 };

@@ -4,6 +4,7 @@
  */
 
 import { TableColumnsType } from 'antd';
+import dayjs from 'dayjs';
 import Table from 'src/components/AntTable/AntTable';
 import { useAntdTable } from 'ahooks';
 import { useTranslation } from 'react-i18next';
@@ -20,6 +21,7 @@ export default function List() {
     {
       title: t('columns.name'),
       dataIndex: ['name', 'last'],
+      fixed: 'left',
     },
     {
       title: t('columns.email'),
@@ -33,11 +35,21 @@ export default function List() {
       title: t('columns.gender'),
       dataIndex: 'gender',
     },
+    {
+      title: t('columns.dateTime'),
+      dataIndex: 'createdAt',
+      render: (value) => dayjs(value).format('YYYY-MM-DD HH:mm:ss'),
+    },
   ];
 
   return (
     <div>
-      <Table {...tableProps} columns={columns} rowKey="productId" />
+      <Table
+        {...tableProps}
+        scroll={{ x: 'max-content' }}
+        columns={columns}
+        rowKey="productId"
+      />
     </div>
   );
 }
