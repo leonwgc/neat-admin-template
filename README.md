@@ -153,8 +153,17 @@ neat-admin-template/
 │   │   └── index.ts
 │   ├── pages/
 │   │   ├── Components/
+│   │   │   ├── locales/
+│   │   │   │   ├── en.ts
+│   │   │   │   └── zh.ts
 │   │   ├── Form/
+│   │   │   ├── locales/
+│   │   │   │   ├── en.ts
+│   │   │   │   └── zh.ts
 │   │   ├── Table/
+│   │   │   ├── locales/
+│   │   │   │   ├── en.ts
+│   │   │   │   └── zh.ts
 │   │   ├── NoPermission/
 │   │   └── NotFound/
 │   ├── scss/
