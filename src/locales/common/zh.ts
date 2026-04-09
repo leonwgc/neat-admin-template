@@ -17,6 +17,8 @@ export default {
   no: '取消',
   noPermissionTitle: '你没有权限浏览此网页',
   noPermissionDescription: '请联系你的管理员',
+  notFoundTitle: '无法找到你正在寻找的网页',
+  notFoundDescription: '哪里出了问题或者网页不存在',
   backHome: '返回主页',
 
   // 全局搜索

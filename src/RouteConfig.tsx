@@ -38,13 +38,6 @@ const RouteConfig = () => {
       <Routes>
         <Route path="/" element={<Redirect to={defaultRoute} />} />
 
-        <Route
-          path="no-permission"
-          element={<App hasSider={false} hasContentHeader={false} />}
-        >
-          <Route index element={<NoPermission />} />
-        </Route>
-
         <Route path="app" element={<App />}>
           {/* Auto-generated routes from menu configuration with page-level error boundaries */}
           {menuRoutes.map(({ path }) => {
@@ -73,7 +66,10 @@ const RouteConfig = () => {
           })}
         </Route>
 
-        <Route path="*" element={<NotFound />} />
+        <Route element={<App hasSider={false} hasContentHeader={false} />}>
+          <Route path="no-permission" element={<NoPermission />} />
+          <Route path="*" element={<NotFound />} />
+        </Route>
       </Routes>
     </Suspense>
   );

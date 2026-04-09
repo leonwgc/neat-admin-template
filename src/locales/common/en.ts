@@ -17,6 +17,8 @@ export default {
   no: 'No',
   noPermissionTitle: 'You do not have permission to view this page',
   noPermissionDescription: 'Please contact your administrator',
+  notFoundTitle: 'Unable to find the page you are looking for',
+  notFoundDescription: 'Something went wrong or the page does not exist',
   backHome: 'Back Home',
 
   // Global Search

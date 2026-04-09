@@ -70,7 +70,7 @@ const Header: React.FC<React.HTMLAttributes<HTMLElement>> = (props) => {
             )}
           >
             <Avatar style={{ cursor: 'pointer', userSelect: 'none' }}>
-              {userInfo?.nickname?.[0] || 'D'}
+              {userInfo?.nickname?.[0]}
             </Avatar>
           </Dropdown>
         </Space>

@@ -22,7 +22,7 @@ import useUserInfo from '../global/useUserInfo';
 type Props = MenuProps & {
   onClick?: () => void;
   collapsed?: boolean;
-  menus?: MenuItem[];
+  menus: MenuItem[];
 };
 
 export default (props: Props) => {
