@@ -8,7 +8,7 @@ const getRoutes = (items) => {
       acc.push(...getRoutes(item.children));
     } else {
       acc.push({
-        rotue: item.route,
+        route: item.route,
         permissions: item.permissions,
       });
     }
