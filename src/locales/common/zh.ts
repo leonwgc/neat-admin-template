@@ -67,6 +67,7 @@ export default {
     editUser: '编辑用户',
     forms: '表单',
     responsiveForm: '响应式表单',
+    table: '表格',
     dynamicList: '动态列表',
     formValidation: '表单验证',
     virtualList: '虚拟列表',

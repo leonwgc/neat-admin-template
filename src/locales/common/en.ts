@@ -67,6 +67,7 @@ export default {
     editUser: 'Edit User',
     forms: 'Forms',
     responsiveForm: 'Responsive Form',
+    table: 'Table',
     dynamicList: 'Dynamic List',
     formValidation: 'Form Validation',
     virtualList: 'Virtual List',

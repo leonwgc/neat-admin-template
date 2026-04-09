@@ -16,12 +16,14 @@ export const resources = {
     'pages.form': en.pages.form, // 注册命名空间
     'pages.components': en.pages.components, // 注册命名空间
     'pages.dashboard': en.pages.dashboard, // 注册命名空间
+    'pages.table': en.pages.table, // 注册命名空间
   },
   zh: {
     [defaultNS]: zh,
     'pages.form': zh.pages.form, // 注册命名空间
     'pages.components': zh.pages.components, // 注册命名空间
     'pages.dashboard': zh.pages.dashboard, // 注册命名空间
+    'pages.table': zh.pages.table, // 注册命名空间
   },
 } as const;
 

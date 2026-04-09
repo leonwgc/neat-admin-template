@@ -7,6 +7,7 @@ import commonZh from './common/zh';
 import formZh from './pages/form/zh';
 import componentsZh from './pages/components/zh';
 import dashboardZh from './pages/dashboard/zh';
+import tableZh from './pages/table/zh';
 
 /**
  * 中文翻译
@@ -21,6 +22,7 @@ const zh = {
     form: formZh,
     components: componentsZh,
     dashboard: dashboardZh,
+    table: tableZh,
   },
 };
 

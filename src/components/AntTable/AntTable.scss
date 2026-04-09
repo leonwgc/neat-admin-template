@@ -1,0 +1,91 @@
+/**
+ * @file: src/components/AntTable/AntTable.scss
+ * @author leon.wang(leon.wang@derbysoft.net)
+ */
+
+@import 'scss/common.scss';
+
+.ant-custom-table {
+    @include card-shadow;
+    padding: 8px;
+    color: $theme-primary;
+
+
+    .ant-select-single {
+        height: 24px;
+
+        .ant-select-selection-item {
+            font-size: 12px;
+        }
+    }
+
+    .ant-table-thead {
+        tr {
+
+            td,
+            th {
+                color: #999;
+                font-size: 12px;
+                font-weight: 600;
+                background: linear-gradient(180deg, #FAFAFA 0%, #F8F8F8 40.63%, #F4F4F4 100%) !important;
+            }
+
+        }
+    }
+
+    .ant-table-pagination {
+
+        padding-left: 8px;
+        padding-right: 8px;
+        margin-bottom: 0;
+
+        .ant-pagination-total-text {
+            font-weight: 600;
+            color: #999;
+            margin-right: auto;
+            height: 24px;
+            line-height: 24px;
+        }
+
+        .ant-pagination-jump-next {
+            width: 24px;
+            height: 24px;
+            min-width: 24px;
+            line-height: 24px;
+        }
+
+        .ant-pagination-prev,
+        .ant-pagination-next {
+            width: 24px;
+            height: 24px;
+            min-width: 24px;
+            line-height: 24px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .ant-pagination-item {
+            width: 24px;
+            height: 24px;
+            min-width: 24px;
+            line-height: 24px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            color: rgb(51, 51, 51);
+
+            a {
+                padding: 0;
+            }
+
+            &.ant-pagination-item-active {
+                background: #05779d;
+                border: none;
+
+                a {
+                    color: #fff;
+                }
+            }
+        }
+
+    }
+}

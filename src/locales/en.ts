@@ -7,6 +7,7 @@ import commonEn from './common/en';
 import formEn from './pages/form/en';
 import componentsEn from './pages/components/en';
 import dashboardEn from './pages/dashboard/en';
+import tableEn from './pages/table/en';
 
 /**
  * English translations
@@ -21,6 +22,7 @@ const en = {
     form: formEn,
     components: componentsEn,
     dashboard: dashboardEn,
+    table: tableEn,
   },
 };
 

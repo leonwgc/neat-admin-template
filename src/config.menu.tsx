@@ -61,6 +61,14 @@ export const menus: MenuItem[] = [
         route: '/app/forms',
         permissions: [operations.formRead],
       },
+      {
+        key: 'forms-table',
+        get label() {
+          return t('menu.table');
+        },
+        route: '/app/forms/table',
+        permissions: [operations.formRead],
+      },
     ],
   },
 

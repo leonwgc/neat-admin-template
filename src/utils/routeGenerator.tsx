@@ -95,6 +95,7 @@ export const getRouteElement = (
 export const routeComponentMap: RouteComponentMap = {
   // Forms
   '/app/forms': lazyLoad('pages/Form/ResponsiveForm'),
+  '/app/forms/table': lazyLoad('pages/Table'),
 
   // Component Examples
   '/app/components/image-upload': lazyLoad(
