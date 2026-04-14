@@ -34,7 +34,7 @@ export default (props: Props) => {
   const [menuCollapsed] = useLocalStorageState<boolean>(NAV_MENU_COLLAPSED_KEY);
   const [openKeys, setOpenKeys] = useState<string[]>([]);
   const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
-  const [userInfo] = useUserInfo();
+  const { userInfo, loading } = useUserInfo();
   const { operations = [] } = userInfo;
 
   // Add currentLanguage as dependency to re-compute menus when language changes
@@ -86,7 +86,7 @@ export default (props: Props) => {
   );
 
   return (
-    <Skeleton active loading={false} style={{ padding: 12 }}>
+    <Skeleton active loading={loading} style={{ padding: 12 }}>
       <Menu
         style={{ borderInlineEnd: 'none' }}
         onClick={(item) => {

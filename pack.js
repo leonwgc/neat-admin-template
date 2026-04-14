@@ -23,5 +23,10 @@ run({
     server: {
       open: true,
     },
+    source: {
+      define: {
+        'process.env.ENV': JSON.stringify('development'),
+      },
+    },
   },
 });

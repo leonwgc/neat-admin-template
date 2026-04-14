@@ -21,7 +21,7 @@ const Header: React.FC<React.HTMLAttributes<HTMLElement>> = (props) => {
   const { t, i18n } = useTranslation();
 
   const currentLang = i18n.language as Language;
-  const [userInfo] = useUserInfo();
+  const { userInfo } = useUserInfo();
 
   const handleLanguageChange = async (lang: Language) => {
     await changeLanguage(lang);

@@ -3,7 +3,7 @@
  * @author leon.wang
  */
 
-import { Layout, SiderProps } from '@derbysoft/neat-design';
+import { Layout } from '@derbysoft/neat-design';
 import { FC, useEffect, useState } from 'react';
 import { useLocalStorageState } from 'ahooks';
 import Menus from './Menus';
@@ -11,18 +11,14 @@ import { menus } from '~/config.menu';
 import Footer from './Footer';
 import './Sider.scss';
 
-type Props = SiderProps & {
-  loading?: boolean;
-};
-
 export const NAV_MENU_COLLAPSED_KEY = 'NAV_MENU_COLLAPSED';
 
-const Sider: FC<Props> = () => {
+const Sider: FC = () => {
   const [value, setValue] = useLocalStorageState<boolean>(
     NAV_MENU_COLLAPSED_KEY,
     {
       defaultValue: false,
-    }
+    },
   );
 
   const [collapsed, setCollapsed] = useState(value);
@@ -30,7 +26,7 @@ const Sider: FC<Props> = () => {
   useEffect(() => {
     document.documentElement.style.setProperty(
       '--menu-width',
-      collapsed ? '64px' : '256px'
+      collapsed ? '64px' : '256px',
     );
 
     setValue(collapsed);

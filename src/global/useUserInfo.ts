@@ -3,28 +3,36 @@
  * @author leon.wang
  */
 
-import { useGlobalState } from '@derbysoft/zustand-kit';
-import operations from '../config.operations';
+import { useMemo } from 'react';
+import { useGlobalSelector } from '@derbysoft/zustand-kit';
 
-type UserInfo = {
+export interface UserInfo {
   userId: string;
   username: string;
   nickname: string;
   operations: string[];
+}
+
+export const defaultUserInfo: UserInfo = {
+  userId: '',
+  username: '',
+  nickname: '',
+  operations: [],
 };
 
 const useUserInfo = () => {
-  // TODO: In a real application, user info would be fetched from an API or derived from authentication state
-  return useGlobalState<UserInfo>('UserInfo', {
-    userId: '1',
-    username: 'Leon',
-    nickname: 'LW',
-    operations: [
-      operations.formRead,
-      operations.imageUploadRead,
-      operations.imageCropRead,
-    ],
-  });
+  const userInfo = useGlobalSelector<UserInfo, UserInfo>(
+    'UserInfo',
+    (state) => state,
+  );
+
+  const userInfoReady = useMemo(() => {
+    return userInfo.userId !== '';
+  }, [userInfo]);
+
+  const loading = !userInfoReady;
+
+  return { userInfo, loading, userInfoReady } as const;
 };
 
 export default useUserInfo;

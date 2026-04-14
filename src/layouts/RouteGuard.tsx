@@ -21,7 +21,7 @@ interface MenuRouteRecord {
 
 const RouteGuard: React.FC<RouteGuardProps> = ({ children }) => {
   const { pathname } = useLocation();
-  const [userInfo] = useUserInfo();
+  const { userInfo, userInfoReady } = useUserInfo();
   const { operations = [] } = userInfo;
 
   const menuPermissions = useMemo(() => {
@@ -30,7 +30,7 @@ const RouteGuard: React.FC<RouteGuardProps> = ({ children }) => {
     return menu?.permissions || [];
   }, [pathname]);
 
-  return !hasPermission(operations, menuPermissions) ? (
+  return userInfoReady && !hasPermission(operations, menuPermissions) ? (
     <Navigate to="/no-permission" replace />
   ) : (
     children

@@ -15,7 +15,7 @@ const MobileMenus: React.FC<DrawerProps> = (props) => {
     props.onClose?.();
   }, [props]);
 
-  const [userInfo] = useUserInfo();
+  const { userInfo } = useUserInfo();
 
   return (
     <Drawer
