@@ -5,24 +5,11 @@
 
 import { useMemo } from 'react';
 import { useGlobalSelector } from '@derbysoft/zustand-kit';
-
-export interface UserInfo {
-  userId: string;
-  username: string;
-  nickname: string;
-  operations: string[];
-}
-
-export const defaultUserInfo: UserInfo = {
-  userId: '',
-  username: '',
-  nickname: '',
-  operations: [],
-};
+import { USER_INFO_KEY, UserInfo } from './config';
 
 const useUserInfo = () => {
   const userInfo = useGlobalSelector<UserInfo, UserInfo>(
-    'UserInfo',
+    USER_INFO_KEY,
     (state) => state,
   );
 

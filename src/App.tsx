@@ -17,7 +17,7 @@ import RouteConfig from './RouteConfig';
 import { useMount } from 'ahooks';
 import useGlobalState, { configureDevtools } from '@derbysoft/zustand-kit';
 import operations from './config.operations';
-import { type UserInfo, defaultUserInfo } from './global/useUserInfo';
+import { defaultUserInfo, USER_INFO_KEY, UserInfo } from './global/config';
 import './App.scss';
 
 configureDevtools(process.env.NODE_ENV === 'development');
@@ -25,7 +25,11 @@ configureDevtools(process.env.NODE_ENV === 'development');
 const App = () => {
   const { i18n } = useTranslation();
 
-  const [, setUserInfo] = useGlobalState<UserInfo>('UserInfo', defaultUserInfo);
+  // Set initial user info in global state
+  const [, setUserInfo] = useGlobalState<UserInfo>(
+    USER_INFO_KEY,
+    defaultUserInfo,
+  );
 
   useEffect(() => {
     const locale = i18n.language === 'zh' ? 'zh-cn' : 'en';
@@ -35,6 +39,7 @@ const App = () => {
   useMount(() => {
     // Simulate user info loading
     setTimeout(() => {
+      // In a real app, you would fetch this from an API
       setUserInfo({
         userId: '1',
         username: 'Leon',
