@@ -34,8 +34,10 @@ export default (props: Props) => {
   const [menuCollapsed] = useLocalStorageState<boolean>(NAV_MENU_COLLAPSED_KEY);
   const [openKeys, setOpenKeys] = useState<string[]>([]);
   const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
-  const { userInfo, loading } = useUserInfo();
-  const { operations = [] } = userInfo;
+  const {
+    userInfo: { operations },
+    loading,
+  } = useUserInfo();
 
   // Add currentLanguage as dependency to re-compute menus when language changes
   const filterMenus = useMemo(

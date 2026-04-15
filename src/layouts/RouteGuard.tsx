@@ -5,7 +5,6 @@
 
 import React, { ReactNode, useMemo } from 'react';
 import { useLocation, Navigate } from 'react-router';
-import { hasPermission } from './Menus.helper';
 import allMenuRoutes from '~/config.route';
 import useUserInfo from '../global/useUserInfo';
 
@@ -21,8 +20,7 @@ interface MenuRouteRecord {
 
 const RouteGuard: React.FC<RouteGuardProps> = ({ children }) => {
   const { pathname } = useLocation();
-  const { userInfo, userInfoReady } = useUserInfo();
-  const { operations = [] } = userInfo;
+  const { userInfoReady, hasPermission } = useUserInfo();
 
   const menuPermissions = useMemo(() => {
     const routes = allMenuRoutes as MenuRouteRecord[];
@@ -30,7 +28,7 @@ const RouteGuard: React.FC<RouteGuardProps> = ({ children }) => {
     return menu?.permissions || [];
   }, [pathname]);
 
-  return userInfoReady && !hasPermission(operations, menuPermissions) ? (
+  return userInfoReady && !hasPermission(menuPermissions) ? (
     <Navigate to="/no-permission" replace />
   ) : (
     children

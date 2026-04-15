@@ -404,6 +404,10 @@ Check these items in order:
 
 - Global state pattern uses @derbysoft/zustand-kit
 - Example hook: src/global/useUserInfo.ts
+- `useUserInfo` now provides:
+  - user read state: `userInfo`, `userInfoReady`, `loading`
+  - user write actions: `setUserInfo`, `resetUserInfo`
+  - permission helper: `hasPermission`
 - Use local hooks for page-level state in src/hooks
 
 ## Path Aliases

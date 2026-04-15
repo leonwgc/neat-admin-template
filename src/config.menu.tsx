@@ -59,7 +59,7 @@ export const menus: MenuItem[] = [
           return t('menu.table');
         },
         route: '/app/forms/table',
-        permissions: [operations.formRead],
+        permissions: [],
       },
       {
         key: 'form1',
