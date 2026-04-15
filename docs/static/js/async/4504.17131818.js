@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkneat_admin_template=self.webpackChunkneat_admin_template||[]).push([["4504"],{50859(e,n,t){t.r(n),t.d(n,{default:()=>u});var a=t(90030),l=t(31290);function u(){let e=(0,l.Zp)();return(0,a.A)(()=>{e("/no-permission")}),null}}}]);

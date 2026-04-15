@@ -25,6 +25,22 @@ export default {
   // 全局搜索
   search: '搜索',
 
+  // HTTP 错误消息
+  error: {
+    badRequest: '请求参数错误',
+    unauthorized: '未授权，请重新登录',
+    forbidden: '没有权限访问',
+    notFound: '请求的资源不存在',
+    timeout: '请求超时',
+    serverError: '服务器错误',
+    badGateway: '网关错误',
+    serviceUnavailable: '服务不可用',
+    gatewayTimeout: '网关超时',
+    unknown: '未知错误',
+    networkError: '网络连接失败',
+    requestFailed: '请求失败',
+  },
+
   // 菜单翻译
   menu: {
     forms: '表单',
@@ -33,6 +49,8 @@ export default {
     components: '组件',
     imageUpload: '图片上传',
     imageCropper: '图片裁剪',
+    apiRequest: '接口请求',
+    apiDemo: 'API 示例',
     resultPage: '结果页',
     noPermission: '无权限 403',
     notFound: '未找到 404',

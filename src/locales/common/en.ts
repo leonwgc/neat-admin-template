@@ -25,6 +25,22 @@ export default {
   // Global Search
   search: 'Search',
 
+  // HTTP error messages
+  error: {
+    badRequest: 'Bad Request',
+    unauthorized: 'Unauthorized, please login again',
+    forbidden: 'Access Forbidden',
+    notFound: 'Resource Not Found',
+    timeout: 'Request Timeout',
+    serverError: 'Server Error',
+    badGateway: 'Bad Gateway',
+    serviceUnavailable: 'Service Unavailable',
+    gatewayTimeout: 'Gateway Timeout',
+    unknown: 'Unknown Error',
+    networkError: 'Network Error',
+    requestFailed: 'Request Failed',
+  },
+
   // Menu translations
   menu: {
     forms: 'Forms',
@@ -33,6 +49,8 @@ export default {
     components: 'Components',
     imageUpload: 'ImageUpload',
     imageCropper: 'ImageCropper',
+    apiRequest: 'API Request',
+    apiDemo: 'API Demo',
     resultPage: 'Result Page',
     noPermission: 'No Permission 403',
     notFound: 'Not Found 404',

@@ -6,6 +6,7 @@ import {
   WidgetOutlined,
   TableOutlined,
   WrenchOutlined,
+  APIOutlined,
 } from '@derbysoft/neat-design-icons';
 import { MenuProps } from '@derbysoft/neat-design';
 import i18n from './i18n';
@@ -75,7 +76,24 @@ export const menus: MenuItem[] = [
       },
     ],
   },
-
+  {
+    key: 'api-request',
+    get label() {
+      return t('menu.apiRequest');
+    },
+    icon: <APIOutlined />,
+    permissions: [],
+    children: [
+      {
+        key: 'api-demo',
+        get label() {
+          return t('menu.apiDemo');
+        },
+        route: '/app/api-request/api-demo',
+        permissions: [],
+      },
+    ],
+  },
   {
     key: 'result-page',
     get label() {
