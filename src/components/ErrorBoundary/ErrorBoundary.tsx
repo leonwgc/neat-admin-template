@@ -6,6 +6,7 @@ import React, { Component, ReactNode, ErrorInfo } from 'react';
 import { Button } from '@derbysoft/neat-design';
 import { ErrorMainteinanceDefaultMedium } from '@derbysoft/neat-design-illustrations';
 import { ReloadOutlined, HomeOutlined } from '@ant-design/icons';
+import i18n from '~/i18n';
 import './ErrorBoundary.scss';
 
 export interface ErrorBoundaryProps {
@@ -45,8 +46,6 @@ export class ErrorBoundary extends Component<
   ErrorBoundaryState
 > {
   static defaultProps = {
-    errorTitle: '页面出错了',
-    errorSubtitle: '抱歉，页面遇到了一些问题',
     showReload: true,
     showHome: true,
     homePath: '/',
@@ -123,6 +122,8 @@ export class ErrorBoundary extends Component<
       showHome,
     } = this.props;
     const { hasError, error, errorInfo } = this.state;
+    const title = errorTitle ?? i18n.t('errorBoundaryTitle');
+    const subtitle = errorSubtitle ?? i18n.t('errorBoundaryDescription');
 
     if (hasError) {
       // If custom fallback is provided, use it
@@ -138,8 +139,8 @@ export class ErrorBoundary extends Component<
         <section className="error-boundary">
           <ErrorMainteinanceDefaultMedium className="error-boundary__illustration" />
 
-          <div className="error-boundary__title">{errorTitle}</div>
-          <div className="error-boundary__description">{errorSubtitle}</div>
+          <div className="error-boundary__title">{title}</div>
+          <div className="error-boundary__description">{subtitle}</div>
 
           <div className="error-boundary__actions">
             {showReload && (
@@ -148,12 +149,12 @@ export class ErrorBoundary extends Component<
                 icon={<ReloadOutlined />}
                 onClick={this.handleReload}
               >
-                重新加载
+                {i18n.t('reload')}
               </Button>
             )}
             {showHome && (
               <Button icon={<HomeOutlined />} onClick={this.handleGoHome}>
-                返回首页
+                {i18n.t('backHome')}
               </Button>
             )}
           </div>

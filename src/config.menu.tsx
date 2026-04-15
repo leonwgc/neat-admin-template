@@ -2,7 +2,11 @@
  * @file src/config.menu.tsx
  * @author leon.wang
  */
-import { WidgetOutlined, TableOutlined } from '@derbysoft/neat-design-icons';
+import {
+  WidgetOutlined,
+  TableOutlined,
+  WrenchOutlined,
+} from '@derbysoft/neat-design-icons';
 import { MenuProps } from '@derbysoft/neat-design';
 import i18n from './i18n';
 import operations from './config.operations';
@@ -68,6 +72,38 @@ export const menus: MenuItem[] = [
         },
         route: '/app/forms',
         permissions: [operations.formRead],
+      },
+    ],
+  },
+
+  {
+    key: 'result-page',
+    get label() {
+      return t('menu.resultPage');
+    },
+    icon: <WrenchOutlined />,
+    permissions: [],
+    children: [
+      {
+        key: 'no-permission',
+        get label() {
+          return t('menu.noPermission');
+        },
+        route: '/app/result-page/no-permission',
+      },
+      {
+        key: 'not-found',
+        get label() {
+          return t('menu.notFound');
+        },
+        route: '/app/result-page/not-found',
+      },
+      {
+        key: 'mantainance',
+        get label() {
+          return t('menu.mantainance');
+        },
+        route: '/app/result-page/mantainance',
       },
     ],
   },

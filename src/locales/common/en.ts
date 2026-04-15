@@ -13,6 +13,9 @@ export default {
   signOut: 'Sign Out',
   yes: 'Yes',
   no: 'No',
+  reload: 'Reload',
+  errorBoundaryTitle: 'Something went wrong',
+  errorBoundaryDescription: 'Sorry, this page encountered an unexpected problem',
   noPermissionTitle: 'You do not have permission to view this page',
   noPermissionDescription: 'Please contact your administrator',
   notFoundTitle: 'Unable to find the page you are looking for',
@@ -30,5 +33,10 @@ export default {
     components: 'Components',
     imageUpload: 'ImageUpload',
     imageCropper: 'ImageCropper',
+    resultPage: 'Result Page',
+    noPermission: 'No Permission 403',
+    notFound: 'Not Found 404',
+    mantainance: 'Maintenance 503',
+
   },
 };
