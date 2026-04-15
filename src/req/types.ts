@@ -4,7 +4,7 @@
  * @description HTTP 请求相关类型定义
  */
 
-import type { AxiosRequestConfig, AxiosResponse } from 'axios';
+import type { AxiosResponse } from 'axios';
 
 /**
  * API 响应数据结构
@@ -46,19 +46,7 @@ export interface PaginationResponse<T = unknown> {
   totalPages: number;
 }
 
-/**
- * 扩展的请求配置
- */
-export interface RequestConfig extends AxiosRequestConfig {
-  /** 是否显示加载提示 */
-  showLoading?: boolean;
-  /** 是否显示错误提示 */
-  showError?: boolean;
-  /** 是否需要认证 */
-  requireAuth?: boolean;
-  /** 自定义错误处理 */
-  customErrorHandler?: (error: unknown) => void;
-}
+
 
 /**
  * HTTP 错误类型

@@ -13,7 +13,6 @@ import request, {
   type ApiResponse,
   type PaginationParams,
   type PaginationResponse,
-  type RequestConfig,
   cancelRequest,
   requestWithCancel,
 } from './index';
@@ -134,7 +133,7 @@ export const userApi = {
     return request.get<Blob>('/users/export', {
       params,
       responseType: 'blob',
-    } as RequestConfig);
+    });
   },
 };
 
@@ -268,32 +267,9 @@ export const example4_CancellableRequest = async () => {
 };
 
 /**
- * 示例 5: 自定义错误处理
+ * 示例 5: 文件上传
  */
-export const example5_CustomErrorHandler = async () => {
-  try {
-    const response = await request.get('/data', {
-      showError: false,
-      customErrorHandler: (error) => {
-        console.error('自定义错误处理:', error);
-
-        // 可以显示自定义的错误提示
-        // Modal.error({
-        //   title: '错误',
-        //   content: error.message,
-        // });
-      },
-    } as RequestConfig);
-    console.log(response.data);
-  } catch {
-    // 错误已被自定义处理器处理
-  }
-};
-
-/**
- * 示例 6: 文件上传
- */
-export const example6_FileUpload = async (file: File) => {
+export const example5_FileUpload = async (file: File) => {
   const formData = new FormData();
   formData.append('file', file);
   formData.append('type', 'avatar');
@@ -324,13 +300,13 @@ export const example6_FileUpload = async (file: File) => {
 };
 
 /**
- * 示例 7: 文件下载
+ * 示例 6: 文件下载
  */
-export const example7_FileDownload = async (fileId: string) => {
+export const example6_FileDownload = async (fileId: string) => {
   try {
     const response = await request.get<Blob>(`/files/${fileId}/download`, {
       responseType: 'blob',
-    } as RequestConfig);
+    });
 
     // 创建下载链接
     const blob = response.data as unknown as Blob;
@@ -348,9 +324,9 @@ export const example7_FileDownload = async (fileId: string) => {
 };
 
 /**
- * 示例 8: 分页请求
+ * 示例 7: 分页请求
  */
-export const example8_PaginationRequest = async () => {
+export const example7_PaginationRequest = async () => {
   try {
     const response = await userApi.getList({
       page: 1,

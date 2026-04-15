@@ -4,9 +4,9 @@
  * @description Axios 实例配置和导出
  */
 
-import axios, { type AxiosInstance } from 'axios';
+import axios, { type AxiosInstance, type AxiosRequestConfig } from 'axios';
 import { setupInterceptors } from './interceptors';
-import type { RequestConfig, CancelTokenMap } from './types';
+import type { CancelTokenMap } from './types';
 
 /**
  * 获取 API 基础 URL
@@ -57,7 +57,7 @@ const cancelTokenMap: CancelTokenMap = {};
  * @param config - 请求配置
  * @returns 唯一 key
  */
-const generateRequestKey = (config: RequestConfig): string => {
+const generateRequestKey = (config: AxiosRequestConfig): string => {
   const { method = 'get', url = '', params = {}, data = {} } = config;
   return `${method}_${url}_${JSON.stringify(params)}_${JSON.stringify(data)}`;
 };
@@ -73,7 +73,7 @@ const generateRequestKey = (config: RequestConfig): string => {
  * cancelRequest(config);
  * ```
  */
-export const cancelRequest = (config: RequestConfig): void => {
+export const cancelRequest = (config: AxiosRequestConfig): void => {
   const key = generateRequestKey(config);
   const controller = cancelTokenMap[key];
 
@@ -120,7 +120,7 @@ export const cancelAllRequests = (): void => {
  * ```
  */
 export const requestWithCancel = <T = unknown>(
-  config: RequestConfig
+  config: AxiosRequestConfig
 ): Promise<T> => {
   const key = generateRequestKey(config);
 
@@ -134,7 +134,7 @@ export const requestWithCancel = <T = unknown>(
   cancelTokenMap[key] = controller;
 
   // 添加取消令牌到请求配置
-  const requestConfig: RequestConfig = {
+  const requestConfig: AxiosRequestConfig = {
     ...config,
     signal: controller.signal,
   };
@@ -151,7 +151,7 @@ export const requestWithCancel = <T = unknown>(
 };
 
 // 导出类型
-export type { RequestConfig, ApiResponse, PaginationParams, PaginationResponse } from './types';
+export type { ApiResponse, PaginationParams, PaginationResponse } from './types';
 export { HttpError, HttpErrorType } from './types';
 
 // 导出默认实例

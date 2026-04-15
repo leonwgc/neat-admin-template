@@ -16,10 +16,9 @@ req/
 ## ✨ 特性
 
 - ✅ **TypeScript 类型安全** - 完整的类型定义
-- ✅ **请求/响应拦截** - 统一处理认证、参数、错误
-- ✅ **错误处理** - 统一的错误提示和特殊错误处理（401、403 等）
+- ✅ **请求/响应拦截** - 统一处理参数、错误
+- ✅ **错误处理** - 统一的错误处理和特殊错误处理（401、403 等）
 - ✅ **请求取消** - 支持取消单个或所有请求
-- ✅ **加载提示** - 自动显示/隐藏 loading
 - ✅ **国际化支持** - 错误消息支持 i18n
 - ✅ **开发调试** - 开发环境详细日志输出
 
@@ -89,24 +88,7 @@ const UserList: React.FC = () => {
 
 ## 📖 高级用法
 
-### 1. 请求配置
-
-```typescript
-import request, { type RequestConfig } from '~/req';
-
-const config: RequestConfig = {
-  url: '/users',
-  method: 'get',
-  showLoading: true,      // 是否显示 loading，默认 true
-  showError: true,        // 是否显示错误提示，默认 true
-  requireAuth: true,      // 是否需要认证，默认 true
-  timeout: 10000,         // 超时时间（毫秒）
-};
-
-const response = await request(config);
-```
-
-### 2. 取消请求
+### 1. 取消请求
 
 ```typescript
 import request, { cancelRequest, cancelAllRequests } from '~/req';
@@ -123,7 +105,7 @@ useEffect(() => {
 }, []);
 ```
 
-### 3. 可取消的请求
+### 2. 可取消的请求
 
 ```typescript
 import { requestWithCancel, cancelRequest } from '~/req';
@@ -146,7 +128,7 @@ const config = { url: '/users', method: 'get' };
 cancelRequest(config);
 ```
 
-### 4. 分页请求
+### 3. 分页请求
 
 ```typescript
 import request, { type PaginationParams, type PaginationResponse } from '~/req';
@@ -168,33 +150,7 @@ const pageData = await fetchUserPage({ page: 1, pageSize: 20 });
 console.log(pageData.list, pageData.total);
 ```
 
-### 5. 自定义错误处理
-
-```typescript
-import request from '~/req';
-
-const fetchData = async () => {
-  try {
-    const response = await request.get('/users', {
-      showError: false, // 禁用默认错误提示
-      customErrorHandler: (error) => {
-        // 自定义错误处理逻辑
-        console.error('Custom error handler:', error);
-        // 自定义错误提示
-        Modal.error({
-          title: 'Error',
-          content: error.message,
-        });
-      },
-    });
-    return response.data;
-  } catch (error) {
-    // 错误已被自定义处理器处理
-  }
-};
-```
-
-### 6. 文件上传
+### 4. 文件上传
 
 ```typescript
 import request from '~/req';
@@ -219,7 +175,7 @@ const uploadFile = async (file: File) => {
 };
 ```
 
-### 9. 文件下载
+### 5. 文件下载
 
 ```typescript
 import request from '~/req';
@@ -297,19 +253,6 @@ interface ApiResponse<T = any> {
   message: string;   // 响应消息
   data: T;           // 响应数据
   success: boolean;  // 是否成功
-}
-```
-
-### RequestConfig
-
-扩展的请求配置：
-
-```typescript
-interface RequestConfig extends AxiosRequestConfig {
-  showLoading?: boolean;              // 是否显示 loading
-  showError?: boolean;                // 是否显示错误提示
-  requireAuth?: boolean;              // 是否需要认证
-  customErrorHandler?: (error: any) => void;  // 自定义错误处理
 }
 ```
 

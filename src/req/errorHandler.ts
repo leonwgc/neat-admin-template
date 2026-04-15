@@ -4,7 +4,6 @@
  * @description HTTP 错误处理器
  */
 
-import { message } from '@derbysoft/neat-design';
 import type { AxiosError, AxiosResponse } from 'axios';
 import i18n from '~/i18n';
 import { HttpError, HttpErrorType } from './types';
@@ -100,7 +99,6 @@ const getErrorType = (error: AxiosError): HttpErrorType => {
  * 处理 HTTP 错误
  *
  * @param error - Axios 错误对象
- * @param showError - 是否显示错误提示，默认 true
  * @returns 封装后的错误对象
  *
  * @example
@@ -113,10 +111,7 @@ const getErrorType = (error: AxiosError): HttpErrorType => {
  * }
  * ```
  */
-export const handleHttpError = (
-  error: unknown,
-  showError: boolean = true,
-): HttpError => {
+export const handleHttpError = (error: unknown): HttpError => {
   const axiosError = error as AxiosError;
   const errorType = getErrorType(axiosError);
   const errorMessage = getErrorMessage(axiosError);
@@ -130,11 +125,6 @@ export const handleHttpError = (
     error,
     axiosError.response,
   );
-
-  // 显示错误提示（排除取消请求）
-  if (showError && errorType !== HttpErrorType.CANCEL_ERROR) {
-    message.error(errorMessage);
-  }
 
   // 特殊错误处理
   handleSpecialError(errorType, statusCode);
