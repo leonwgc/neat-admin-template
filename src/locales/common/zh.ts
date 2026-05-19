@@ -55,5 +55,6 @@ export default {
     noPermission: '无权限 403',
     notFound: '未找到 404',
     mantainance: '维护中 503',
+    selectIMEDemo: 'Select IME 输入法',
   },
 };

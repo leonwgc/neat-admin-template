@@ -55,6 +55,6 @@ export default {
     noPermission: 'No Permission 403',
     notFound: 'Not Found 404',
     mantainance: 'Maintenance 503',
-
+    selectIMEDemo: 'Select IME Demo',
   },
 };

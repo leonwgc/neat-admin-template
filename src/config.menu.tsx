@@ -150,6 +150,14 @@ export const menus: MenuItem[] = [
         route: '/app/components/image-cropper',
         permissions: [operations.imageCropRead],
       },
+      {
+        key: 'select-ime-demo',
+        get label() {
+          return t('menu.selectIMEDemo');
+        },
+        route: '/app/components/select-ime-demo',
+        permissions: [],
+      },
     ],
   },
 ];

@@ -104,6 +104,9 @@ export const routeComponentMap: RouteComponentMap = {
   '/app/components/image-cropper': lazyLoad(
     'pages/Components/ImageCropperExample',
   ),
+  '/app/components/select-ime-demo': lazyLoad(
+    'pages/Components/SelectIMEDemo',
+  ),
 
   // API Request Example
   '/app/api-request/api-demo': lazyLoad('pages/ApiDemo/index'),
