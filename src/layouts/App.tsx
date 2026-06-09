@@ -10,6 +10,7 @@ import classNames from 'classnames';
 import Header from './Header';
 import Sider from './Sider';
 import RouteGuard from './RouteGuard';
+import { UserLoadingSkeleton } from '~/components/UserLoadingSkeleton';
 import './App.scss';
 
 const App: React.FC<{
@@ -33,7 +34,9 @@ const App: React.FC<{
 
             <Layout.Content className="app-layout__inner-content">
               <RouteGuard>
-                <Outlet />
+                <UserLoadingSkeleton>
+                  <Outlet />
+                </UserLoadingSkeleton>
               </RouteGuard>
             </Layout.Content>
           </Layout>
