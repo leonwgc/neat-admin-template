@@ -35,8 +35,6 @@
   // Body (contains Sider + Main)
   &__body {
     display: flex;
-    height: 100%;
-    overflow: hidden;
   }
 
   // Main content area
@@ -45,7 +43,6 @@
     box-sizing: border-box;
     height: 100vh;
     padding: var(--nav-height) 0 40px var(--menu-width);
-    overflow: hidden;
     background: #fff;
     transition: padding-left $theme-transition-duration ease-in-out;
 
