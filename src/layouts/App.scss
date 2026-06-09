@@ -42,7 +42,7 @@
     position: relative;
     box-sizing: border-box;
     height: 100vh;
-    padding: var(--nav-height) 0 40px var(--menu-width);
+    padding: var(--header-height) 0 0px var(--menu-width);
     background: #fff;
     transition: padding-left $theme-transition-duration ease-in-out;
 
@@ -81,10 +81,7 @@
   }
 
   &__inner-content {
-    padding: 0;
-    & > div {
-      padding: 24px;
-    }
+    padding: 24px;
   }
 
   // Loading state

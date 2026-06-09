@@ -86,7 +86,7 @@ const SelectIMEDemo: React.FC = () => {
   };
 
   return (
-    <div style={{ padding: 24, maxWidth: 900 }}>
+    <div>
       <Title level={4}>中文输入法（IME）与 Select 搜索</Title>
       <Paragraph type="secondary">
         使用拼音输入法时，<Text code>onSearch</Text>{' '}

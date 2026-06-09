@@ -47,13 +47,11 @@ export default function List() {
   ];
 
   return (
-    <div>
-      <Table
-        {...tableProps}
-        scroll={{ x: 'max-content' }}
-        columns={columns}
-        rowKey="productId"
-      />
-    </div>
+    <Table
+      {...tableProps}
+      scroll={{ x: 'max-content' }}
+      columns={columns}
+      rowKey="productId"
+    />
   );
 }
