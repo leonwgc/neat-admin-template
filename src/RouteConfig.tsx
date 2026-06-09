@@ -6,6 +6,7 @@
 import { Route, Routes } from 'react-router';
 import App from './layouts/App';
 import { lazy, Suspense } from 'react';
+import { Skeleton } from '@derbysoft/neat-design';
 import Redirect from './components/Redirect';
 import { ErrorBoundary } from './components/ErrorBoundary';
 import { menus } from './config.menu';
@@ -32,7 +33,7 @@ const menuRoutes = extractRoutesFromMenus(menus);
  */
 const RouteConfig = () => {
   return (
-    <Suspense>
+    <Suspense fallback={<Skeleton loading />}>
       <Routes>
         <Route path="/" element={<Redirect to={defaultRoute} />} />
 

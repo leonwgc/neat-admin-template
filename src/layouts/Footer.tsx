@@ -6,7 +6,11 @@
 import FadeIn from '../components/FadeIn';
 import './Footer.scss';
 
-const Footer = ({ menuCollapsed }) => {
+interface FooterProps {
+  menuCollapsed: boolean;
+}
+
+const Footer = ({ menuCollapsed }: FooterProps) => {
   return (
     <div className="app-footer">
       {menuCollapsed ? (
