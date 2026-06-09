@@ -25,6 +25,13 @@ export default {
   // 全局搜索
   search: '搜索',
 
+  // 页脚
+  footer: {
+    company: '德比软件 Inc.',
+    copyright: '版权所有,',
+    privacyPolicy: '隐私政策',
+  },
+
   // HTTP 错误消息
   error: {
     badRequest: '请求参数错误',

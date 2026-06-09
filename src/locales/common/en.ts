@@ -25,6 +25,13 @@ export default {
   // Global Search
   search: 'Search',
 
+  // Footer
+  footer: {
+    company: 'DerbySoft Inc.',
+    copyright: 'All rights reserved,',
+    privacyPolicy: 'Privacy Policy',
+  },
+
   // HTTP error messages
   error: {
     badRequest: 'Bad Request',

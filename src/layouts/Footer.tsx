@@ -4,6 +4,7 @@
  */
 
 import FadeIn from '../components/FadeIn';
+import { useTranslation } from 'react-i18next';
 import './Footer.scss';
 
 interface FooterProps {
@@ -11,6 +12,9 @@ interface FooterProps {
 }
 
 const Footer = ({ menuCollapsed }: FooterProps) => {
+  const { t, i18n } = useTranslation();
+  const isZh = i18n.resolvedLanguage === 'zh';
+
   return (
     <div className="app-footer">
       {menuCollapsed ? (
@@ -21,15 +25,21 @@ const Footer = ({ menuCollapsed }: FooterProps) => {
         </FadeIn>
       ) : (
         <FadeIn duration={300} key={'1'}>
-          <div>© 2002 - {new Date().getFullYear()} 德比软件 Inc.</div>
           <div>
-            版权所有,
+            © 2002 - {new Date().getFullYear()} {t('footer.company')}
+          </div>
+          <div>
+            {t('footer.copyright')}
             <a
               target="_blank"
-              href="https://www.derbysoft.com/cn/privacy-policy/"
+              href={
+                isZh
+                  ? 'https://www.derbysoft.com/cn/privacy-policy/'
+                  : 'https://www.derbysoft.com/privacy-policy/'
+              }
               rel="noreferrer"
             >
-              隐私政策
+              {t('footer.privacyPolicy')}
             </a>
           </div>
         </FadeIn>
