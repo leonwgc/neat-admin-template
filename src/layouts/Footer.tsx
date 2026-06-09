@@ -17,7 +17,7 @@ const Footer = ({ menuCollapsed }) => {
         </FadeIn>
       ) : (
         <FadeIn duration={300} key={'1'}>
-          <div>© 2002 - 2026 德比软件 Inc.</div>
+          <div>© 2002 - {new Date().getFullYear()} 德比软件 Inc.</div>
           <div>
             版权所有,
             <a
