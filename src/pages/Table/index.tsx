@@ -8,14 +8,16 @@
  * @author leon.wang
  */
 
-import { TableColumnsType, Table } from '@derbysoft/neat-design';
+import { TableColumnsType, Table, Skeleton } from '@derbysoft/neat-design';
 import dayjs from 'dayjs';
 import { useAntdTable } from 'ahooks';
 import { useTranslation } from 'react-i18next';
 import { getDataList } from './api';
+import useUserInfo from '../../global/useUserInfo';
 
 export default function List() {
   const { t } = useTranslation();
+  const { loading } = useUserInfo();
 
   const { tableProps } = useAntdTable(getDataList, {
     defaultPageSize: 10,
@@ -47,11 +49,13 @@ export default function List() {
   ];
 
   return (
-    <Table
-      {...tableProps}
-      scroll={{ x: 'max-content' }}
-      columns={columns}
-      rowKey="productId"
-    />
+    <Skeleton loading={loading}>
+      <Table
+        {...tableProps}
+        scroll={{ x: 'max-content' }}
+        columns={columns}
+        rowKey="productId"
+      />
+    </Skeleton>
   );
 }
