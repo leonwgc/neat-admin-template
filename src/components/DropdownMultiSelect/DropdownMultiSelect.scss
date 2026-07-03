@@ -1,0 +1,40 @@
+/**
+ * @file src/components/DropdownMultiSelect/DropdownMultiSelect.scss
+ * @author leon.wang
+ */
+
+@import 'scss/common.scss';
+
+.dropdown-multi-select {
+  width: 100%;
+
+  .ds-select-selection-overflow-item,
+  .ant-select-selection-overflow-item {
+    &::after {
+      content: ',';
+    }
+  }
+
+  .ds-select-selection-overflow-item-suffix,
+  .ant-select-selection-overflow-item-suffix,
+  .ds-select-selection-overflow-item-rest,
+  .ant-select-selection-overflow-item-rest {
+    &::after {
+      content: '';
+    }
+  }
+
+  &__dropdown {
+    .ant-select-item {
+      padding-top: 10px;
+      padding-bottom: 10px;
+    }
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 8px 8px;
+  }
+}

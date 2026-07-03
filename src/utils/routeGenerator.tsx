@@ -107,6 +107,9 @@ export const routeComponentMap: RouteComponentMap = {
   '/app/components/select-ime-demo': lazyLoad(
     'pages/Components/SelectIMEDemo',
   ),
+  '/app/components/dropdown-multi-select-demo': lazyLoad(
+    'pages/Components/DropdownMultiSelectDemo',
+  ),
 
   // API Request Example
   '/app/api-request/api-demo': lazyLoad('pages/ApiDemo/index'),

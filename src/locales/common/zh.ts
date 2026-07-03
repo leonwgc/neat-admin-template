@@ -63,5 +63,6 @@ export default {
     notFound: '未找到 404',
     mantainance: '维护中 503',
     selectIMEDemo: 'Select IME 输入法',
+    dropdownMultiSelectDemo: '下拉多选示例',
   },
 };

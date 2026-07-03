@@ -158,6 +158,14 @@ export const menus: MenuItem[] = [
         route: '/app/components/select-ime-demo',
         permissions: [],
       },
+      {
+        key: 'dropdown-multi-select-demo',
+        get label() {
+          return t('menu.dropdownMultiSelectDemo');
+        },
+        route: '/app/components/dropdown-multi-select-demo',
+        permissions: [],
+      },
     ],
   },
 ];

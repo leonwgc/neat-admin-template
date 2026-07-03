@@ -63,5 +63,6 @@ export default {
     notFound: 'Not Found 404',
     mantainance: 'Maintenance 503',
     selectIMEDemo: 'Select IME Demo',
+    dropdownMultiSelectDemo: 'Dropdown Multi Select Demo',
   },
 };

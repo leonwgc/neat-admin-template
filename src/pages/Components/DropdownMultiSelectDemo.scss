@@ -1,0 +1,14 @@
+/**
+ * @file src/pages/Components/DropdownMultiSelectDemo.scss
+ * @author leon.wang
+ */
+
+@import 'scss/common.scss';
+
+.dropdown-multi-select-demo {
+  max-width: 800px;
+
+  &__card {
+    margin-top: 12px;
+  }
+}
