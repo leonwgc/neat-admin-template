@@ -3,7 +3,7 @@
  * @author leon.wang
  */
 
-import React, { useMemo, useState, useEffect, useCallback } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 import { Select, Button, Divider, Checkbox } from '@derbysoft/neat-design';
 import classNames from 'classnames';
 import './DropdownMultiSelect.scss';
@@ -35,6 +35,7 @@ export interface DropdownMultiSelectProps {
   /** Minimum width of dropdown popup */
   popupMinWidth?: number;
   style?: React.CSSProperties;
+  language?: 'zh' | 'en';
 }
 
 /**
@@ -47,10 +48,9 @@ const DropdownMultiSelect: React.FC<DropdownMultiSelectProps> = ({
   defaultValue = [],
   options,
   onChange,
-  placeholder = '请选择',
+  language = 'zh',
   className,
   disabled,
-  style,
 }) => {
   const isControlled = value !== undefined;
   const [innerValue, setInnerValue] = useState<string[]>(defaultValue);
@@ -88,7 +88,7 @@ const DropdownMultiSelect: React.FC<DropdownMultiSelectProps> = ({
     setDraftValue(selectedValue);
   };
 
-  const handleDraftChange = (nextValue: string[]) => {
+  const handleDraftChange = (nextValue) => {
     setDraftValue(nextValue);
   };
 
@@ -111,24 +111,9 @@ const DropdownMultiSelect: React.FC<DropdownMultiSelectProps> = ({
     setOpen(false);
   };
 
-  // const tagRender = useCallback(
-  //   (props) => {
-  //     const v = (open ? draftValue : selectedValue).map((item) => {
-  //       const option = options.find((o) => o.value === item);
-  //       return option?.label || item;
-  //     });
-
-  //     return (
-  //       <span className="dropdown-multi-select__tag">
-  //         <span className="dropdown-multi-select__tag-text">
-  //           {v.join(', ')}
-  //         </span>
-  //         &nbsp;
-  //       </span>
-  //     );
-  //   },
-  //   [draftValue, open, options, selectedValue],
-  // );
+  const displayedValue = useMemo(() => {
+    return open ? draftValue : selectedValue;
+  }, [draftValue, open, selectedValue]);
 
   return (
     <div className={classNames('dropdown-multi-select', className)}>
@@ -136,18 +121,17 @@ const DropdownMultiSelect: React.FC<DropdownMultiSelectProps> = ({
         mode="multiple"
         open={open}
         onOpenChange={handleOpenChange}
-        value={open ? draftValue : selectedValue}
+        value={displayedValue}
         options={options}
         disabled={disabled}
-        maxTagCount="responsive"
-        placeholder={placeholder}
-        style={{ width: '100%' }}
+        maxTagCount={0}
+        maxTagPlaceholder={(omittedValues) =>
+          language === 'en'
+            ? `${omittedValues.length} selected`
+            : `已选中 ${omittedValues.length} 项`
+        }
+        placeholder={language === 'zh' ? '请选择' : 'Please select'}
         onChange={handleDraftChange}
-        closable={false}
-        tagRender={(props) => {
-          const { label } = props;
-          return <span className="tag-text">{label}</span>;
-        }}
         popupRender={(menu) => (
           <div className="dropdown-multi-select__dropdown">
             {menu}
@@ -159,7 +143,7 @@ const DropdownMultiSelect: React.FC<DropdownMultiSelectProps> = ({
                 onMouseDown={(e) => e.preventDefault()}
                 onClick={handleApply}
               >
-                应用
+                {language === 'zh' ? '应用' : 'Apply'}
               </Button>
 
               <Checkbox
@@ -168,7 +152,7 @@ const DropdownMultiSelect: React.FC<DropdownMultiSelectProps> = ({
                 checked={isAllSelected}
                 onClick={handleToggleAll}
               >
-                全选
+                {language === 'zh' ? '全选' : 'Select All'}
               </Checkbox>
             </div>
           </div>

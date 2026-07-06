@@ -12,21 +12,19 @@ import './DropdownMultiSelectDemo.scss';
 const { Title, Paragraph } = Typography;
 
 const ENTRY_OPTIONS: DropdownMultiSelectOption[] = [
-  { label: '在线订阅', value: 'online-subscription' },
-  { label: '线下订阅', value: 'offline-subscription' },
-  { label: '人工审核', value: 'manual-review' },
-  { label: '绿通邀请', value: 'green-channel' },
+  { label: '在线订阅', value: 'Online Subscription' },
+  { label: '线下订阅', value: 'Offline Subscription' },
+  { label: '人工审核', value: 'Manual Review' },
+  { label: '绿通邀请', value: 'Green Channel' },
 ];
+
+const values = Object.values(ENTRY_OPTIONS).map((option) => option.value);
 
 /**
  * DropdownMultiSelect demo page
  */
 const DropdownMultiSelectDemo: React.FC = () => {
-  const [entryTypes, setEntryTypes] = useState<string[]>([
-    'online-subscription',
-    'offline-subscription',
-    'manual-review',
-  ]);
+  const [entryTypes, setEntryTypes] = useState<string[]>(values);
 
   return (
     <div className="dropdown-multi-select-demo">
@@ -40,8 +38,7 @@ const DropdownMultiSelectDemo: React.FC = () => {
           value={entryTypes}
           options={ENTRY_OPTIONS}
           onChange={setEntryTypes}
-          placeholder="请选择准入类型"
-          style={{ width: 176 }}
+          language="zh"
         />
 
         <Divider style={{ margin: '16px 0' }} />
@@ -50,7 +47,11 @@ const DropdownMultiSelectDemo: React.FC = () => {
           {entryTypes.length === 0 && <Tag>未选择</Tag>}
           {entryTypes.map((item) => {
             const option = ENTRY_OPTIONS.find((entry) => entry.value === item);
-            return <Tag key={item} color="blue">{option?.label || item}</Tag>;
+            return (
+              <Tag key={item} color="blue">
+                {option?.label || item}
+              </Tag>
+            );
           })}
         </Space>
       </Card>

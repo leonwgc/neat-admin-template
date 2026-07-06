@@ -6,21 +6,22 @@
 @import 'scss/common.scss';
 
 .dropdown-multi-select {
-  width: 100%;
-
-  .ds-select-selection-overflow-item,
-  .ant-select-selection-overflow-item {
-    &::after {
-      content: ',';
-    }
+  .ds-select {
+    width: 100%;
+    display: flex;
   }
 
-  .ds-select-selection-overflow-item-suffix,
-  .ant-select-selection-overflow-item-suffix,
-  .ds-select-selection-overflow-item-rest,
-  .ant-select-selection-overflow-item-rest {
-    &::after {
-      content: '';
+  .ds-tag {
+    margin-inline-start: -8px;
+    background: none;
+    border: none;
+    outline: none;
+    &:hover {
+      background: none;
+    }
+    &:active {
+      background: none;
+      color: #333;
     }
   }
 
