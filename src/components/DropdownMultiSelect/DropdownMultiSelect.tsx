@@ -3,18 +3,10 @@
  * @author leon.wang
  */
 
-import React, { useMemo, useState, useEffect } from 'react';
-import {
-  Select,
-  Button,
-  Divider,
-  Checkbox,
-  Typography,
-} from '@derbysoft/neat-design';
+import React, { useMemo, useState, useEffect, useCallback } from 'react';
+import { Select, Button, Divider, Checkbox } from '@derbysoft/neat-design';
 import classNames from 'classnames';
 import './DropdownMultiSelect.scss';
-
-const { Text } = Typography;
 
 export interface DropdownMultiSelectOption {
   /** Option label */
@@ -123,6 +115,26 @@ const DropdownMultiSelect: React.FC<DropdownMultiSelectProps> = ({
     return open ? draftValue : selectedValue;
   }, [draftValue, open, selectedValue]);
 
+  const maxTagPlaceholder = useCallback(
+    (omittedValues) => {
+      if (omittedValues.length === 0) {
+        return language === 'en' ? 'None selected' : '未选择';
+      } else if (omittedValues.length === 1) {
+        return omittedValues[0].label;
+      } else if (
+        omittedValues.length > 1 &&
+        omittedValues.length < options.length
+      ) {
+        return language === 'en'
+          ? `${omittedValues.length} selected`
+          : `已选中 ${omittedValues.length} 项`;
+      } else {
+        return language === 'en' ? 'All selected' : '已选中全部';
+      }
+    },
+    [language, options?.length],
+  );
+
   return (
     <div className={classNames('dropdown-multi-select', className)}>
       <Select
@@ -138,17 +150,7 @@ const DropdownMultiSelect: React.FC<DropdownMultiSelectProps> = ({
         //     ? `${omittedValues.length} selected`
         //     : `已选中 ${omittedValues.length} 项`
         // }
-        maxTagPlaceholder={(omittedValues) => {
-          return (
-            <Text
-              ellipsis
-              style={{ maxWidth: '100%' }}
-              className="dropdown-multi-select__omitted-values"
-            >
-              {omittedValues.map((value) => value.value).join(', ')}
-            </Text>
-          );
-        }}
+        maxTagPlaceholder={maxTagPlaceholder}
         placeholder={language === 'zh' ? '请选择' : 'Please select'}
         onChange={handleDraftChange}
         popupRender={(menu) => (
