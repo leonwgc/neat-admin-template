@@ -4,9 +4,17 @@
  */
 
 import React, { useMemo, useState, useEffect } from 'react';
-import { Select, Button, Divider, Checkbox } from '@derbysoft/neat-design';
+import {
+  Select,
+  Button,
+  Divider,
+  Checkbox,
+  Typography,
+} from '@derbysoft/neat-design';
 import classNames from 'classnames';
 import './DropdownMultiSelect.scss';
+
+const { Text } = Typography;
 
 export interface DropdownMultiSelectOption {
   /** Option label */
@@ -125,11 +133,22 @@ const DropdownMultiSelect: React.FC<DropdownMultiSelectProps> = ({
         options={options}
         disabled={disabled}
         maxTagCount={0}
-        maxTagPlaceholder={(omittedValues) =>
-          language === 'en'
-            ? `${omittedValues.length} selected`
-            : `已选中 ${omittedValues.length} 项`
-        }
+        // maxTagPlaceholder={(omittedValues) =>
+        //   language === 'en'
+        //     ? `${omittedValues.length} selected`
+        //     : `已选中 ${omittedValues.length} 项`
+        // }
+        maxTagPlaceholder={(omittedValues) => {
+          return (
+            <Text
+              ellipsis
+              style={{ maxWidth: '100%' }}
+              className="dropdown-multi-select__omitted-values"
+            >
+              {omittedValues.map((value) => value.value).join(', ')}
+            </Text>
+          );
+        }}
         placeholder={language === 'zh' ? '请选择' : 'Please select'}
         onChange={handleDraftChange}
         popupRender={(menu) => (
@@ -149,6 +168,7 @@ const DropdownMultiSelect: React.FC<DropdownMultiSelectProps> = ({
               <Checkbox
                 type="link"
                 size="small"
+                indeterminate={!isAllSelected && draftValue.length > 0}
                 checked={isAllSelected}
                 onClick={handleToggleAll}
               >
