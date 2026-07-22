@@ -19,7 +19,7 @@
 
   &__content {
     height: 100%;
-    padding-bottom: 64px;
+    padding: 32px 0 64px;
     overflow-y: scroll;
     &::-webkit-scrollbar {
       display: none;

@@ -7,6 +7,7 @@ import {
   TableOutlined,
   WrenchOutlined,
   APIOutlined,
+  HomeOutlined,
 } from '@derbysoft/neat-design-icons';
 import { MenuProps } from '@derbysoft/neat-design';
 import i18n from './i18n';
@@ -50,6 +51,14 @@ export type MenuItem = Required<MenuProps>['items'][number] & {
  * This structure is used to render navigation menus and control access based on permissions.
  */
 export const menus: MenuItem[] = [
+  {
+    key: 'page1',
+    get label() {
+      return '结算管理';
+    },
+    route: '/app/forms/table',
+    icon: <HomeOutlined />,
+  },
   {
     key: 'form',
     get label() {
