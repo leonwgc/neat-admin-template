@@ -13,6 +13,10 @@
   margin-top: var(--nav-height);
   z-index: 40;
 
+  .ds-menu {
+    user-select: none;
+  }
+
   &__content {
     height: 100%;
     padding-bottom: 64px;
