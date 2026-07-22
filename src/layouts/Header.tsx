@@ -12,7 +12,7 @@ import {
   Divider,
 } from '@derbysoft/neat-design';
 import type { MenuProps } from '@derbysoft/neat-design';
-import { MenuOutlined } from '@derbysoft/neat-design-icons';
+import { HotelOutlined, MenuOutlined } from '@derbysoft/neat-design-icons';
 import { Dropdown } from 'antd';
 import { useBoolean } from 'ahooks';
 import { useTranslation } from 'react-i18next';
@@ -63,6 +63,11 @@ const Header: React.FC<React.HTMLAttributes<HTMLElement>> = (props) => {
           <DerbySoftLogo />
           <Tag color="blue">结算中心后台管理系统</Tag>
           <Divider alignment="vertical" style={{ height: 24 }} />
+
+          <Flex align="center" gap={8}>
+            <HotelOutlined />
+            上海行者无疆大酒店
+          </Flex>
         </Flex>
 
         <Space size={8}>
