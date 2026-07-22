@@ -3,7 +3,14 @@
  * @author leon.wang
  */
 import React from 'react';
-import { Layout, Space, Flex, Avatar } from '@derbysoft/neat-design';
+import {
+  Layout,
+  Space,
+  Flex,
+  Avatar,
+  Tag,
+  Divider,
+} from '@derbysoft/neat-design';
 import type { MenuProps } from '@derbysoft/neat-design';
 import { MenuOutlined } from '@derbysoft/neat-design-icons';
 import { Dropdown } from 'antd';
@@ -52,8 +59,10 @@ const Header: React.FC<React.HTMLAttributes<HTMLElement>> = (props) => {
   return (
     <div className="neat-header">
       <Layout.Header {...props}>
-        <Flex align="center" gap={16}>
+        <Flex align="center" gap={8}>
           <DerbySoftLogo />
+          <Tag color="blue">结算中心后台管理系统</Tag>
+          <Divider alignment="vertical" style={{ height: 24 }} />
         </Flex>
 
         <Space size={8}>
