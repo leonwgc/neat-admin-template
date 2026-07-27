@@ -10,8 +10,7 @@ import type {
   AxiosResponse,
 } from 'axios';
 import type { ApiResponse } from './types';
-
-const notVerifyLocation = ['/nav/no-permission', '/nav/404', '/nav/500'];
+import { notVerifyLocation } from './req.config';
 
 /**
  * 配置请求拦截器
