@@ -11,6 +11,8 @@ import type {
 } from 'axios';
 import type { ApiResponse } from './types';
 
+const notVerifyLocation = ['/nav/no-permission', '/nav/404', '/nav/500'];
+
 /**
  * 配置请求拦截器
  *
@@ -60,6 +62,17 @@ export const setupResponseInterceptors = (instance: AxiosInstance): void => {
       return Promise.reject(new Error(errorMessage));
     },
     (error) => {
+      if (error.response.status === 401) {
+        if (!notVerifyLocation.includes(location.pathname?.toLowerCase())) {
+          // 如果响应头中包含 location，则跳转到该地址
+          if (error.response.headers['location']) {
+            window.location.replace(error.response.headers['location']);
+          }
+        }
+      } else if (error.response.status === 403) {
+        // 如果是 403 错误，跳转到无权限页面
+        location.href = '/nav/no-permission';
+      }
       return Promise.reject(error);
     },
   );
