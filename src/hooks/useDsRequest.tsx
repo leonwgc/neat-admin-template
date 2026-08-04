@@ -12,22 +12,6 @@ import { onSuccessHandler } from '../helper';
 
 const t = (key) => i18n.t(key);
 
-export type ObjectType = Record<string, unknown>;
-
-export type ListObjectType = {
-  pageSize?: number;
-  pageNum?: number;
-  totals: number;
-  totalPages?: number;
-  records: ObjectType[];
-};
-
-export type ResponseDataType = {
-  result: 'success' | 'fail';
-  timestamp?: number;
-  data?: ObjectType | ObjectType[] | ListObjectType;
-};
-
 type Options<TParams extends unknown[] = any[], TData = unknown> = {
   manual?: boolean;
   async?: boolean; // default false
@@ -100,7 +84,7 @@ const useDsRequest = (
         options?.onFailed(error, params, res);
       } else {
         if (toastDefaultError) {
-          toast.error('Operation failed');
+          toast.error(t('common.error.unknown'));
         }
       }
 
