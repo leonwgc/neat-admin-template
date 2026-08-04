@@ -10,14 +10,12 @@ import type { AxiosResponse } from 'axios';
  * API 响应数据结构
  */
 export interface ApiResponse<T = unknown> {
-  /** 响应码 */
-  code: number;
-  /** 响应消息 */
-  message: string;
-  /** 响应数据 */
   data: T;
   /** 是否成功 */
-  success: boolean;
+  result: 'success' | 'error';
+  message?: string;
+  /** 其他信息 */
+  [key: string]: unknown;
 }
 
 /**
@@ -45,8 +43,6 @@ export interface PaginationResponse<T = unknown> {
   /** 总页数 */
   totalPages: number;
 }
-
-
 
 /**
  * HTTP 错误类型

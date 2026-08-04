@@ -2,14 +2,13 @@
 const { run } = require('@derbysoft/pack');
 
 run({
+  index: ['./src/index'],
   port: 3000,
   proxy: [
     {
-      context: ['/neat-api-dev'],
-      target: 'localhost:3001',
-      pathRewrite: {
-        '^/neat-api-dev': '',
-      },
+      context: ['/unifyplatform-backend-qa'],
+      pathFilter: ['/unifyplatform-backend-qa'],
+      target: 'https://unifyplatform.qa.derbysoft-test.com/',
       changeOrigin: true,
       logLevel: 'silent',
     },
@@ -20,13 +19,20 @@ run({
       title: 'Neat Design Admin',
       favicon: './public/favicon.ico',
     },
-    server: {
-      open: true,
+    tools: {
+      rspack: { optimization: { nodeEnv: false } },
     },
     source: {
       define: {
-        'process.env.ENV': JSON.stringify('development'),
+        // 'process.env.NODE_ENV': JSON.stringify('development'),
+        // 'process.env.NODE_ENV': JSON.stringify('uat'),
+        // 'process.env.NODE_ENV': JSON.stringify('production-cn'),
+        'process.env.NODE_ENV': JSON.stringify("qa")
+        // 'process.env.NODE_ENV': JSON.stringify('internal-qa'),
       },
+    },
+    server: {
+      open: true,
     },
   },
 });

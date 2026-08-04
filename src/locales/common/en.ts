@@ -15,7 +15,8 @@ export default {
   no: 'No',
   reload: 'Reload',
   errorBoundaryTitle: 'Something went wrong',
-  errorBoundaryDescription: 'Sorry, this page encountered an unexpected problem',
+  errorBoundaryDescription:
+    'Sorry, this page encountered an unexpected problem',
   noPermissionTitle: 'You do not have permission to view this page',
   noPermissionDescription: 'Please contact your administrator',
   notFoundTitle: 'Unable to find the page you are looking for',
@@ -46,6 +47,9 @@ export default {
     unknown: 'Unknown Error',
     networkError: 'Network Error',
     requestFailed: 'Request Failed',
+    defaultMessageTitle: 'Server or network exception',
+    defaultMessage:
+      'Unable to connect to the server. Please check your internet connection or try again later.',
   },
 
   // Menu translations

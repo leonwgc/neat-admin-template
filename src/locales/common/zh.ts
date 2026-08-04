@@ -46,6 +46,9 @@ export default {
     unknown: '未知错误',
     networkError: '网络连接失败',
     requestFailed: '请求失败',
+    defaultMessageTitle: '服务器或网络异常',
+    defaultMessage:
+      '无法连接到服务器。请检查您的网络连接或稍后再试。',
   },
 
   // 菜单翻译

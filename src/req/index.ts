@@ -13,13 +13,11 @@ import type { CancelTokenMap } from './types';
  */
 const getBaseURL = (): string => {
   // 可以根据环境变量或配置文件获取
-  if (process.env.NODE_ENV === 'development') {
-    return '/api'; // 开发环境使用代理
-  }
 
-  // 生产环境从 window 全局配置获取（由 build 时注入）
-  const globalWindow = window as unknown as Record<string, unknown>;
-  return (globalWindow.__API_BASE_URL__ as string) || '/api';
+  if (process.env.NODE_ENV === 'qa') {
+    return '/unifyplatform-backend-qa';
+  }
+  return '';
 };
 
 /**
@@ -120,7 +118,7 @@ export const cancelAllRequests = (): void => {
  * ```
  */
 export const requestWithCancel = <T = unknown>(
-  config: AxiosRequestConfig
+  config: AxiosRequestConfig,
 ): Promise<T> => {
   const key = generateRequestKey(config);
 
@@ -151,7 +149,11 @@ export const requestWithCancel = <T = unknown>(
 };
 
 // 导出类型
-export type { ApiResponse, PaginationParams, PaginationResponse } from './types';
+export type {
+  ApiResponse,
+  PaginationParams,
+  PaginationResponse,
+} from './types';
 export { HttpError, HttpErrorType } from './types';
 
 // 导出默认实例

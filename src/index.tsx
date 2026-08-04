@@ -8,7 +8,7 @@ import { HashRouter } from 'react-router';
 import App from './App';
 import './scss/index.scss';
 
-createRoot(document.getElementById('app')).render(
+createRoot(document.getElementById('app') as HTMLElement).render(
   <HashRouter>
     <App />
   </HashRouter>,

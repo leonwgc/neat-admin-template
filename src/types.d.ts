@@ -47,3 +47,19 @@ interface NodeRequire {
 }
 
 declare const require: NodeRequire;
+
+declare interface Window {
+  ENV?: string;
+}
+
+declare const process: {
+  env: {
+    NODE_ENV: string;
+  };
+};
+
+declare type RequestHandler = (
+  data: unknown,
+  params: unknown[],
+  fullData?: unknown,
+) => void;
