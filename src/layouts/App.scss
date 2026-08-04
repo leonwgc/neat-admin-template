@@ -9,6 +9,9 @@
   height: 100vh;
   overflow: hidden;
 
+  .ds-layout-header {
+    line-height: unset;
+  }
   --header-height: 56px;
   // Header
   &__header {
@@ -18,7 +21,7 @@
     width: 100%;
     height: var(--header-height);
     padding: 0 16px;
-    line-height: var(--header-height);
+    // line-height: var(--header-height);
     background-color: #fff;
     border-bottom: 1px solid #dfe4e8;
     box-shadow: 0 4px 4px rgba(112, 138, 151, 0.08);

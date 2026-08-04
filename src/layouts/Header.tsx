@@ -10,6 +10,7 @@ import {
   Avatar,
   Tag,
   Divider,
+  Skeleton,
 } from '@derbysoft/neat-design';
 import type { MenuProps } from '@derbysoft/neat-design';
 import { HotelOutlined, MenuOutlined } from '@derbysoft/neat-design-icons';
@@ -28,7 +29,7 @@ const Header: React.FC<React.HTMLAttributes<HTMLElement>> = (props) => {
   const { t, i18n } = useTranslation();
 
   const currentLang = i18n.language as Language;
-  const { userInfo } = useUserInfo();
+  const { userInfo, loading } = useUserInfo();
 
   const handleLanguageChange = async (lang: Language) => {
     await changeLanguage(lang);
@@ -64,10 +65,16 @@ const Header: React.FC<React.HTMLAttributes<HTMLElement>> = (props) => {
           <Tag color="blue">结算中心后台管理系统</Tag>
           <Divider alignment="vertical" style={{ height: 24 }} />
 
-          <Flex align="center" gap={8}>
-            <HotelOutlined />
-            上海行者无疆大酒店
-          </Flex>
+          {!loading ? (
+            <Flex align="center" gap={8}>
+              <HotelOutlined />
+              {userInfo?.joinedCompanies?.find(
+                (company) => company.id === userInfo?.currentCompanyId,
+              )?.name || ''}
+            </Flex>
+          ) : (
+            <Skeleton.Button size="small" active />
+          )}
         </Flex>
 
         <Space size={8}>
@@ -84,7 +91,7 @@ const Header: React.FC<React.HTMLAttributes<HTMLElement>> = (props) => {
             )}
           >
             <Avatar style={{ cursor: 'pointer', userSelect: 'none' }}>
-              {userInfo?.nickname?.[0]}
+              {userInfo?.familyName?.[0]}
             </Avatar>
           </Dropdown>
         </Space>

@@ -3,7 +3,7 @@
  * @author leon.wang
  */
 
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import dayjs from 'dayjs';
 import 'dayjs/locale/zh-cn';
 import 'dayjs/locale/en';
@@ -14,10 +14,7 @@ import enUS from 'antd/es/locale/en_US';
 import { useTranslation } from 'react-i18next';
 import { ErrorBoundary } from './components/ErrorBoundary';
 import RouteConfig from './RouteConfig';
-import { useMount } from 'ahooks';
-import useGlobalState, { configureDevtools } from '@derbysoft/zustand-kit';
-import operations from './config.operations';
-import { defaultUserInfo, USER_INFO_KEY, UserInfo } from './global/config';
+import { configureDevtools } from '@derbysoft/zustand-kit';
 import './App.scss';
 
 configureDevtools(process.env.NODE_ENV === 'development');
@@ -25,33 +22,10 @@ configureDevtools(process.env.NODE_ENV === 'development');
 const App = () => {
   const { i18n } = useTranslation();
 
-  // Set initial user info in global state
-  const [, setUserInfo] = useGlobalState<UserInfo>(
-    USER_INFO_KEY,
-    defaultUserInfo,
-  );
-
   useEffect(() => {
     const locale = i18n.language === 'zh' ? 'zh-cn' : 'en';
     dayjs.locale(locale);
   }, [i18n.language]);
-
-  useMount(() => {
-    // Simulate user info loading
-    setTimeout(() => {
-      // In a real app, you would fetch this from an API
-      setUserInfo({
-        userId: '1',
-        username: 'Leon',
-        nickname: 'LW',
-        operations: [
-          operations.formRead,
-          operations.imageUploadRead,
-          operations.imageCropRead,
-        ],
-      });
-    }, 1000);
-  });
 
   return (
     <ErrorBoundary

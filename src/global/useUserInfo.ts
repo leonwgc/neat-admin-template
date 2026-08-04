@@ -3,23 +3,25 @@
  * @author leon.wang
  */
 
-import { useMemo } from 'react';
-import { useGlobalSelector, useGlobalState } from '@derbysoft/zustand-kit';
-import { USER_INFO_KEY, UserInfo, defaultUserInfo } from './config';
+import { useGlobalState } from '@derbysoft/zustand-kit';
+import { USER_INFO_KEY } from './config';
+import useDsRequest from '../hooks/useDsRequest';
+import req from '../req';
+import createFetchOnce from '../utils/createFetchOnce';
+
+const fetchUserInfoOnce = createFetchOnce(() => req.get('/auth/userinfo'));
 
 const useUserInfo = () => {
-  const userInfo = useGlobalSelector<UserInfo, UserInfo>(
+  const [userInfo, setGlobalUserInfo] = useGlobalState<UserInfo>(
     USER_INFO_KEY,
-    (state) => state,
-  );
-  const [, setGlobalUserInfo] = useGlobalState<UserInfo>(
-    USER_INFO_KEY,
-    defaultUserInfo,
+    {} as UserInfo,
   );
 
-  const userInfoReady = useMemo(() => {
-    return userInfo.userId !== '';
-  }, [userInfo]);
+  const { loading, refresh } = useDsRequest(fetchUserInfoOnce, {
+    onSuccess: (data) => {
+      setGlobalUserInfo(data as UserInfo);
+    },
+  });
 
   const hasPermission = (permissions?: string[] | string) => {
     if (!permissions || (Array.isArray(permissions) && !permissions.length)) {
@@ -31,7 +33,7 @@ const useUserInfo = () => {
       : [permissions];
 
     return requiredPermissions.every((permission) =>
-      userInfo.operations.includes(permission),
+      userInfo.operations?.includes?.(permission),
     );
   };
 
@@ -40,18 +42,17 @@ const useUserInfo = () => {
   };
 
   const resetUserInfo = () => {
-    setGlobalUserInfo(defaultUserInfo);
+    setGlobalUserInfo({} as UserInfo);
   };
-
-  const loading = !userInfoReady;
 
   return {
     userInfo,
     loading,
-    userInfoReady,
+    userInfoReady: !loading,
     hasPermission,
     setUserInfo,
     resetUserInfo,
+    refreshUserInfo: refresh,
   } as const;
 };
 
