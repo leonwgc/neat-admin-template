@@ -8,6 +8,7 @@ import { USER_INFO_KEY } from './config';
 import useDsRequest from '../hooks/useDsRequest';
 import req from '../req';
 import createFetchOnce from '../utils/createFetchOnce';
+import { useMount } from 'ahooks';
 
 const fetchUserInfoOnce = createFetchOnce(() => req.get('/auth/userinfo'));
 
@@ -17,7 +18,8 @@ const useUserInfo = () => {
     {} as UserInfo,
   );
 
-  const { loading, refresh } = useDsRequest(fetchUserInfoOnce, {
+  const { loading, refresh, run } = useDsRequest(fetchUserInfoOnce, {
+    manual: true,
     onSuccess: (data) => {
       setGlobalUserInfo(data as UserInfo);
     },
@@ -44,6 +46,12 @@ const useUserInfo = () => {
   const resetUserInfo = () => {
     setGlobalUserInfo({} as UserInfo);
   };
+
+  useMount(() => {
+    if (!loading && !userInfo.userId) {
+      run();
+    }
+  });
 
   return {
     userInfo,
