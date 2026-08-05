@@ -37,6 +37,7 @@ function getRequestKey(config) {
 export const setupRequestInterceptors = (instance: AxiosInstance): void => {
   instance.interceptors.request.use(
     (config: InternalAxiosRequestConfig) => {
+
       const key = getRequestKey(config);
 
       // ✅ 如果该请求已经在执行中：直接抛出，不发送请求，达到忽略效果
