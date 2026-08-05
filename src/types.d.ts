@@ -10,8 +10,7 @@ declare module '*.png' {
 
 declare namespace NodeJS {
   interface ProcessEnv {
-    NODE_ENV?: 'development' | 'production' | 'uat' | 'qa';
-    [key: string]: string | undefined;
+    NODE_ENV: 'development' | 'production' | 'uat' | 'qa';
   }
 
   interface Process {
@@ -50,6 +49,7 @@ declare const require: NodeRequire;
 
 declare interface Window {
   ENV?: string;
+  gtag: (...args: unknown[]) => void;
 }
 
 declare const process: {
