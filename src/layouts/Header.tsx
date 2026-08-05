@@ -3,17 +3,9 @@
  * @author leon.wang
  */
 import React from 'react';
-import {
-  Layout,
-  Space,
-  Flex,
-  Avatar,
-  Tag,
-  Divider,
-  Skeleton,
-} from '@derbysoft/neat-design';
+import { Layout, Space, Flex, Avatar, Tag } from '@derbysoft/neat-design';
 import type { MenuProps } from '@derbysoft/neat-design';
-import { HotelOutlined, MenuOutlined } from '@derbysoft/neat-design-icons';
+import { MenuOutlined } from '@derbysoft/neat-design-icons';
 import { Dropdown } from 'antd';
 import { useBoolean } from 'ahooks';
 import { useTranslation } from 'react-i18next';
@@ -62,8 +54,8 @@ const Header: React.FC<React.HTMLAttributes<HTMLElement>> = (props) => {
       <Layout.Header {...props}>
         <Flex align="center" gap={8}>
           <DerbySoftLogo />
-          <Tag color="blue">结算中心后台管理系统</Tag>
-          <Divider alignment="vertical" style={{ height: 24 }} />
+          <Tag color="blue">Customer Settlement Center</Tag>
+          {/* <Divider alignment="vertical" style={{ height: 24 }} />
 
           {!loading ? (
             <Flex align="center" gap={8}>
@@ -74,7 +66,7 @@ const Header: React.FC<React.HTMLAttributes<HTMLElement>> = (props) => {
             </Flex>
           ) : (
             <Skeleton.Button size="small" active />
-          )}
+          )} */}
         </Flex>
 
         <Space size={8}>

@@ -18,15 +18,12 @@ const useUserInfo = () => {
     {} as UserInfo,
   );
 
-  const { loading, refresh, run } = useDsRequest(
-    () => req.get('/auth/userinfo'),
-    {
-      manual: true,
-      onSuccess: (data) => {
-        setGlobalUserInfo(data as UserInfo);
-      },
+  const { loading, refresh, run } = useDsRequest(fetchUserInfoOnce, {
+    manual: true,
+    onSuccess: (data) => {
+      setGlobalUserInfo(data as UserInfo);
     },
-  );
+  });
 
   const hasPermission = (permissions?: string[] | string) => {
     if (!permissions || (Array.isArray(permissions) && !permissions.length)) {

@@ -8,12 +8,7 @@ import axios, { type AxiosInstance, type AxiosRequestConfig } from 'axios';
 import { setupInterceptors } from './interceptors';
 import type { CancelTokenMap } from './types';
 
-/**
- * 获取 API 基础 URL
- */
 const getBaseURL = (): string => {
-  // 可以根据环境变量或配置文件获取
-
   if (process.env.NODE_ENV === 'qa') {
     return '/unifyplatform-backend-qa';
   }

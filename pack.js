@@ -24,10 +24,10 @@ run({
     },
     source: {
       define: {
-        // 'process.env.NODE_ENV': JSON.stringify('development'),
+        'process.env.NODE_ENV': JSON.stringify('development'),
         // 'process.env.NODE_ENV': JSON.stringify('uat'),
         // 'process.env.NODE_ENV': JSON.stringify('production-cn'),
-        'process.env.NODE_ENV': JSON.stringify("qa")
+        // 'process.env.NODE_ENV': JSON.stringify("qa")
         // 'process.env.NODE_ENV': JSON.stringify('internal-qa'),
       },
     },
