@@ -32,7 +32,7 @@ export const setupRequestInterceptors = (instance: AxiosInstance): void => {
         if (pendingMap.has(key)) {
           if (process.env.NODE_ENV !== 'production') {
             // eslint-disable-next-line no-console
-            console.warn(`Duplicate request: ${key}`);
+            console.log(`Duplicate request intercepted: ${key}`);
           }
           return Promise.reject(new Error(`Duplicate request: ${key}`));
         }
