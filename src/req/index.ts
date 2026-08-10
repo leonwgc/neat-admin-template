@@ -4,56 +4,18 @@
  * @description Axios 实例配置和导出
  */
 
-import axios, { type AxiosInstance, type AxiosRequestConfig } from 'axios';
-import { setupInterceptors } from './interceptors';
-import type { CancelTokenMap } from './types';
-
-const getBaseURL = (): string => {
-  if (process.env.NODE_ENV === 'qa') {
-    return '/unifyplatform-backend-qa';
-  }
-  return '';
-};
-
-/**
- * 创建 Axios 实例
- */
-const createAxiosInstance = (): AxiosInstance => {
-  const instance = axios.create({
-    baseURL: getBaseURL(),
-    timeout: 30000, // 30 秒超时
-    withCredentials: true, // 跨域请求是否携带凭证
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
-
-  // 配置拦截器
-  setupInterceptors(instance);
-
-  return instance;
-};
+import type { AxiosRequestConfig, InternalAxiosRequestConfig } from 'axios';
+import { getRequestKey, getAxiosInstance } from './utils';
 
 /**
  * Axios 实例（单例）
  */
-const request = createAxiosInstance();
+const request = getAxiosInstance();
 
 /**
  * 请求取消器映射表
  */
-const cancelTokenMap: CancelTokenMap = {};
-
-/**
- * 生成请求的唯一 key
- *
- * @param config - 请求配置
- * @returns 唯一 key
- */
-const generateRequestKey = (config: AxiosRequestConfig): string => {
-  const { method = 'get', url = '', params = {}, data = {} } = config;
-  return `${method}_${url}_${JSON.stringify(params)}_${JSON.stringify(data)}`;
-};
+const cancelTokenMap: Map<string, AbortController> = new Map();
 
 /**
  * 取消指定请求
@@ -66,13 +28,13 @@ const generateRequestKey = (config: AxiosRequestConfig): string => {
  * cancelRequest(config);
  * ```
  */
-export const cancelRequest = (config: AxiosRequestConfig): void => {
-  const key = generateRequestKey(config);
-  const controller = cancelTokenMap[key];
+export const cancelRequest = (config: InternalAxiosRequestConfig): void => {
+  const key = getRequestKey(config);
+  const controller = cancelTokenMap.get(key);
 
   if (controller) {
     controller.abort();
-    delete cancelTokenMap[key];
+    cancelTokenMap.delete(key);
   }
 };
 
@@ -86,11 +48,9 @@ export const cancelRequest = (config: AxiosRequestConfig): void => {
  * ```
  */
 export const cancelAllRequests = (): void => {
-  Object.keys(cancelTokenMap).forEach((key) => {
-    cancelTokenMap[key].abort();
-  });
-  Object.keys(cancelTokenMap).forEach((key) => {
-    delete cancelTokenMap[key];
+  cancelTokenMap.forEach((controller, key) => {
+    controller.abort();
+    cancelTokenMap.delete(key);
   });
 };
 
@@ -115,16 +75,15 @@ export const cancelAllRequests = (): void => {
 export const requestWithCancel = <T = unknown>(
   config: AxiosRequestConfig,
 ): Promise<T> => {
-  const key = generateRequestKey(config);
+  const key = getRequestKey(config);
 
-  // 如果存在相同的请求，先取消它
-  if (cancelTokenMap[key]) {
-    cancelTokenMap[key].abort();
+  if (cancelTokenMap.has(key)) {
+    cancelTokenMap.get(key)?.abort();
   }
 
   // 创建新的 AbortController
   const controller = new AbortController();
-  cancelTokenMap[key] = controller;
+  cancelTokenMap.set(key, controller);
 
   // 添加取消令牌到请求配置
   const requestConfig: AxiosRequestConfig = {
@@ -134,11 +93,11 @@ export const requestWithCancel = <T = unknown>(
 
   return request(requestConfig)
     .then((response) => {
-      delete cancelTokenMap[key];
+      cancelTokenMap.delete(key);
       return response.data;
     })
     .catch((error) => {
-      delete cancelTokenMap[key];
+      cancelTokenMap.delete(key);
       throw error;
     });
 };

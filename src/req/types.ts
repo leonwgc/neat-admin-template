@@ -94,10 +94,3 @@ export class HttpError extends Error {
     this.response = response;
   }
 }
-
-/**
- * 请求取消控制器映射
- */
-export interface CancelTokenMap {
-  [key: string]: AbortController;
-}

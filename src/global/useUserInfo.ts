@@ -6,11 +6,8 @@
 import { useGlobalState } from '@derbysoft/zustand-kit';
 import { USER_INFO_KEY } from './config';
 import useDsRequest from '../hooks/useDsRequest';
-import req from '../req';
-import createFetchOnce from '../utils/createFetchOnce';
 import { useMount } from 'ahooks';
-
-const fetchUserInfoOnce = createFetchOnce(() => req.get('/auth/userinfo'));
+import { getUserInfo } from './api';
 
 const useUserInfo = () => {
   const [userInfo, setGlobalUserInfo] = useGlobalState<UserInfo>(
@@ -18,7 +15,7 @@ const useUserInfo = () => {
     {} as UserInfo,
   );
 
-  const { loading, refresh, run } = useDsRequest(fetchUserInfoOnce, {
+  const { loading, refresh, run } = useDsRequest(getUserInfo, {
     manual: true,
     onSuccess: (data) => {
       setGlobalUserInfo(data as UserInfo);
