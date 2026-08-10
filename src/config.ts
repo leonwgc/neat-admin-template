@@ -4,7 +4,7 @@
  */
 import type { AxiosRequestConfig } from 'axios';
 
-export const preventDuplicateRequestHeaderKey = 'Prevent-Duplicate-Request';
+export const preventDuplicateRequestHeaderKey = 'PREVENT-DUPLICATE-REQUEST';
 
 export const defaultRoute = '/app/forms/table';
 
