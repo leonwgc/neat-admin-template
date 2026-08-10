@@ -1,103 +1,111 @@
 # HTTP 请求封装
 
-基于 Axios 的企业级 HTTP 请求封装，提供统一的请求/响应处理、错误处理、请求取消等功能。
+基于 Axios 的请求模块，提供统一实例、重复请求拦截、请求取消能力，以及基础的 401/403 跳转处理。
 
-## 📋 目录结构
+## 目录结构
 
-```
+```text
 req/
-├── index.ts           # 主入口，导出配置好的 axios 实例
-├── types.ts           # TypeScript 类型定义
-├── interceptors.ts    # 请求/响应拦截器
-├── errorHandler.ts    # 错误处理器
-└── README.md          # 使用文档
+├── index.ts        # 模块入口：导出 axios 实例与取消相关方法
+├── interceptors.ts # 请求/响应拦截器（重复请求、401/403 处理）
+├── req.config.ts   # 请求相关配置（免校验路径、SSO 地址）
+├── types.ts        # 通用类型与 HttpError 定义
+├── utils.ts        # baseURL、请求 key、实例创建等工具
+├── example.ts      # 使用示例
+└── README.md
 ```
 
-## ✨ 特性
+## 当前能力（与代码一致）
 
-- ✅ **TypeScript 类型安全** - 完整的类型定义
-- ✅ **请求/响应拦截** - 统一处理参数、错误
-- ✅ **错误处理** - 统一的错误处理和特殊错误处理（401、403 等）
-- ✅ **请求取消** - 支持取消单个或所有请求
-- ✅ **国际化支持** - 错误消息支持 i18n
-- ✅ **开发调试** - 开发环境详细日志输出
+- TypeScript 类型导出：`ApiResponse`、`PaginationParams`、`PaginationResponse`、`HttpError`、`HttpErrorType`
+- 单例 Axios 实例：默认超时 30s、`withCredentials: true`
+- 重复请求拦截：通过请求头 `Prevent-Duplicate-Request: true` 启用
+- 请求取消：支持按配置取消单个请求，或取消全部请求
+- 响应错误处理：
+  - `401`：若当前路径不在免校验白名单，且响应头存在 `location`，则跳转到该地址
+  - `403`：跳转到 `/nav/no-permission`
 
-## 🚀 快速开始
-
-### 基础使用
+## 快速开始
 
 ```typescript
 import request from '~/req';
 
-// GET 请求
-const fetchUserList = async () => {
-  const response = await request.get('/users');
-  return response.data;
+const fetchUsers = async () => {
+  const res = await request.get('/users');
+  return res.data;
 };
 
-// POST 请求
-const createUser = async (userData: UserData) => {
-  const response = await request.post('/users', userData);
-  return response.data;
-};
-
-// PUT 请求
-const updateUser = async (id: string, userData: UserData) => {
-  const response = await request.put(`/users/${id}`, userData);
-  return response.data;
-};
-
-// DELETE 请求
-const deleteUser = async (id: string) => {
-  const response = await request.delete(`/users/${id}`);
-  return response.data;
+const createUser = async (payload: { username: string; email: string }) => {
+  const res = await request.post('/users', payload);
+  return res.data;
 };
 ```
 
-### 使用 ahooks
+## 重复请求拦截
 
-推荐使用 `ahooks` 的 `useRequest` Hook：
+只有显式添加以下请求头，才会启用“相同请求去重”逻辑：
 
 ```typescript
-import { useRequest } from 'ahooks';
 import request from '~/req';
+import { preventDuplicateRequestHeader } from '~/config';
 
-const UserList: React.FC = () => {
-  const { data, loading, error, run, refresh } = useRequest(
-    async () => {
-      const res = await request.get('/users');
-      return res.data;
-    },
-    {
-      manual: false, // 自动执行
-      debounceWait: 300, // 防抖
-    }
-  );
-
-  if (loading) return <Spin />;
-  if (error) return <Alert message="Error" />;
-
-  return (
-    <div>
-      <Button onClick={refresh}>刷新</Button>
-      <List dataSource={data} />
-    </div>
-  );
-};
+await request.get('/users', {
+  params: { page: 1, pageSize: 20 },
+  headers: {
+    ...preventDuplicateRequestHeader,
+  },
+});
 ```
 
-## 📖 高级用法
+请求唯一 key 由以下字段组成：
 
-### 1. 取消请求
+```text
+${method}_${url}_${JSON.stringify(params)}_${JSON.stringify(data)}
+```
+
+若同 key 请求已在进行中，后续请求会被直接拒绝，并抛出 `Error("Duplicate request: ...")`。
+
+## 请求取消
+
+### 1) 取消单个请求
+
+`cancelRequest` 根据传入配置计算 key，并中止对应请求。
 
 ```typescript
-import request, { cancelRequest, cancelAllRequests } from '~/req';
+import type { InternalAxiosRequestConfig } from 'axios';
+import { cancelRequest } from '~/req';
 
-// 取消指定请求
-const config = { url: '/users', method: 'get' };
+const config = {
+  url: '/users',
+  method: 'get',
+} as InternalAxiosRequestConfig;
+
 cancelRequest(config);
+```
 
-// 取消所有请求（常用于页面卸载）
+### 2) 可取消请求（推荐）
+
+`requestWithCancel` 会为同 key 请求自动覆盖旧请求并保留新请求。
+
+```typescript
+import type { InternalAxiosRequestConfig } from 'axios';
+import { requestWithCancel, cancelRequest } from '~/req';
+
+const config = { url: '/users', method: 'get' as const };
+const promise = requestWithCancel<{ list: unknown[] }>(config);
+
+// 需要时取消
+cancelRequest(config as InternalAxiosRequestConfig);
+
+const data = await promise;
+```
+
+### 3) 取消全部请求
+
+```typescript
+import { useEffect } from 'react';
+import { cancelAllRequests } from '~/req';
+
 useEffect(() => {
   return () => {
     cancelAllRequests();
@@ -105,371 +113,84 @@ useEffect(() => {
 }, []);
 ```
 
-### 2. 可取消的请求
+## 响应与错误处理说明
+
+当前实现不会自动把响应“解包”为业务数据，`request.get/post/...` 返回的是 Axios 原始响应对象。
 
 ```typescript
-import { requestWithCancel, cancelRequest } from '~/req';
-
-const fetchData = async () => {
-  const config = { url: '/users', method: 'get' };
-
-  try {
-    const data = await requestWithCancel(config);
-    console.log(data);
-  } catch (error) {
-    if (error.type === 'CANCEL_ERROR') {
-      console.log('Request cancelled');
-    }
-  }
-};
-
-// 取消请求
-const config = { url: '/users', method: 'get' };
-cancelRequest(config);
+const res = await request.get('/users');
+// res 是 AxiosResponse
+console.log(res.data);
 ```
 
-### 3. 分页请求
+`requestWithCancel` 返回的是 `response.data`。
 
 ```typescript
-import request, { type PaginationParams, type PaginationResponse } from '~/req';
-
-interface User {
-  id: string;
-  name: string;
-}
-
-const fetchUserPage = async (
-  params: PaginationParams
-): Promise<PaginationResponse<User>> => {
-  const response = await request.get('/users/page', { params });
-  return response.data;
-};
-
-// 使用
-const pageData = await fetchUserPage({ page: 1, pageSize: 20 });
-console.log(pageData.list, pageData.total);
+const data = await requestWithCancel({ url: '/users', method: 'get' });
 ```
 
-### 4. 文件上传
+当前实现对错误处理的实际行为：
+
+- 会移除重复请求追踪表中的 key
+- `401` 和 `403` 执行页面跳转逻辑
+- 其余错误透传（`Promise.reject(error)`）
+
+注意：当前拦截器未把 Axios 错误统一转换为 `HttpError`，`types.ts` 中 `HttpError` 是可复用类型定义。
+
+## 基础配置
+
+`utils.ts` 中实例默认配置：
 
 ```typescript
-import request from '~/req';
-
-const uploadFile = async (file: File) => {
-  const formData = new FormData();
-  formData.append('file', file);
-
-  const response = await request.post('/upload', formData, {
-    headers: {
-      'Content-Type': 'multipart/form-data',
-    },
-    onUploadProgress: (progressEvent) => {
-      const percent = Math.round(
-        (progressEvent.loaded * 100) / (progressEvent.total || 1)
-      );
-      console.log(`Upload progress: ${percent}%`);
-    },
-  });
-
-  return response.data;
-};
-```
-
-### 5. 文件下载
-
-```typescript
-import request from '~/req';
-
-const downloadFile = async (fileId: string) => {
-  const response = await request.get(`/files/${fileId}/download`, {
-    responseType: 'blob',
-  });
-
-  // 创建下载链接
-  const url = window.URL.createObjectURL(new Blob([response.data]));
-  const link = document.createElement('a');
-  link.href = url;
-  link.download = 'filename.pdf';
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-  window.URL.revokeObjectURL(url);
-};
-```
-
-## 🔧 配置说明
-
-### 基础配置
-
-在 `index.ts` 中配置：
-
-```typescript
-const instance = axios.create({
-  baseURL: getBaseURL(),
-  timeout: 30000,          // 30 秒超时
-  withCredentials: false,  // 是否携带凭证
+axios.create({
+  baseURL: baseURL || getBaseURL(),
+  timeout: 30000,
+  withCredentials: true,
   headers: {
     'Content-Type': 'application/json',
   },
 });
 ```
 
-### 环境配置
+`getBaseURL()` 当前逻辑：
 
-根据不同环境配置不同的 API 地址：
+- `NODE_ENV === 'qa'` 时返回 `/unifyplatform-backend-qa`
+- 其他环境返回空字符串 `''`
 
-```typescript
-const getBaseURL = (): string => {
-  if (process.env.NODE_ENV === 'development') {
-    return '/api'; // 开发环境使用代理
-  }
-
-  // 生产环境从全局配置获取
-  return (window as any).__API_BASE_URL__ || '/api';
-};
-```
-
-### Token 配置
-
-在 `interceptors.ts` 中修改 `getToken` 方法：
+## 类型定义
 
 ```typescript
-const getToken = (): string | null => {
-  return localStorage.getItem('token');
-  // 或从其他地方获取
-  // return store.getState().auth.token;
-};
-```
-
-## 🎯 类型定义
-
-### ApiResponse
-
-标准 API 响应格式：
-
-```typescript
-interface ApiResponse<T = any> {
-  code: number;      // 响应码
-  message: string;   // 响应消息
-  data: T;           // 响应数据
-  success: boolean;  // 是否成功
+export interface ApiResponse<T = unknown> {
+  data: T;
+  result: 'success' | 'error';
+  message?: string;
+  [key: string]: unknown;
 }
-```
 
-### HttpError
-
-标准化的 HTTP 错误：
-
-```typescript
-class HttpError extends Error {
-  type: HttpErrorType;      // 错误类型
-  code?: number;            // 错误码
-  originalError?: any;      // 原始错误
-  response?: AxiosResponse; // 响应对象
-}
-```
-
-## 🚨 错误处理
-
-### 错误类型
-
-```typescript
-enum HttpErrorType {
-  NETWORK_ERROR = 'NETWORK_ERROR',         // 网络错误
-  TIMEOUT_ERROR = 'TIMEOUT_ERROR',         // 超时错误
-  CANCEL_ERROR = 'CANCEL_ERROR',           // 取消请求
-  SERVER_ERROR = 'SERVER_ERROR',           // 服务器错误
-  BUSINESS_ERROR = 'BUSINESS_ERROR',       // 业务错误
-  AUTH_ERROR = 'AUTH_ERROR',               // 认证错误
-  PERMISSION_ERROR = 'PERMISSION_ERROR',   // 权限错误
-  UNKNOWN_ERROR = 'UNKNOWN_ERROR',         // 未知错误
-}
-```
-
-### 特殊错误处理
-
-- **401 未授权**: 自动清除用户信息并跳转到登录页
-- **403 无权限**: 自动跳转到无权限页面
-- **其他错误**: 显示错误提示消息
-
-## 🌍 国际化
-
-错误消息支持国际化，在 `locales/common` 中配置：
-
-```typescript
-// locales/zh.ts
-export default {
-  common: {
-    error: {
-      badRequest: '请求参数错误',
-      unauthorized: '未授权，请重新登录',
-      forbidden: '没有权限访问',
-      notFound: '请求的资源不存在',
-      timeout: '请求超时',
-      serverError: '服务器错误',
-      unknown: '未知错误',
-    },
-  },
-};
-
-// locales/en.ts
-export default {
-  common: {
-    error: {
-      badRequest: 'Bad Request',
-      unauthorized: 'Unauthorized',
-      forbidden: 'Forbidden',
-      notFound: 'Not Found',
-      timeout: 'Request Timeout',
-      serverError: 'Server Error',
-      unknown: 'Unknown Error',
-    },
-  },
-};
-```
-
-## 📝 最佳实践
-
-### 1. 使用 TypeScript
-
-定义请求和响应类型：
-
-```typescript
-interface UserListParams {
+export interface PaginationParams {
   page: number;
   pageSize: number;
-  keyword?: string;
 }
 
-interface User {
-  id: string;
-  name: string;
-  email: string;
-}
-
-const fetchUsers = async (
-  params: UserListParams
-): Promise<User[]> => {
-  const response = await request.get<ApiResponse<User[]>>('/users', { params });
-  return response.data.data;
-};
-```
-
-### 2. 封装 API 方法
-
-创建 API 模块：
-
-```typescript
-// api/user.ts
-import request, { type ApiResponse } from '~/req';
-
-export const userApi = {
-  // 获取用户列表
-  getList: (params: UserListParams) => {
-    return request.get<ApiResponse<User[]>>('/users', { params });
-  },
-
-  // 获取用户详情
-  getDetail: (id: string) => {
-    return request.get<ApiResponse<User>>(`/users/${id}`);
-  },
-
-  // 创建用户
-  create: (data: CreateUserDto) => {
-    return request.post<ApiResponse<User>>('/users', data);
-  },
-
-  // 更新用户
-  update: (id: string, data: UpdateUserDto) => {
-    return request.put<ApiResponse<User>>(`/users/${id}`, data);
-  },
-
-  // 删除用户
-  delete: (id: string) => {
-    return request.delete<ApiResponse<void>>(`/users/${id}`);
-  },
-};
-```
-
-### 3. 配合 ahooks 使用
-
-```typescript
-import { useRequest } from 'ahooks';
-import { userApi } from '~/api/user';
-
-const UserManagement: React.FC = () => {
-  // 获取列表
-  const { data, loading, refresh } = useRequest(
-    () => userApi.getList({ page: 1, pageSize: 20 })
-  );
-
-  // 创建用户
-  const { run: createUser, loading: creating } = useRequest(
-    userApi.create,
-    {
-      manual: true,
-      onSuccess: () => {
-        message.success('创建成功');
-        refresh();
-      },
-    }
-  );
-
-  return (
-    <div>
-      {/* UI 代码 */}
-    </div>
-  );
-};
-```
-
-### 4. 组件卸载时取消请求
-
-```typescript
-import { useEffect } from 'react';
-import { cancelAllRequests } from '~/req';
-
-const MyComponent: React.FC = () => {
-  useEffect(() => {
-    return () => {
-      // 组件卸载时取消所有请求
-      cancelAllRequests();
-    };
-  }, []);
-
-  return <div>...</div>;
-};
-```
-
-## 🔍 调试
-
-开发环境会自动打印详细的请求/响应日志：
-
-```
-📤 Request: { url: '/users', method: 'get', params: {...}, data: {...} }
-📥 Response: { url: '/users', method: 'get', status: 200, data: {...} }
-```
-
-错误信息：
-
-```
-HTTP Error: {
-  type: 'SERVER_ERROR',
-  code: 500,
-  message: '服务器错误',
-  url: '/users',
-  method: 'get',
-  originalError: {...}
+export interface PaginationResponse<T = unknown> {
+  list: T[];
+  total: number;
+  page: number;
+  pageSize: number;
+  totalPages: number;
 }
 ```
 
-## 📚 参考资源
+## 相关文件
 
-- [Axios 文档](https://axios-http.com/)
-- [ahooks 文档](https://ahooks.js.org/)
-- [TypeScript 手册](https://www.typescriptlang.org/docs/)
+- 入口：`src/req/index.ts`
+- 拦截器：`src/req/interceptors.ts`
+- 工具与实例：`src/req/utils.ts`
+- 请求配置：`src/req/req.config.ts`
+- 类型定义：`src/req/types.ts`
+- 使用示例：`src/req/example.ts`
 
 ---
 
-**最后更新**: 2026-04-15
-**维护者**: leon.wang
+最后更新：2026-08-10
+维护者：leon.wang
