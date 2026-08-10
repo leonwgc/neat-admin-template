@@ -4,7 +4,7 @@
  * @description Axios 实例配置和导出
  */
 
-import type { AxiosRequestConfig, InternalAxiosRequestConfig } from 'axios';
+import type { AxiosRequestConfig } from 'axios';
 import { getRequestKey, getAxiosInstance } from './utils';
 
 /**
@@ -28,7 +28,7 @@ const cancelTokenMap: Map<string, AbortController> = new Map();
  * cancelRequest(config);
  * ```
  */
-export const cancelRequest = (config: InternalAxiosRequestConfig): void => {
+export const cancelRequest = (config: AxiosRequestConfig): void => {
   const key = getRequestKey(config);
   const controller = cancelTokenMap.get(key);
 
@@ -102,6 +102,83 @@ export const requestWithCancel = <T = unknown>(
     });
 };
 
+/**
+ * GET with cancel
+ */
+export const getWithCancel = <T = unknown>(
+  url: string,
+  config?: AxiosRequestConfig,
+): Promise<T> => {
+  return requestWithCancel<T>({
+    ...config,
+    url,
+    method: 'get',
+  });
+};
+
+/**
+ * DELETE with cancel
+ */
+export const deleteWithCancel = <T = unknown>(
+  url: string,
+  config?: AxiosRequestConfig,
+): Promise<T> => {
+  return requestWithCancel<T>({
+    ...config,
+    url,
+    method: 'delete',
+  });
+};
+
+/**
+ * POST with cancel
+ */
+export const postWithCancel = <T = unknown>(
+  url: string,
+  data?: unknown,
+  config?: AxiosRequestConfig,
+): Promise<T> => {
+  return requestWithCancel<T>({
+    ...config,
+    url,
+    method: 'post',
+    data,
+  });
+};
+
+/**
+ * PUT with cancel
+ */
+export const putWithCancel = <T = unknown>(
+  url: string,
+  data?: unknown,
+  config?: AxiosRequestConfig,
+): Promise<T> => {
+  return requestWithCancel<T>({
+    ...config,
+    url,
+    method: 'put',
+    data,
+  });
+};
+
+type RequestWithCancelMethods = typeof request & {
+  getWithCancel: typeof getWithCancel;
+  postWithCancel: typeof postWithCancel;
+  putWithCancel: typeof putWithCancel;
+  deleteWithCancel: typeof deleteWithCancel;
+};
+
+const requestWithCancelMethods: RequestWithCancelMethods = Object.assign(
+  request,
+  {
+    getWithCancel,
+    postWithCancel,
+    putWithCancel,
+    deleteWithCancel,
+  },
+);
+
 // 导出类型
 export type {
   ApiResponse,
@@ -111,4 +188,4 @@ export type {
 export { HttpError, HttpErrorType } from './types';
 
 // 导出默认实例
-export default request;
+export default requestWithCancelMethods;
