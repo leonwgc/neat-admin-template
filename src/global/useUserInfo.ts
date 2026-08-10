@@ -4,10 +4,10 @@
  */
 
 import { useGlobalState } from '@derbysoft/zustand-kit';
-import { USER_INFO_KEY } from './config';
-import useDsRequest from '../hooks/useDsRequest';
+import { USER_INFO_KEY } from '~/global/store.config';
+import useDsRequest from '~/hooks/useDsRequest';
 import { useMount } from 'ahooks';
-import { getUserInfo } from './api';
+import { getUserInfo } from '~/global/api';
 
 const useUserInfo = () => {
   const [userInfo, setGlobalUserInfo] = useGlobalState<UserInfo>(
