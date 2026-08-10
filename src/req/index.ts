@@ -7,6 +7,12 @@
 import type { AxiosRequestConfig } from 'axios';
 import { getRequestKey, getAxiosInstance } from './utils';
 
+export interface CancelableRequest<T = unknown> {
+  key: string;
+  promise: Promise<T>;
+  cancel: () => void;
+}
+
 /**
  * Axios 实例（单例）
  */
@@ -55,26 +61,14 @@ export const cancelAllRequests = (): void => {
 };
 
 /**
- * 带取消功能的请求方法
+ * 创建可取消请求句柄
  *
  * @param config - 请求配置
- * @returns Promise
- *
- * @example
- * ```typescript
- * // 发起可取消的请求
- * const data = await requestWithCancel({
- *   url: '/api/data',
- *   method: 'get',
- * });
- *
- * // 取消请求
- * cancelRequest({ url: '/api/data', method: 'get' });
- * ```
+ * @returns 包含 promise/cancel/key 的句柄
  */
-export const requestWithCancel = <T = unknown>(
+export const createCancelableRequest = <T = unknown>(
   config: AxiosRequestConfig,
-): Promise<T> => {
+): CancelableRequest<T> => {
   const key = getRequestKey(config);
 
   if (cancelTokenMap.has(key)) {
@@ -91,7 +85,7 @@ export const requestWithCancel = <T = unknown>(
     signal: controller.signal,
   };
 
-  return request(requestConfig)
+  const promise = request(requestConfig)
     .then((response) => {
       cancelTokenMap.delete(key);
       return response.data;
@@ -100,16 +94,25 @@ export const requestWithCancel = <T = unknown>(
       cancelTokenMap.delete(key);
       throw error;
     });
+
+  return {
+    key,
+    promise,
+    cancel: () => {
+      controller.abort();
+      cancelTokenMap.delete(key);
+    },
+  };
 };
 
 /**
- * GET with cancel
+ * GET cancelable handle
  */
-export const getWithCancel = <T = unknown>(
+export const getCancelable = <T = unknown>(
   url: string,
   config?: AxiosRequestConfig,
-): Promise<T> => {
-  return requestWithCancel<T>({
+): CancelableRequest<T> => {
+  return createCancelableRequest<T>({
     ...config,
     url,
     method: 'get',
@@ -117,13 +120,13 @@ export const getWithCancel = <T = unknown>(
 };
 
 /**
- * DELETE with cancel
+ * DELETE cancelable handle
  */
-export const deleteWithCancel = <T = unknown>(
+export const deleteCancelable = <T = unknown>(
   url: string,
   config?: AxiosRequestConfig,
-): Promise<T> => {
-  return requestWithCancel<T>({
+): CancelableRequest<T> => {
+  return createCancelableRequest<T>({
     ...config,
     url,
     method: 'delete',
@@ -131,14 +134,14 @@ export const deleteWithCancel = <T = unknown>(
 };
 
 /**
- * POST with cancel
+ * POST cancelable handle
  */
-export const postWithCancel = <T = unknown>(
+export const postCancelable = <T = unknown>(
   url: string,
   data?: unknown,
   config?: AxiosRequestConfig,
-): Promise<T> => {
-  return requestWithCancel<T>({
+): CancelableRequest<T> => {
+  return createCancelableRequest<T>({
     ...config,
     url,
     method: 'post',
@@ -147,14 +150,14 @@ export const postWithCancel = <T = unknown>(
 };
 
 /**
- * PUT with cancel
+ * PUT cancelable handle
  */
-export const putWithCancel = <T = unknown>(
+export const putCancelable = <T = unknown>(
   url: string,
   data?: unknown,
   config?: AxiosRequestConfig,
-): Promise<T> => {
-  return requestWithCancel<T>({
+): CancelableRequest<T> => {
+  return createCancelableRequest<T>({
     ...config,
     url,
     method: 'put',
@@ -162,20 +165,22 @@ export const putWithCancel = <T = unknown>(
   });
 };
 
-type RequestWithCancelMethods = typeof request & {
-  getWithCancel: typeof getWithCancel;
-  postWithCancel: typeof postWithCancel;
-  putWithCancel: typeof putWithCancel;
-  deleteWithCancel: typeof deleteWithCancel;
+type RequestCancelableMethods = typeof request & {
+  getCancelable: typeof getCancelable;
+  postCancelable: typeof postCancelable;
+  putCancelable: typeof putCancelable;
+  deleteCancelable: typeof deleteCancelable;
+  createCancelableRequest: typeof createCancelableRequest;
 };
 
-const requestWithCancelMethods: RequestWithCancelMethods = Object.assign(
+const requestCancelableMethods: RequestCancelableMethods = Object.assign(
   request,
   {
-    getWithCancel,
-    postWithCancel,
-    putWithCancel,
-    deleteWithCancel,
+    getCancelable,
+    postCancelable,
+    putCancelable,
+    deleteCancelable,
+    createCancelableRequest,
   },
 );
 
@@ -188,4 +193,4 @@ export type {
 export { HttpError, HttpErrorType } from './types';
 
 // 导出默认实例
-export default requestWithCancelMethods;
+export default requestCancelableMethods;
