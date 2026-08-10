@@ -173,7 +173,7 @@ type RequestCancelableMethods = typeof request & {
   createCancelableRequest: typeof createCancelableRequest;
 };
 
-const requestCancelableMethods: RequestCancelableMethods = Object.assign(
+const enhancedRequest: RequestCancelableMethods = Object.assign(
   request,
   {
     getCancelable,
@@ -193,4 +193,4 @@ export type {
 export { HttpError, HttpErrorType } from './types';
 
 // 导出默认实例
-export default requestCancelableMethods;
+export default enhancedRequest;
