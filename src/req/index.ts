@@ -6,6 +6,7 @@
 
 import type { AxiosRequestConfig } from 'axios';
 import { getRequestKey, getAxiosInstance } from './utils';
+import { getBaseURL } from './req.config';
 
 export interface CancelableRequest<T = unknown> {
   key: string;
@@ -16,7 +17,7 @@ export interface CancelableRequest<T = unknown> {
 /**
  * Axios 实例（单例）
  */
-const request = getAxiosInstance();
+const request = getAxiosInstance(getBaseURL());
 
 /**
  * 请求取消器映射表
@@ -173,16 +174,13 @@ type RequestCancelableMethods = typeof request & {
   createCancelableRequest: typeof createCancelableRequest;
 };
 
-const enhancedRequest: RequestCancelableMethods = Object.assign(
-  request,
-  {
-    getCancelable,
-    postCancelable,
-    putCancelable,
-    deleteCancelable,
-    createCancelableRequest,
-  },
-);
+const enhancedRequest: RequestCancelableMethods = Object.assign(request, {
+  getCancelable,
+  postCancelable,
+  putCancelable,
+  deleteCancelable,
+  createCancelableRequest,
+});
 
 // 导出类型
 export type {

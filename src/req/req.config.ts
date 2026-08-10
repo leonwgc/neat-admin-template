@@ -15,3 +15,10 @@ export const getSSOFrontendURI = () => {
       return 'https://sso.derbysoftsec.com';
   }
 };
+
+export const getBaseURL = (): string => {
+  if (process.env.NODE_ENV === 'qa') {
+    return '/unifyplatform-backend-qa';
+  }
+  return '';
+};

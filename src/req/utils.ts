@@ -119,13 +119,6 @@ const serializeRequestPart = (value: unknown): string => {
   return String(value);
 };
 
-export const getBaseURL = (): string => {
-  if (process.env.NODE_ENV === 'qa') {
-    return '/unifyplatform-backend-qa';
-  }
-  return '';
-};
-
 export const checkPreventDuplicateRequest = (
   config: AxiosRequestConfig,
 ): boolean => {
@@ -152,7 +145,7 @@ export const getRequestKey = (config: AxiosRequestConfig): string => {
  */
 export const getAxiosInstance = (baseURL?: string): AxiosInstance => {
   const instance = axios.create({
-    baseURL: baseURL || getBaseURL(),
+    baseURL,
     timeout: 30000, // 30 秒超时
     withCredentials: true, // 跨域请求是否携带凭证
     headers: {
