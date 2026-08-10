@@ -11,8 +11,7 @@ import type {
   AxiosError,
 } from 'axios';
 
-import { notVerifyLocation } from './req.config';
-import { getRequestKey } from './utils';
+import { getRequestKey, handleResponseError } from './utils';
 import { checkPreventDuplicateRequest } from './utils';
 
 // 保存正在进行的请求：key=>AbortController
@@ -23,7 +22,7 @@ const pendingMap: Map<string, AbortController> = new Map();
  *
  * @param instance - Axios 实例
  */
-export const setupRequestInterceptors = (instance: AxiosInstance): void => {
+const setupRequestInterceptors = (instance: AxiosInstance): void => {
   instance.interceptors.request.use(
     (config: InternalAxiosRequestConfig) => {
       if (checkPreventDuplicateRequest(config)) {
@@ -34,7 +33,9 @@ export const setupRequestInterceptors = (instance: AxiosInstance): void => {
             // eslint-disable-next-line no-console
             console.log(`Duplicate request intercepted: ${key}`);
           }
-          const duplicateError = new Error(`Duplicate request: ${key}`) as Error & {
+          const duplicateError = new Error(
+            `Duplicate request: ${key}`,
+          ) as Error & {
             isDuplicateRequest?: boolean;
             requestKey?: string;
           };
@@ -61,7 +62,7 @@ export const setupRequestInterceptors = (instance: AxiosInstance): void => {
  *
  * @param instance - Axios 实例
  */
-export const setupResponseInterceptors = (instance: AxiosInstance): void => {
+const setupResponseInterceptors = (instance: AxiosInstance): void => {
   instance.interceptors.response.use(
     (response: AxiosResponse) => {
       if (checkPreventDuplicateRequest(response.config)) {
@@ -77,17 +78,8 @@ export const setupResponseInterceptors = (instance: AxiosInstance): void => {
         pendingMap.delete(key);
       }
 
-      const status = error.response?.status;
+      handleResponseError(error);
 
-      if (status === 401) {
-        if (!notVerifyLocation.includes(location.pathname?.toLowerCase())) {
-          if (error?.response?.headers['location']) {
-            window.location.replace(error.response.headers['location']);
-          }
-        }
-      } else if (status === 403) {
-        location.href = '/nav/no-permission';
-      }
       return Promise.reject(error);
     },
   );

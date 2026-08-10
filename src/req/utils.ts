@@ -1,6 +1,11 @@
-import axios, { AxiosInstance, type AxiosRequestConfig } from 'axios';
+import axios, {
+  AxiosError,
+  AxiosInstance,
+  type AxiosRequestConfig,
+} from 'axios';
 import { setupInterceptors } from './interceptors';
 import { preventDuplicateRequestHeaderKey } from '../config';
+import { notVerifyLocation } from './req.config';
 
 const getHeaderValue = (
   headers: AxiosRequestConfig['headers'],
@@ -11,7 +16,9 @@ const getHeaderValue = (
   }
 
   // AxiosHeaders（axios v1）支持 get
-  if (typeof (headers as { get?: (name: string) => unknown }).get === 'function') {
+  if (
+    typeof (headers as { get?: (name: string) => unknown }).get === 'function'
+  ) {
     return (headers as { get: (name: string) => unknown }).get(key);
   }
 
@@ -40,7 +47,9 @@ const isFormData = (value: unknown): value is FormData => {
 };
 
 const isURLSearchParams = (value: unknown): value is URLSearchParams => {
-  return typeof URLSearchParams !== 'undefined' && value instanceof URLSearchParams;
+  return (
+    typeof URLSearchParams !== 'undefined' && value instanceof URLSearchParams
+  );
 };
 
 const sortObject = (value: unknown): unknown => {
@@ -120,7 +129,10 @@ export const getBaseURL = (): string => {
 export const checkPreventDuplicateRequest = (
   config: AxiosRequestConfig,
 ): boolean => {
-  const headerValue = getHeaderValue(config.headers, preventDuplicateRequestHeaderKey);
+  const headerValue = getHeaderValue(
+    config.headers,
+    preventDuplicateRequestHeaderKey,
+  );
   return String(headerValue).toLowerCase() === 'true';
 };
 
@@ -151,4 +163,33 @@ export const getAxiosInstance = (baseURL?: string): AxiosInstance => {
   setupInterceptors(instance);
 
   return instance;
+};
+
+export const handleResponseError = (error: AxiosError): void => {
+  const status = error?.response?.status;
+
+  switch (status) {
+    case 401:
+      handle401Error(error);
+      break;
+    case 403:
+      handle403Error(error);
+      break;
+    default:
+      break;
+  }
+};
+
+export const handle401Error = (error: AxiosError): void => {
+  if (!notVerifyLocation.includes(location.pathname?.toLowerCase())) {
+    if (error?.response?.headers['location']) {
+      window.location.replace(error.response.headers['location']);
+    }
+  }
+};
+
+export const handle403Error = (error: AxiosError): void => {
+  if (error?.response?.status === 403) {
+    location.href = '/nav/no-permission';
+  }
 };
