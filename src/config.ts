@@ -5,9 +5,10 @@
 import type { AxiosRequestConfig } from 'axios';
 
 export const preventDuplicateRequestHeaderKey = 'PREVENT-DUPLICATE-REQUEST';
+export const preventDuplicateRequestHeaderValue = 'YES';
 
 export const defaultRoute = '/app/forms/table';
 
 export const preventDuplicateRequestHeader = {
-  [preventDuplicateRequestHeaderKey]: 'true',
+  [preventDuplicateRequestHeaderKey]: preventDuplicateRequestHeaderValue,
 } as AxiosRequestConfig['headers'];

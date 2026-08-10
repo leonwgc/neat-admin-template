@@ -4,7 +4,10 @@ import axios, {
   type AxiosRequestConfig,
 } from 'axios';
 import { setupInterceptors } from './interceptors';
-import { preventDuplicateRequestHeaderKey } from '../config';
+import {
+  preventDuplicateRequestHeaderKey,
+  preventDuplicateRequestHeaderValue,
+} from '../config';
 import { notVerifyLocation } from './req.config';
 
 const getHeaderValue = (
@@ -126,7 +129,7 @@ export const checkPreventDuplicateRequest = (
     config.headers,
     preventDuplicateRequestHeaderKey,
   );
-  return String(headerValue).toLowerCase() === 'true';
+  return headerValue === preventDuplicateRequestHeaderValue;
 };
 
 /**
