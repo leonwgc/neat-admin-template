@@ -2,6 +2,114 @@ import axios, { AxiosInstance, type AxiosRequestConfig } from 'axios';
 import { setupInterceptors } from './interceptors';
 import { preventDuplicateRequestHeaderKey } from '../config';
 
+const getHeaderValue = (
+  headers: AxiosRequestConfig['headers'],
+  key: string,
+): unknown => {
+  if (!headers) {
+    return undefined;
+  }
+
+  // AxiosHeaders（axios v1）支持 get
+  if (typeof (headers as { get?: (name: string) => unknown }).get === 'function') {
+    return (headers as { get: (name: string) => unknown }).get(key);
+  }
+
+  // 兼容普通对象和大小写差异
+  const headerRecord = headers as Record<string, unknown>;
+  const directValue = headerRecord[key];
+
+  if (directValue !== undefined) {
+    return directValue;
+  }
+
+  const lowerKey = key.toLowerCase();
+  const foundKey = Object.keys(headerRecord).find(
+    (headerKey) => headerKey.toLowerCase() === lowerKey,
+  );
+
+  if (!foundKey) {
+    return undefined;
+  }
+
+  return headerRecord[foundKey];
+};
+
+const isFormData = (value: unknown): value is FormData => {
+  return typeof FormData !== 'undefined' && value instanceof FormData;
+};
+
+const isURLSearchParams = (value: unknown): value is URLSearchParams => {
+  return typeof URLSearchParams !== 'undefined' && value instanceof URLSearchParams;
+};
+
+const sortObject = (value: unknown): unknown => {
+  if (Array.isArray(value)) {
+    return value.map((item) => sortObject(item));
+  }
+
+  if (
+    value &&
+    typeof value === 'object' &&
+    !isFormData(value) &&
+    !isURLSearchParams(value)
+  ) {
+    const sortedEntries = Object.entries(value as Record<string, unknown>)
+      .sort(([a], [b]) => a.localeCompare(b))
+      .map(([k, v]) => [k, sortObject(v)]);
+
+    return Object.fromEntries(sortedEntries);
+  }
+
+  return value;
+};
+
+const serializeRequestPart = (value: unknown): string => {
+  if (value === undefined) {
+    return '';
+  }
+
+  if (value === null) {
+    return 'null';
+  }
+
+  if (isURLSearchParams(value)) {
+    const sortedParams = Array.from(value.entries()).sort(([a], [b]) =>
+      a.localeCompare(b),
+    );
+    return JSON.stringify(sortedParams);
+  }
+
+  if (isFormData(value)) {
+    const sortedEntries = Array.from(value.entries())
+      .map(([k, v]) => {
+        if (v instanceof File) {
+          return [k, `file:${v.name}:${v.size}:${v.type}`];
+        }
+        return [k, String(v)];
+      })
+      .sort(([a], [b]) => a.localeCompare(b));
+
+    return JSON.stringify(sortedEntries);
+  }
+
+  if (typeof value === 'string') {
+    // 兼容 data 为 JSON 字符串的场景，尽量按对象语义稳定化
+    try {
+      const parsed = JSON.parse(value);
+      return JSON.stringify(sortObject(parsed));
+    } catch {
+      return value;
+    }
+  }
+
+  if (typeof value === 'object') {
+    return JSON.stringify(sortObject(value));
+  }
+
+  return String(value);
+};
+
 export const getBaseURL = (): string => {
   if (process.env.NODE_ENV === 'qa') {
     return '/unifyplatform-backend-qa';
@@ -12,13 +120,8 @@ export const getBaseURL = (): string => {
 export const checkPreventDuplicateRequest = (
   config: AxiosRequestConfig,
 ): boolean => {
-  if (
-    config.headers &&
-    config.headers[preventDuplicateRequestHeaderKey] === 'true'
-  ) {
-    return true;
-  }
-  return false;
+  const headerValue = getHeaderValue(config.headers, preventDuplicateRequestHeaderKey);
+  return String(headerValue).toLowerCase() === 'true';
 };
 
 /**
@@ -29,7 +132,7 @@ export const checkPreventDuplicateRequest = (
  */
 export const getRequestKey = (config: AxiosRequestConfig): string => {
   const { method = 'get', url = '', params = {}, data = {} } = config;
-  return `${method}_${url}_${JSON.stringify(params)}_${JSON.stringify(data)}`;
+  return `${method.toLowerCase()}_${url}_${serializeRequestPart(params)}_${serializeRequestPart(data)}`;
 };
 
 /**

@@ -60,10 +60,32 @@ await request.get('/users', {
 请求唯一 key 由以下字段组成：
 
 ```text
-${method}_${url}_${JSON.stringify(params)}_${JSON.stringify(data)}
+${method}_${url}_${serialized(params)}_${serialized(data)}
 ```
 
-若同 key 请求已在进行中，后续请求会被直接拒绝，并抛出 `Error("Duplicate request: ...")`。
+其中 `serialized(...)` 使用稳定序列化策略：
+
+- 普通对象会按 key 排序后再序列化（避免对象字段顺序不同导致误判）
+- `URLSearchParams` 会按参数名排序后序列化
+- `FormData` 会按字段名排序后序列化（`File` 会带上 `name/size/type`）
+- 字符串类型 `data` 若是 JSON 字符串，会先尝试解析再稳定序列化
+
+若同 key 请求已在进行中，后续请求会被直接拒绝，并抛出带额外标识的错误对象：
+
+```typescript
+try {
+  await request.get('/users', { headers: preventDuplicateRequestHeader });
+} catch (error) {
+  const e = error as Error & {
+    isDuplicateRequest?: boolean;
+    requestKey?: string;
+  };
+
+  if (e.isDuplicateRequest) {
+    console.log('重复请求被拦截:', e.requestKey);
+  }
+}
+```
 
 ## 请求取消
 

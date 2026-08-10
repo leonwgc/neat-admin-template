@@ -34,7 +34,13 @@ export const setupRequestInterceptors = (instance: AxiosInstance): void => {
             // eslint-disable-next-line no-console
             console.log(`Duplicate request intercepted: ${key}`);
           }
-          return Promise.reject(new Error(`Duplicate request: ${key}`));
+          const duplicateError = new Error(`Duplicate request: ${key}`) as Error & {
+            isDuplicateRequest?: boolean;
+            requestKey?: string;
+          };
+          duplicateError.isDuplicateRequest = true;
+          duplicateError.requestKey = key;
+          return Promise.reject(duplicateError);
         }
 
         const controller = new AbortController();
@@ -71,13 +77,15 @@ export const setupResponseInterceptors = (instance: AxiosInstance): void => {
         pendingMap.delete(key);
       }
 
-      if (error.status === 401) {
+      const status = error.response?.status;
+
+      if (status === 401) {
         if (!notVerifyLocation.includes(location.pathname?.toLowerCase())) {
           if (error?.response?.headers['location']) {
             window.location.replace(error.response.headers['location']);
           }
         }
-      } else if (error.status === 403) {
+      } else if (status === 403) {
         location.href = '/nav/no-permission';
       }
       return Promise.reject(error);
