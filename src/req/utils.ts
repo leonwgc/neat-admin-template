@@ -1,5 +1,6 @@
 import axios, { AxiosInstance, type AxiosRequestConfig } from 'axios';
 import { setupInterceptors } from './interceptors';
+import { preventDuplicateRequestHeaderKey } from '../config';
 
 export const getBaseURL = (): string => {
   if (process.env.NODE_ENV === 'qa') {
@@ -8,14 +9,12 @@ export const getBaseURL = (): string => {
   return '';
 };
 
-export const preventDuplicateRequestHeader = 'Prevent-Duplicate-Request';
-
 export const checkPreventDuplicateRequest = (
   config: AxiosRequestConfig,
 ): boolean => {
   if (
     config.headers &&
-    config.headers[preventDuplicateRequestHeader] === 'true'
+    config.headers[preventDuplicateRequestHeaderKey] === 'true'
   ) {
     return true;
   }

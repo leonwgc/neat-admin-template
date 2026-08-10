@@ -1,8 +1,8 @@
 import req from '~/req';
-import { preventDuplicateRequestHeader } from '../req/utils';
+import { preventDuplicateRequestHeader } from '~/config';
 
 export const getUserInfo = () => {
   return req.get('/auth/userinfo', {
-    headers: { [preventDuplicateRequestHeader]: 'true' },
+    headers: preventDuplicateRequestHeader,
   });
 };
