@@ -272,7 +272,6 @@ const ARStatementsPage: React.FC = () => {
         columns={columns}
         {...tableProps}
         rowKey={(record) => `${record.statementName}-${record.invoiceId}`}
-        // scroll={{ x: 1500 }}
       />
     </div>
   );
