@@ -21,6 +21,7 @@ const useTable = (
   responseDataTransform?: (
     data: ObjectType | ObjectType[],
   ) => ListResult<ObjectType>,
+  options?: Parameters<typeof useAntdTable>[1],
 ) => {
   const { toast, notification } = App.useApp();
   const [form] = Form.useForm();
@@ -103,10 +104,12 @@ const useTable = (
     tableProps,
     search: { submit, reset, type, changeType },
   } = useAntdTable(service, {
-    debounceWait: 400,
+    ...options,
+    debounceWait: options?.debounceWait ?? 400,
     form,
-    onFinally() {
+    onFinally(...args) {
       setLoading(false);
+      options?.onFinally?.(...args);
     },
   });
 
