@@ -1,0 +1,32 @@
+/**
+ * @file src/components/TopBar/TopBar.scss
+ * @author leon.wang
+ */
+
+@import 'scss/common';
+
+.top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 80px;
+  padding: 12px 24px;
+  background: transparent;
+
+  &__title {
+    font-size: 24px;
+    font-weight: 600;
+    color: $theme-primary;
+    line-height: 1.2;
+  }
+  &__cat {
+    font-size: 14px;
+    font-weight: 400;
+  }
+
+  &__extra {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+}

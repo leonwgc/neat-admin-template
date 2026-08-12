@@ -89,7 +89,7 @@ export const menus: MenuItem[] = [
         get label() {
           return 'AR Statements';
         },
-        route: '/app/forms/table',
+        route: '/app/ar-statements',
       },
       {
         key: 'g2-2',

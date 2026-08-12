@@ -100,7 +100,16 @@ src/
    // ❌ 避免：类组件（除非需要 ErrorBoundary）
    ```
 
-2. **文件头注释**
+2. **优先使用 Neat Design 组件开发页面**
+   ```typescript
+   // ✅ 推荐：页面和通用交互优先使用 Neat Design 组件
+   import { Button, Card, Table, Input, Form } from '@derbysoft/neat-design';
+
+   // ❌ 避免：直接使用原生 HTML 表单、按钮、表格等来实现业务 UI
+   // 只有在 Neat Design 无法满足极特殊场景时，才考虑原生元素或自定义实现
+   ```
+
+3. **文件头注释**
    ```typescript
    /**
     * @file components/ComponentName/ComponentName.tsx
@@ -158,6 +167,17 @@ src/
    ```
 
 ## 🎨 样式开发规范
+
+### 组件优先级规则
+
+1. **页面开发优先使用 Neat Design 组件**
+   - 表单、按钮、表格、弹窗、分页、筛选器等默认优先使用 `@derbysoft/neat-design`
+   - 对于业务页面，优先复用组件库能力，避免原生 HTML 组件散落在页面中
+   - 仅在组件库无法满足特定设计要求时，再自行封装基础样式和交互
+
+2. **原生元素仅用于极端定制场景**
+   - 如果确实需要高度自定义视觉效果，应先尝试通过 `className` + SCSS + 组件属性扩展实现
+   - 不要为了快速开发而直接写原生 `table` / `button` / `input` / `select` 代替组件库组件
 
 ### SCSS 架构
 

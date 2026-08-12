@@ -96,6 +96,7 @@ export const routeComponentMap: RouteComponentMap = {
   // Forms
   '/app/forms': lazyLoad('pages/Form/ResponsiveForm'),
   '/app/forms/table': lazyLoad('pages/Table'),
+  '/app/ar-statements': lazyLoad('pages/AR-Statements'),
 
   // Component Examples
   '/app/components/image-upload': lazyLoad(
