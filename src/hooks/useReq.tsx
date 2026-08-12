@@ -1,5 +1,5 @@
 /**
- * @file src/hooks/useDsRequest.tsx
+ * @file src/hooks/useReq.tsx
  * @author leon.wang(leon.wang@derbysoft.net)
  */
 
@@ -64,7 +64,7 @@ export const errorHandler = (
   }
 };
 
-const useDsRequest = (
+const useReq = (
   request: (...params: any[]) => AxiosPromise<ResponseDataType>,
   options: Options = {},
 ) => {
@@ -96,4 +96,4 @@ const useDsRequest = (
   });
 };
 
-export default useDsRequest;
+export default useReq;

@@ -7,7 +7,7 @@ import { useCallback, useMemo, useState } from 'react';
 import { Form } from 'antd';
 import { useAntdTable, useLatest } from 'ahooks';
 import { AxiosPromise } from 'axios';
-import { errorHandler } from './useDsRequest';
+import { errorHandler } from './useReq';
 import { App } from '@derbysoft/neat-design';
 
 type ListResult<T> = {
