@@ -8,6 +8,7 @@ import {
   WrenchOutlined,
   APIOutlined,
   HomeOutlined,
+  PersonaOutlined,
 } from '@derbysoft/neat-design-icons';
 import { MenuProps } from '@derbysoft/neat-design';
 import i18n from './i18n';
@@ -52,12 +53,52 @@ export type MenuItem = Required<MenuProps>['items'][number] & {
  */
 export const menus: MenuItem[] = [
   {
-    key: 'page1',
+    key: 'g1',
     get label() {
-      return '结算管理';
+      return 'Customer Settlement File';
+    },
+    route: '/app/forms/table',
+    icon: <PersonaOutlined />,
+    children: [
+      {
+        key: 'g1-1',
+        get label() {
+          return 'Settlement Account Info';
+        },
+        route: '/app/forms/table',
+      },
+      {
+        key: 'g1-2',
+        get label() {
+          return 'Settlement Account Configuration';
+        },
+        route: '/app/forms/table',
+      },
+    ],
+  },
+  {
+    key: 'g2',
+    get label() {
+      return 'Customer AR';
     },
     route: '/app/forms/table',
     icon: <HomeOutlined />,
+    children: [
+      {
+        key: 'g2-1',
+        get label() {
+          return 'AR Statements';
+        },
+        route: '/app/forms/table',
+      },
+      {
+        key: 'g2-2',
+        get label() {
+          return 'AR Dispute Audit';
+        },
+        route: '/app/forms/table',
+      },
+    ],
   },
   {
     key: 'form',
