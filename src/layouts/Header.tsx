@@ -54,7 +54,7 @@ const Header: React.FC<React.HTMLAttributes<HTMLElement>> = (props) => {
       <Layout.Header {...props}>
         <Flex align="center" gap={8}>
           <DerbySoftLogo />
-          <Tag color="blue">Customer Settlement Center</Tag>
+          <Tag color="blue">Customer Billing & Reconciliation</Tag>
           {/* <Divider alignment="vertical" style={{ height: 24 }} />
 
           {!loading ? (
