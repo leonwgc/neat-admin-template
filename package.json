@@ -16,7 +16,7 @@
   "dependencies": {
     "@derbysoft/derbysoft-all-in-one-help-widget": "^2.3.14",
     "@derbysoft/neat-design": "^2.2.2",
-    "@derbysoft/neat-design-icons": "^1.1.9",
+    "@derbysoft/neat-design-icons": "^1.2.6",
     "@derbysoft/neat-design-illustrations": "^1.0.15",
     "@derbysoft/zustand-kit": "^1.1.3",
     "ahooks": "^3.9.0",
