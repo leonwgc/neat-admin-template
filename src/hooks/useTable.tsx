@@ -28,7 +28,10 @@ const useTable = (
   const [loading, setLoading] = useState(true);
 
   const service = useCallback(
-    ({ current, pageSize, sorter }, formData = {}) => {
+    (
+      { current, pageSize, sorter },
+      formData = {},
+    ): Promise<ListResult<ObjectType>> => {
       setLoading(true);
       const params: ObjectType = {
         pageNum: current - 1,
@@ -87,6 +90,10 @@ const useTable = (
         })
         .catch((error) => {
           errorHandler(error, notification, true, toast);
+          return {
+            total: 0,
+            list: [],
+          };
         });
     },
     [formValuesTransform, notification, req, responseDataTransform, toast],
