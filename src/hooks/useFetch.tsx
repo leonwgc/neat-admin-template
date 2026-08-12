@@ -70,7 +70,7 @@ export const errorHandler = (
   }
 };
 
-const useReq = (
+const useFetch = (
   request: (...params) => AxiosPromise<ResponseDataType>,
   options?: Options,
 ) => {
@@ -102,4 +102,4 @@ const useReq = (
   });
 };
 
-export default useReq;
+export default useFetch;
