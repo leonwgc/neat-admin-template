@@ -216,6 +216,54 @@ const { run } = useFetch(fetchOrder, {
 });
 ```
 
+### 4. 直接抛出异常给上层处理
+
+```tsx
+const { runAsync, loading } = useFetch(
+  () => request.get('/api/order/detail'),
+  {
+    async: true,
+    manual: true,
+    toastDefaultError: true,
+    onFailed: (error) => {
+      console.error('请求失败', error);
+    },
+  },
+);
+
+const handleLoad = async () => {
+  try {
+    await runAsync();
+  } catch (error) {
+    console.error('上层捕获异常', error);
+  }
+};
+```
+
+当 `async: true` 时，失败会抛给调用方，适合在页面中用 `try / catch` 统一处理更复杂的业务流程。
+
+### 5. 使用 `Promise.then` 链式处理
+
+```tsx
+const { runAsync } = useFetch(
+  () => request.get('/api/user/profile'),
+  {
+    manual: true,
+    toastDefaultError: true,
+  },
+);
+
+runAsync()
+  .then((res) => {
+    console.log('请求成功', res);
+  })
+  .catch((error) => {
+    console.error('请求失败', error);
+  });
+```
+
+这种写法适合在不想显式写 `async/await` 的场景中，快速处理成功和失败分支。
+
 ## 注意事项
 
 1. `useFetch` 仍然是 `useRequest` 的增强封装，不是独立的请求库。
