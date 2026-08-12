@@ -14,6 +14,7 @@
   "author": "leon.wang",
   "license": "ISC",
   "dependencies": {
+    "@derbysoft/antd-form-builder": "^1.0.0",
     "@derbysoft/derbysoft-all-in-one-help-widget": "^2.3.14",
     "@derbysoft/neat-design": "^2.2.2",
     "@derbysoft/neat-design-icons": "^1.2.6",

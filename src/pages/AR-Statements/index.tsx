@@ -7,6 +7,7 @@ import React from 'react';
 import {
   Button,
   DatePicker,
+  Form,
   Input,
   Select,
   Space,
@@ -46,393 +47,6 @@ const summaryCards = [
     title: '本期回款率',
     value: '81%',
     meta: '2026-07-01 — 2026-07-31',
-  },
-];
-
-const rows = [
-  {
-    statementName: 'Agoda预订3天开票预收款单',
-    customerEntityCode: '3GAXP2',
-    customerAccount: 'JYX7A7',
-    currency: 'CNY',
-    osAmount: '1,234,567.89',
-    confirmedAmount: '1,234,567.89',
-    invoiceId: '1U7R9P3S',
-    invoiceStatus: 'Pending Confirmation',
-    paymentStatus: '—',
-    status: 'pending',
-  },
-  {
-    statementName: 'Agoda预订7天开票预收款单',
-    customerEntityCode: '6X9M2V',
-    customerAccount: 'BZQF1C',
-    currency: 'CNY',
-    osAmount: '1,234,567.89',
-    confirmedAmount: '1,234,567.89',
-    invoiceId: '2W5J9K1F',
-    invoiceStatus: 'Pending Confirmation',
-    paymentStatus: '—',
-    status: 'pending',
-  },
-  {
-    statementName: 'Agoda预订5天开票预收款单',
-    customerEntityCode: 'JQ8L4P',
-    customerAccount: 'H7Q6M2',
-    currency: 'CNY',
-    osAmount: '1,234,567.89',
-    confirmedAmount: '1,234,567.89',
-    invoiceId: '5D1M4N7Z',
-    invoiceStatus: 'Statement Confirmed',
-    paymentStatus: '—',
-    status: 'confirmed',
-  },
-  {
-    statementName: 'Agoda预订1天开票预收款单',
-    customerEntityCode: 'S8Y5R2',
-    customerAccount: 'Q9P2M1',
-    currency: 'CNY',
-    osAmount: '1,000.00',
-    confirmedAmount: '1,000.00',
-    invoiceId: 'K4L9J6A',
-    invoiceStatus: 'Statement Confirmed',
-    paymentStatus: '—',
-    status: 'confirmed',
-  },
-  {
-    statementName: 'Agoda预订2天开票可用性外',
-    customerEntityCode: '8E4D2M',
-    customerAccount: 'V6N1H7',
-    currency: 'CNY',
-    osAmount: '1,234,567.89',
-    confirmedAmount: '1,234,567.89',
-    invoiceId: 'L0 P4R9K',
-    invoiceStatus: 'Statement Confirmed',
-    paymentStatus: '—',
-    status: 'confirmed',
-  },
-  {
-    statementName: 'Agoda预订4天开票可用性外',
-    customerEntityCode: 'P2Q4R7',
-    customerAccount: 'A1N6C9',
-    currency: 'CNY',
-    osAmount: '1,234,567.00',
-    confirmedAmount: '1,234,567.00',
-    invoiceId: 'R7S1M4H',
-    invoiceStatus: 'Invoice Confirmation',
-    paymentStatus: 'Waiting for Payment',
-    status: 'waiting',
-  },
-  {
-    statementName: 'Agoda预订7天开票可用性外',
-    customerEntityCode: 'A9F2M8',
-    customerAccount: 'P4D6Q8',
-    currency: 'CNY',
-    osAmount: '123,000.00',
-    confirmedAmount: '123,000.00',
-    invoiceId: 'Q2F1P7K',
-    invoiceStatus: 'Invoice Rejected',
-    paymentStatus: '—',
-    status: 'rejected',
-  },
-  {
-    statementName: 'Agoda预订7天开票可用性外',
-    customerEntityCode: 'L5M3A1',
-    customerAccount: 'D8V9X2',
-    currency: 'CNY',
-    osAmount: '45,678.90',
-    confirmedAmount: '45,678.90',
-    invoiceId: 'M5J8L9P',
-    invoiceStatus: 'Invoice Confirmation',
-    paymentStatus: 'Payment Confirmed',
-    status: 'completed',
-  },
-  {
-    statementName: 'Agoda预订6天开票预收款单',
-    customerEntityCode: 'F4C7K9',
-    customerAccount: 'E1Q8V4',
-    currency: 'CNY',
-    osAmount: '982,100.00',
-    confirmedAmount: '982,100.00',
-    invoiceId: 'N2D5Y8P',
-    invoiceStatus: 'Statement Confirmed',
-    paymentStatus: '—',
-    status: 'confirmed',
-  },
-  {
-    statementName: 'Agoda预订3天开票可用性外',
-    customerEntityCode: 'R7V3P1',
-    customerAccount: 'K9W5S2',
-    currency: 'CNY',
-    osAmount: '872,500.00',
-    confirmedAmount: '872,500.00',
-    invoiceId: 'T6H4Q9M',
-    invoiceStatus: 'Pending Confirmation',
-    paymentStatus: '—',
-    status: 'pending',
-  },
-  {
-    statementName: 'Agoda预订8天开票预收款单',
-    customerEntityCode: 'M4Q7X2',
-    customerAccount: 'N6L9P3',
-    currency: 'CNY',
-    osAmount: '2,156,888.00',
-    confirmedAmount: '2,156,888.00',
-    invoiceId: 'U3V8K6R',
-    invoiceStatus: 'Invoice Confirmation',
-    paymentStatus: 'Waiting for Payment',
-    status: 'waiting',
-  },
-  {
-    statementName: 'Agoda预订5天开票优先款单',
-    customerEntityCode: 'W2P8R5',
-    customerAccount: 'A4F7K1',
-    currency: 'CNY',
-    osAmount: '654,300.00',
-    confirmedAmount: '654,300.00',
-    invoiceId: 'X9M3L7Q',
-    invoiceStatus: 'Statement Confirmed',
-    paymentStatus: '—',
-    status: 'confirmed',
-  },
-  {
-    statementName: 'Agoda预订9天开票预收款单',
-    customerEntityCode: 'Y5T1N8',
-    customerAccount: 'B2R7H4',
-    currency: 'CNY',
-    osAmount: '1,987,200.00',
-    confirmedAmount: '1,987,200.00',
-    invoiceId: 'Z1K6M4D',
-    invoiceStatus: 'Completed',
-    paymentStatus: 'Payment Confirmed',
-    status: 'completed',
-  },
-  {
-    statementName: 'Agoda预订2天开票预收款单',
-    customerEntityCode: 'G3L9W5',
-    customerAccount: 'Q7J2M6',
-    currency: 'CNY',
-    osAmount: '365,000.00',
-    confirmedAmount: '365,000.00',
-    invoiceId: 'C4N8S2F',
-    invoiceStatus: 'Pending Confirmation',
-    paymentStatus: '—',
-    status: 'pending',
-  },
-  {
-    statementName: 'Agoda预订4天开票优先款单',
-    customerEntityCode: 'H6R2T7',
-    customerAccount: 'M1W8F3',
-    currency: 'CNY',
-    osAmount: '779,500.00',
-    confirmedAmount: '779,500.00',
-    invoiceId: 'V9P4Q8L',
-    invoiceStatus: 'Statement Confirmed',
-    paymentStatus: '—',
-    status: 'confirmed',
-  },
-  {
-    statementName: 'Agoda预订1天开票可用性外',
-    customerEntityCode: 'J8K4C2',
-    customerAccount: 'R3T6L9',
-    currency: 'CNY',
-    osAmount: '221,400.00',
-    confirmedAmount: '221,400.00',
-    invoiceId: 'P7Q2H6M',
-    invoiceStatus: 'Invoice Rejected',
-    paymentStatus: '—',
-    status: 'rejected',
-  },
-  {
-    statementName: 'Agoda预订3天开票优先款单',
-    customerEntityCode: 'S6D8Y4',
-    customerAccount: 'L2Q9N7',
-    currency: 'CNY',
-    osAmount: '918,300.00',
-    confirmedAmount: '918,300.00',
-    invoiceId: 'F4K1R8Q',
-    invoiceStatus: 'Statement Confirmed',
-    paymentStatus: '—',
-    status: 'confirmed',
-  },
-  {
-    statementName: 'Agoda预订7天开票优先款单',
-    customerEntityCode: 'D7M2X6',
-    customerAccount: 'C5R1T8',
-    currency: 'CNY',
-    osAmount: '1,120,000.00',
-    confirmedAmount: '1,120,000.00',
-    invoiceId: 'W3N9J5H',
-    invoiceStatus: 'Pending Confirmation',
-    paymentStatus: '—',
-    status: 'pending',
-  },
-  {
-    statementName: 'Agoda预订2天开票预收款单',
-    customerEntityCode: 'K9F3N1',
-    customerAccount: 'E5V7T2',
-    currency: 'CNY',
-    osAmount: '439,200.00',
-    confirmedAmount: '439,200.00',
-    invoiceId: 'B2X8L4Q',
-    invoiceStatus: 'Statement Confirmed',
-    paymentStatus: '—',
-    status: 'confirmed',
-  },
-  {
-    statementName: 'Agoda预订8天开票可用性外',
-    customerEntityCode: 'X4L1H7',
-    customerAccount: 'T9R5W3',
-    currency: 'CNY',
-    osAmount: '1,764,500.00',
-    confirmedAmount: '1,764,500.00',
-    invoiceId: 'V7D3Q1N',
-    invoiceStatus: 'Invoice Confirmation',
-    paymentStatus: 'Waiting for Payment',
-    status: 'waiting',
-  },
-  {
-    statementName: 'Agoda预订6天开票可用性外',
-    customerEntityCode: 'Q2M7K4',
-    customerAccount: 'H8V6D3',
-    currency: 'CNY',
-    osAmount: '892,650.00',
-    confirmedAmount: '892,650.00',
-    invoiceId: 'R5T9F2P',
-    invoiceStatus: 'Statement Confirmed',
-    paymentStatus: '—',
-    status: 'confirmed',
-  },
-  {
-    statementName: 'Agoda预订5天开票预收款单',
-    customerEntityCode: 'U3J1M8',
-    customerAccount: 'C6W9K4',
-    currency: 'CNY',
-    osAmount: '703,200.00',
-    confirmedAmount: '703,200.00',
-    invoiceId: 'A7H2Y9F',
-    invoiceStatus: 'Completed',
-    paymentStatus: 'Payment Confirmed',
-    status: 'completed',
-  },
-  {
-    statementName: 'Agoda预订9天开票可用性外',
-    customerEntityCode: 'N8W5H2',
-    customerAccount: 'Q6M4P1',
-    currency: 'CNY',
-    osAmount: '2,431,000.00',
-    confirmedAmount: '2,431,000.00',
-    invoiceId: 'Y9T5K1L',
-    invoiceStatus: 'Pending Confirmation',
-    paymentStatus: '—',
-    status: 'pending',
-  },
-  {
-    statementName: 'Agoda预订4天开票预收款单',
-    customerEntityCode: 'L2D8V6',
-    customerAccount: 'R4N7K1',
-    currency: 'CNY',
-    osAmount: '586,900.00',
-    confirmedAmount: '586,900.00',
-    invoiceId: 'S3G8M7Y',
-    invoiceStatus: 'Statement Confirmed',
-    paymentStatus: '—',
-    status: 'confirmed',
-  },
-  {
-    statementName: 'Agoda预订7天开票可用性外',
-    customerEntityCode: 'P9X5T2',
-    customerAccount: 'J3F8W6',
-    currency: 'CNY',
-    osAmount: '1,310,800.00',
-    confirmedAmount: '1,310,800.00',
-    invoiceId: 'K4V7R1M',
-    invoiceStatus: 'Invoice Rejected',
-    paymentStatus: '—',
-    status: 'rejected',
-  },
-  {
-    statementName: 'Agoda预订8天开票优先款单',
-    customerEntityCode: 'M7Q9R4',
-    customerAccount: 'P1L6V2',
-    currency: 'CNY',
-    osAmount: '1,842,300.00',
-    confirmedAmount: '1,842,300.00',
-    invoiceId: 'D4G8N2H',
-    invoiceStatus: 'Invoice Confirmation',
-    paymentStatus: 'Waiting for Payment',
-    status: 'waiting',
-  },
-  {
-    statementName: 'Agoda预订6天开票优先款单',
-    customerEntityCode: 'T5Y8P1',
-    customerAccount: 'V2N4K6',
-    currency: 'CNY',
-    osAmount: '760,100.00',
-    confirmedAmount: '760,100.00',
-    invoiceId: 'Q1R7M8D',
-    invoiceStatus: 'Statement Confirmed',
-    paymentStatus: '—',
-    status: 'confirmed',
-  },
-  {
-    statementName: 'Agoda预订3天开票预收款单',
-    customerEntityCode: 'H6C2M9',
-    customerAccount: 'A7V4T1',
-    currency: 'CNY',
-    osAmount: '490,500.00',
-    confirmedAmount: '490,500.00',
-    invoiceId: 'B9N4R2X',
-    invoiceStatus: 'Completed',
-    paymentStatus: 'Payment Confirmed',
-    status: 'completed',
-  },
-  {
-    statementName: 'Agoda预订2天开票可用性外',
-    customerEntityCode: 'F3K8J5',
-    customerAccount: 'L6M2Q9',
-    currency: 'CNY',
-    osAmount: '318,600.00',
-    confirmedAmount: '318,600.00',
-    invoiceId: 'N7P1H4Z',
-    invoiceStatus: 'Pending Confirmation',
-    paymentStatus: '—',
-    status: 'pending',
-  },
-  {
-    statementName: 'Agoda预订1天开票优先款单',
-    customerEntityCode: 'W4S7L2',
-    customerAccount: 'M5Q8R3',
-    currency: 'CNY',
-    osAmount: '204,800.00',
-    confirmedAmount: '204,800.00',
-    invoiceId: 'G2H9N5Q',
-    invoiceStatus: 'Statement Confirmed',
-    paymentStatus: '—',
-    status: 'confirmed',
-  },
-  {
-    statementName: 'Agoda预订5天开票可用性外',
-    customerEntityCode: 'E1V6C9',
-    customerAccount: 'S3J8W5',
-    currency: 'CNY',
-    osAmount: '689,700.00',
-    confirmedAmount: '689,700.00',
-    invoiceId: 'L4P8T2R',
-    invoiceStatus: 'Invoice Confirmation',
-    paymentStatus: 'Waiting for Payment',
-    status: 'waiting',
-  },
-  {
-    statementName: 'Agoda预订8天开票预收款单',
-    customerEntityCode: 'Y9Z2H6',
-    customerAccount: 'D4V7M1',
-    currency: 'CNY',
-    osAmount: '1,556,400.00',
-    confirmedAmount: '1,556,400.00',
-    invoiceId: 'R8Q3K7V',
-    invoiceStatus: 'Completed',
-    paymentStatus: 'Payment Confirmed',
-    status: 'completed',
   },
 ];
 
@@ -560,7 +174,7 @@ const columns: TableColumnsType<StatementRow> = [
 ];
 
 const ARStatementsPage: React.FC = () => {
-  const { tableProps } = useTable(getStateList, null, (data) => {
+  const { tableProps, form, submit } = useTable(getStateList, null, (data) => {
     if (Array.isArray(data)) {
       return {
         list: data,
@@ -603,23 +217,36 @@ const ARStatementsPage: React.FC = () => {
         ))}
       </div>
 
-      <div className="ar-statements__toolbar">
+      <Form
+        className="ar-statements__toolbar"
+        form={form}
+        onValuesChange={(values) => {
+          submit();
+        }}
+      >
         <Space size={16} align="center">
-          <DatePicker.RangePicker format="YYYY-MM-DD" />
+          <Form.Item name="dateRange">
+            <DatePicker.RangePicker format="YYYY-MM-DD" />
+          </Form.Item>
+
           <Space.Compact block>
-            <Select
-              defaultValue="Statement Name"
-              style={{ width: 158 }}
-              options={[
-                { label: 'Statement Name', value: 'Statement Name' },
-                { label: 'Agoda', value: 'Agoda' },
-              ]}
-            />
-            <Input
-              style={{ width: 322 }}
-              placeholder="Search..."
-              suffix={<SearchOutlined />}
-            />
+            <Form.Item name="filter">
+              <Select
+                defaultValue="Statement Name"
+                style={{ width: 158 }}
+                options={[
+                  { label: 'Statement Name', value: 'Statement Name' },
+                  { label: 'Agoda', value: 'Agoda' },
+                ]}
+              />
+            </Form.Item>
+            <Form.Item name="search">
+              <Input
+                style={{ width: 322 }}
+                placeholder="Search..."
+                suffix={<SearchOutlined />}
+              />
+            </Form.Item>
           </Space.Compact>
         </Space>
         <Button
@@ -627,7 +254,7 @@ const ARStatementsPage: React.FC = () => {
           className="toolbar-filters__icon-btn"
           aria-label="Filter"
         />
-      </div>
+      </Form>
 
       <Table
         columns={columns}
