@@ -32,46 +32,6 @@
     width: 100%;
     padding: 16px 24px;
   }
-
-  &__footer {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-top: 8px;
-    padding: 0 8px;
-  }
-
-  &__pagination-meta {
-    color: #6b7280;
-    font-size: 12px;
-  }
-
-  &__pagination {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  &__page-btn {
-    min-width: 30px;
-    height: 30px;
-    padding: 0 10px;
-    border: 1px solid #dfe3e8;
-    border-radius: 6px;
-    background: #fff;
-    color: #475467;
-    cursor: pointer;
-
-    &:first-child,
-    &:last-child {
-      min-width: 32px;
-    }
-
-    &:hover {
-      border-color: #a7c5ff;
-      color: #1d4ed8;
-    }
-  }
 }
 
 .summary-card {
@@ -80,10 +40,12 @@
   gap: 8px;
   min-height: 112px;
   padding: 14px 16px;
-  border: 1px solid #e6e7eb;
   border-radius: 16px;
-  // background: linear-gradient(180deg, #ffffff 0%, #f8fafb 100%);
-  // box-shadow: 0 1px 1px rgba(15, 23, 42, 0.02);
+  background: #fff;
+  // @include shadow(1);
+
+  box-shadow: 0px 0.3px 1.8px 0px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 1.6px 7.2px 0px rgba(0, 0, 0, 0.13)
 
   &__label {
     font-size: 13px;
