@@ -174,18 +174,30 @@ const columns: TableColumnsType<StatementRow> = [
 ];
 
 const ARStatementsPage: React.FC = () => {
-  const { tableProps, form, submit } = useTable(getStateList, null, (data) => {
-    if (Array.isArray(data)) {
+  const { tableProps, form, submit } = useTable(
+    getStateList,
+    (values) => {
+      const { dateRange, ...rest } = values;
+      if (dateRange && dateRange?.length === 2) {
+        rest.start = dateRange[0].format('YYYY-MM-DD');
+        rest.end = dateRange[1].format('YYYY-MM-DD');
+      }
+
+      return rest;
+    },
+    (data) => {
+      if (Array.isArray(data)) {
+        return {
+          list: data,
+          total: data.length,
+        };
+      }
       return {
-        list: data,
-        total: data.length,
+        list: [],
+        total: 0,
       };
-    }
-    return {
-      list: [],
-      total: 0,
-    };
-  });
+    },
+  );
   return (
     <div className="ar-statements">
       <TopBar
