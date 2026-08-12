@@ -101,7 +101,7 @@ const useTable = (
 
   const {
     tableProps,
-    search: { submit, reset },
+    search: { submit, reset, type, changeType },
   } = useAntdTable(service, {
     debounceWait: 400,
     form,
@@ -134,6 +134,8 @@ const useTable = (
     form,
     submit,
     reset,
+    type,
+    changeType,
   };
 };
 
