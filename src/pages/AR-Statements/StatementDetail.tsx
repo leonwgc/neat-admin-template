@@ -11,6 +11,7 @@ import {
   Select,
   Space,
   Table,
+  Tag,
   type TableColumnsType,
 } from '@derbysoft/neat-design';
 import { ExportOutlined, SearchOutlined } from '@derbysoft/neat-design-icons';
@@ -41,7 +42,7 @@ type DetailRow = {
 
 const columns: TableColumnsType<DetailRow> = [
   {
-    dataIndex:'ersp',
+    dataIndex: 'ersp',
     title: 'Ersp',
     key: 'ersp',
     width: 200,
@@ -120,7 +121,7 @@ const columns: TableColumnsType<DetailRow> = [
             : 'status-pill status-pill--discrepancy'
         }
       >
-        {value}
+        <Tag color={value === 'MATCH' ? 'neutral' : 'red'}> {value}</Tag>
       </span>
     ),
   },
