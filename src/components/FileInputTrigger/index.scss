@@ -1,0 +1,16 @@
+/**
+ * @file src/components/FileInputTrigger/index.scss
+ * @author leon.wang(leon.wang@derbysoft.net)
+ */
+
+.file-input-trigger {
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    cursor: pointer;
+
+    &.disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+    }
+}
