@@ -7,7 +7,10 @@ import React from 'react';
 import { App, Button, Drawer, Flex } from '@derbysoft/neat-design';
 import DotStatus from '~/components/DotStatus';
 import FileInputTrigger from '~/components/FileInputTrigger';
-import { checkFileSize, checkFileType } from '~/helper';
+import { checkFileSize, checkFileType, downloadFile } from '~/helper';
+import useFetch from '../../hooks/useFetch';
+import { uploadInvoiceImage } from './api';
+import classNames from 'classnames';
 
 export interface ViewVoiceProps {
   open: boolean;
@@ -21,14 +24,34 @@ const acceptImageTypes = 'image/png,image/jpg,image/jpeg';
 const ViewVoice: React.FC<ViewVoiceProps> = ({
   open,
   invoiceId = '1U7R9P3S',
-  imageUrl,
   onClose,
 }) => {
-  const src = imageUrl;
-
+  const [src, setSrc] = React.useState<string>();
   const [dataUrl, setDataUrl] = React.useState<string>();
 
   const { toast } = App.useApp();
+
+  const { run, loading } = useFetch(uploadInvoiceImage, {
+    onSuccess: (data) => {
+      setSrc(data?.imageUrl);
+    },
+    onFailed: (error) => {
+      toast.error(error?.message || '上传失败');
+    },
+  });
+
+  const handleDownload = () => {
+    if (!invoiceId) {
+      toast.error('发票ID不存在');
+      return;
+    }
+
+    // TODO: use real download url from server, currently use mock url
+    downloadFile(
+      `/api/invoice/${invoiceId}/download`,
+      `invoice-${invoiceId}.pdf`,
+    );
+  };
 
   const handle = (files: FileList | File[]) => {
     if (!files?.length) {
@@ -49,6 +72,7 @@ const ViewVoice: React.FC<ViewVoiceProps> = ({
     setDataUrl(objectURL);
 
     // TODO: Upload the image to the server and update the invoice image URL
+    run(invoiceId, image);
   };
 
   return (
@@ -67,7 +91,9 @@ const ViewVoice: React.FC<ViewVoiceProps> = ({
       className="invoice-drawer"
       footer={
         <div className="invoice-drawer__footer">
-          <Button type="tertiary">下载发票</Button>
+          <Button type="tertiary" onClick={handleDownload}>
+            下载发票
+          </Button>
 
           <FileInputTrigger accept={acceptImageTypes} onChange={handle}>
             <Button>重新上传发票</Button>
@@ -77,7 +103,9 @@ const ViewVoice: React.FC<ViewVoiceProps> = ({
     >
       <div className="invoice-drawer__content">
         <img
-          className="invoice-drawer__image"
+          className={classNames('invoice-drawer__image', {
+            'invoice-drawer__image--loading': loading,
+          })}
           src={src || dataUrl}
           alt={`Invoice ${invoiceId}`}
         />

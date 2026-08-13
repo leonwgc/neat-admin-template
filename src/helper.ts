@@ -18,3 +18,15 @@ export const checkFileSize = (file: File, maxSize: number) => {
   const fileSizeInMB = file.size / (1024 * 1024);
   return fileSizeInMB <= maxSize;
 };
+
+// only same origin url can be downloaded, otherwise it will be blocked by CORS policy
+export const downloadFile = (url: string, filename: string) => {
+  const a = document.createElement('a');
+  a.href = url;
+  a.target = '_blank';
+  a.download = filename;
+  a.style.display = 'none';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+};
