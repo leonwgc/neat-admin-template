@@ -12,6 +12,7 @@
 - **React**: 18.3.1 - 使用最新的并发特性
 - **TypeScript**: 严格类型检查，提供完整的类型定义
 - **Neat Design**: @derbysoft/neat-design 企业级 UI 组件库
+- **ahooks**: 3.9.0 - React Hooks 工具集，提供丰富的自定义 Hooks
 
 ### 状态管理
 - **zustand**: 5.0.9 - 轻量级状态管理
@@ -582,6 +583,24 @@ export type { MyComponentProps } from './MyComponent';
 ```
 
 ## 🌐 HTTP 请求规范
+
+### 核心约束
+
+1. **所有常规请求必须使用 `useFetch`**
+   - 不要在组件中直接手写 `useState + useEffect` + `axios` 请求逻辑
+   - 统一走项目封装的 `useFetch`，保证 loading、error、成功失败处理、toast 统一
+
+2. **分页列表请求必须使用 `useTable`**
+   - 所有表格分页、筛选、排序、页码查询都必须复用 `useTable`
+   - 不要重复实现分页参数转换、列表数据适配、搜索重置、查询状态管理
+
+3. **功能优先使用 ahooks 实现**
+   - 优先使用 `ahooks` 提供的能力，如 `useRequest`、`useAntdTable`、`useDebounceFn`、`useThrottleFn` 等
+   - 如果已有能力能解决问题，禁止从零开始造轮子
+
+4. **定制能力仅在必要时新增**
+   - 只有在项目已有 hook / util 无法满足业务场景时，才新增自定义 Hook
+   - 新增逻辑应优先组合 `useFetch` / `useTable`，而不是重复实现一套请求状态管理
 
 ### 使用 axios 实例
 
