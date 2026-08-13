@@ -13,7 +13,7 @@ export type Language = 'zh' | 'en';
 export const SUPPORTED_LANGUAGES: Language[] = ['zh', 'en'];
 
 /** Default language */
-const DEFAULT_LANGUAGE: Language = 'zh';
+const DEFAULT_LANGUAGE: Language = 'en';
 
 /** LocalStorage key for language preference */
 const LANGUAGE_STORAGE_KEY = 'app_language';
@@ -23,7 +23,7 @@ const LANGUAGE_STORAGE_KEY = 'app_language';
  * 1. URL query parameter (?lang=en)
  * 2. LocalStorage saved preference
  * 3. Browser language
- * 4. Default language (zh)
+ * 4. Default language (en)
  */
 function detectLanguage(): Language {
   // 1. Check URL parameter
