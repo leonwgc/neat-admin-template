@@ -3,7 +3,7 @@
  * @author leon.wang
  */
 
-import React, { useMemo, useState } from 'react';
+import React, { useState } from 'react';
 import {
   Button,
   DatePicker,
@@ -25,6 +25,8 @@ import useTable from '~/hooks/useTable';
 import { getStateList } from './api';
 import ViewVoice from './ViewVoice';
 import { useNavigate } from 'react-router';
+import useGlobalState from '@derbysoft/zustand-kit';
+import { useMount } from 'ahooks';
 
 const summaryCards = [
   {
@@ -79,9 +81,13 @@ const ARStatementsPage: React.FC = () => {
   const [activeInvoice, setActiveInvoice] = useState<StatementRow | null>(null);
   const navigate = useNavigate();
 
-  const columns = (
-    onViewInvoice: (record: StatementRow) => void,
-  ): TableColumnsType<StatementRow> => [
+  const [filters, setFilters] = useGlobalState(
+    'settings',
+    {},
+    { storage: 'sessionStorage' },
+  );
+
+  const columns: TableColumnsType<StatementRow> = [
     {
       title: 'Statement Name',
       dataIndex: 'statementName',
@@ -181,7 +187,6 @@ const ARStatementsPage: React.FC = () => {
           <button
             type="button"
             className="table-actions__link table-actions__link--alt"
-            onClick={() => onViewInvoice(record)}
           >
             View Invoice
           </button>
@@ -189,11 +194,6 @@ const ARStatementsPage: React.FC = () => {
       ),
     },
   ];
-
-  const invoiceColumns = useMemo(
-    () => columns((record) => setActiveInvoice(record)),
-    [],
-  );
 
   const { tableProps, form, submit } = useTable(
     getStateList,
@@ -219,6 +219,11 @@ const ARStatementsPage: React.FC = () => {
       };
     },
   );
+
+  useMount(() => {
+    form.setFieldsValue(filters);
+  });
+
   return (
     <div className="ar-statements">
       <TopBar
@@ -253,7 +258,9 @@ const ARStatementsPage: React.FC = () => {
       <Form
         className="ar-statements__toolbar"
         form={form}
-        onValuesChange={() => {
+        initialValues={filters}
+        onValuesChange={(v, allValues) => {
+          setFilters(allValues);
           submit();
         }}
       >
@@ -290,7 +297,7 @@ const ARStatementsPage: React.FC = () => {
       </Form>
 
       <Table
-        columns={invoiceColumns}
+        columns={columns}
         {...tableProps}
         rowKey={(record) => `${record.statementName}-${record.invoiceId}`}
       />
