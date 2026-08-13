@@ -3,7 +3,7 @@
  * @author leon.wang
  */
 
-import React from 'react';
+import React, { useMemo, useState } from 'react';
 import {
   Button,
   DatePicker,
@@ -23,6 +23,7 @@ import {
 } from '@derbysoft/neat-design-icons';
 import useTable from '~/hooks/useTable';
 import { getStateList } from './api';
+import ViewVoice from './ViewVoice';
 
 const summaryCards = [
   {
@@ -73,7 +74,7 @@ interface StatementRow {
   status: StatementStatus;
 }
 
-const columns: TableColumnsType<StatementRow> = [
+const columns = (onViewInvoice: (record: StatementRow) => void): TableColumnsType<StatementRow> => [
   {
     title: 'Statement Name',
     dataIndex: 'statementName',
@@ -157,7 +158,7 @@ const columns: TableColumnsType<StatementRow> = [
     key: 'action',
     fixed: 'right',
     width: 200,
-    render: () => (
+    render: (_, record) => (
       <div className="table-actions">
         <button type="button" className="table-actions__link">
           Statement Details
@@ -165,6 +166,7 @@ const columns: TableColumnsType<StatementRow> = [
         <button
           type="button"
           className="table-actions__link table-actions__link--alt"
+          onClick={() => onViewInvoice(record)}
         >
           View Invoice
         </button>
@@ -174,6 +176,13 @@ const columns: TableColumnsType<StatementRow> = [
 ];
 
 const ARStatementsPage: React.FC = () => {
+  const [activeInvoice, setActiveInvoice] = useState<StatementRow | null>(null);
+
+  const invoiceColumns = useMemo(
+    () => columns((record) => setActiveInvoice(record)),
+    [],
+  );
+
   const { tableProps, form, submit } = useTable(
     getStateList,
     (values) => {
@@ -232,7 +241,7 @@ const ARStatementsPage: React.FC = () => {
       <Form
         className="ar-statements__toolbar"
         form={form}
-        onValuesChange={(values) => {
+        onValuesChange={() => {
           submit();
         }}
       >
@@ -269,9 +278,15 @@ const ARStatementsPage: React.FC = () => {
       </Form>
 
       <Table
-        columns={columns}
+        columns={invoiceColumns}
         {...tableProps}
         rowKey={(record) => `${record.statementName}-${record.invoiceId}`}
+      />
+
+      <ViewVoice
+        open={Boolean(activeInvoice)}
+        invoiceId={activeInvoice?.invoiceId}
+        onClose={() => setActiveInvoice(null)}
       />
     </div>
   );

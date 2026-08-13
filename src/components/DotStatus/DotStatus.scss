@@ -1,0 +1,42 @@
+/**
+ * @file src/components/DotStatus/DotStatus.scss
+ * @author leon.wang
+ */
+
+@import 'scss/common.scss';
+
+.dot-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  line-height: 16px;
+
+  &--with-description {
+    align-items: flex-start;
+
+    .dot-status__icon {
+      margin-top: 6px;
+    }
+  }
+
+  &__icon {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: 0px;
+  }
+
+  &__text {
+    font-weight: 400;
+  }
+
+  &__description {
+    color: #647075;
+  }
+}

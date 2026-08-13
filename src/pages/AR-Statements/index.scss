@@ -45,9 +45,7 @@
   // @include shadow(1);
 
   box-shadow: 0px 0.3px 1.8px 0px rgba(0, 0, 0, 0.1);
-  box-shadow: 0px 1.6px 7.2px 0px rgba(0, 0, 0, 0.13)
-
-  &__label {
+  box-shadow: 0px 1.6px 7.2px 0px rgba(0, 0, 0, 0.13) &__label {
     font-size: 13px;
     color: #667085;
   }
@@ -163,6 +161,33 @@
     &--alt {
       color: #0f172a;
     }
+  }
+}
+
+.invoice-drawer {
+  &__content {
+    display: flex;
+    justify-content: center;
+    min-height: 100%;
+  }
+
+  &__image {
+    display: block;
+    width: 100%;
+    max-width: 620px;
+    height: auto;
+    border-radius: 16px;
+    border: 1px solid #e5e7eb;
+    background: #fff;
+    box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+  }
+
+  &__footer {
+    display: flex;
+    justify-content: space-between;
+    padding: 16px 20px 20px;
+    background: #fff;
+    border-top: 1px solid #d1d5d6;
   }
 }
 
