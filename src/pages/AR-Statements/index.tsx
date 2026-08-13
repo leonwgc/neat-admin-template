@@ -27,6 +27,7 @@ import ViewVoice from './ViewVoice';
 import { useNavigate } from 'react-router';
 import useGlobalState from '@derbysoft/zustand-kit';
 import { useMount } from 'ahooks';
+import dayjs from 'dayjs';
 
 const summaryCards = [
   {
@@ -197,15 +198,7 @@ const ARStatementsPage: React.FC = () => {
 
   const { tableProps, form, submit } = useTable(
     getStateList,
-    (values) => {
-      const { dateRange, ...rest } = values;
-      if (dateRange && dateRange?.length === 2) {
-        rest.start = dateRange[0].format('YYYY-MM-DD');
-        rest.end = dateRange[1].format('YYYY-MM-DD');
-      }
-
-      return rest;
-    },
+    (values) => values,
     (data) => {
       if (Array.isArray(data)) {
         return {
@@ -265,7 +258,23 @@ const ARStatementsPage: React.FC = () => {
         }}
       >
         <Space size={16} align="center">
-          <Form.Item name="dateRange">
+          <Form.Item
+            name="dateRange"
+            normalize={(value) => {
+              if (Array.isArray(value) && value.length === 2) {
+                return value.map((v) => dayjs(v).format('YYYY-MM-DD'));
+              }
+              return value;
+            }}
+            getValueProps={(value) => {
+              if (Array.isArray(value) && value.length === 2) {
+                return {
+                  value: value.map((v) => dayjs(v)),
+                };
+              }
+              return { value };
+            }}
+          >
             <DatePicker.RangePicker format="YYYY-MM-DD" />
           </Form.Item>
 
