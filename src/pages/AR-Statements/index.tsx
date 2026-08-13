@@ -24,6 +24,7 @@ import {
 import useTable from '~/hooks/useTable';
 import { getStateList } from './api';
 import ViewVoice from './ViewVoice';
+import { useNavigate } from 'react-router';
 
 const summaryCards = [
   {
@@ -74,109 +75,120 @@ interface StatementRow {
   status: StatementStatus;
 }
 
-const columns = (onViewInvoice: (record: StatementRow) => void): TableColumnsType<StatementRow> => [
-  {
-    title: 'Statement Name',
-    dataIndex: 'statementName',
-    key: 'statementName',
-    fixed: 'left',
-    width: 240,
-    render: (_, record) => (
-      <div className="statement-name-cell">
-        <div className="statement-name-cell__title">{record.statementName}</div>
-        <div className="statement-name-cell__meta">
-          {record.customerEntityCode}
-        </div>
-      </div>
-    ),
-  },
-  {
-    title: 'Customer Entity Code',
-    dataIndex: 'customerEntityCode',
-    key: 'customerEntityCode',
-    width: 150,
-  },
-  {
-    title: 'Customer Account',
-    dataIndex: 'customerAccount',
-    key: 'customerAccount',
-    width: 150,
-  },
-  {
-    title: 'Currency',
-    dataIndex: 'currency',
-    key: 'currency',
-    width: 110,
-  },
-  {
-    title: 'OS Amount',
-    dataIndex: 'osAmount',
-    key: 'osAmount',
-    width: 170,
-    render: (value: string, record) => (
-      <div className="money-cell">
-        {value}
-        <span>{record.currency}</span>
-      </div>
-    ),
-  },
-  {
-    title: 'Confirmed Amount',
-    dataIndex: 'confirmedAmount',
-    key: 'confirmedAmount',
-    width: 170,
-    render: (value: string, record) => (
-      <div className="money-cell">
-        {value}
-        <span>{record.currency}</span>
-      </div>
-    ),
-  },
-  {
-    title: 'Invoice ID',
-    dataIndex: 'invoiceId',
-    key: 'invoiceId',
-    width: 150,
-  },
-  {
-    title: 'Invoice Status',
-    dataIndex: 'invoiceStatus',
-    key: 'invoiceStatus',
-    width: 180,
-    render: (_, record) => (
-      <span className={statusMap[record.status]}>{record.invoiceStatus}</span>
-    ),
-  },
-  {
-    title: 'Payment Status',
-    dataIndex: 'paymentStatus',
-    key: 'paymentStatus',
-    width: 150,
-  },
-  {
-    title: 'Action',
-    key: 'action',
-    fixed: 'right',
-    width: 200,
-    render: (_, record) => (
-      <div className="table-actions">
-        <button type="button" className="table-actions__link">
-          Statement Details
-        </button>
-        <button
-          type="button"
-          className="table-actions__link table-actions__link--alt"
-          onClick={() => onViewInvoice(record)}
-        >
-          View Invoice
-        </button>
-      </div>
-    ),
-  },
-];
-
 const ARStatementsPage: React.FC = () => {
   const [activeInvoice, setActiveInvoice] = useState<StatementRow | null>(null);
+  const navigate = useNavigate();
+
+  const columns = (
+    onViewInvoice: (record: StatementRow) => void,
+  ): TableColumnsType<StatementRow> => [
+    {
+      title: 'Statement Name',
+      dataIndex: 'statementName',
+      key: 'statementName',
+      fixed: 'left',
+      width: 240,
+      render: (_, record) => (
+        <div className="statement-name-cell">
+          <div className="statement-name-cell__title">
+            {record.statementName}
+          </div>
+          <div className="statement-name-cell__meta">
+            {record.customerEntityCode}
+          </div>
+        </div>
+      ),
+    },
+    {
+      title: 'Customer Entity Code',
+      dataIndex: 'customerEntityCode',
+      key: 'customerEntityCode',
+      width: 150,
+    },
+    {
+      title: 'Customer Account',
+      dataIndex: 'customerAccount',
+      key: 'customerAccount',
+      width: 150,
+    },
+    {
+      title: 'Currency',
+      dataIndex: 'currency',
+      key: 'currency',
+      width: 110,
+    },
+    {
+      title: 'OS Amount',
+      dataIndex: 'osAmount',
+      key: 'osAmount',
+      width: 170,
+      render: (value: string, record) => (
+        <div className="money-cell">
+          {value}
+          <span>{record.currency}</span>
+        </div>
+      ),
+    },
+    {
+      title: 'Confirmed Amount',
+      dataIndex: 'confirmedAmount',
+      key: 'confirmedAmount',
+      width: 170,
+      render: (value: string, record) => (
+        <div className="money-cell">
+          {value}
+          <span>{record.currency}</span>
+        </div>
+      ),
+    },
+    {
+      title: 'Invoice ID',
+      dataIndex: 'invoiceId',
+      key: 'invoiceId',
+      width: 150,
+    },
+    {
+      title: 'Invoice Status',
+      dataIndex: 'invoiceStatus',
+      key: 'invoiceStatus',
+      width: 180,
+      render: (_, record) => (
+        <span className={statusMap[record.status]}>{record.invoiceStatus}</span>
+      ),
+    },
+    {
+      title: 'Payment Status',
+      dataIndex: 'paymentStatus',
+      key: 'paymentStatus',
+      width: 150,
+    },
+    {
+      title: 'Action',
+      key: 'action',
+      fixed: 'right',
+      width: 200,
+      render: (_, record) => (
+        <div className="table-actions">
+          <button
+            type="button"
+            className="table-actions__link"
+            onClick={() =>
+              navigate(`/app/ar-statements/${record.customerEntityCode}`)
+            }
+          >
+            Statement Details
+          </button>
+          <button
+            type="button"
+            className="table-actions__link table-actions__link--alt"
+            onClick={() => onViewInvoice(record)}
+          >
+            View Invoice
+          </button>
+        </div>
+      ),
+    },
+  ];
 
   const invoiceColumns = useMemo(
     () => columns((record) => setActiveInvoice(record)),

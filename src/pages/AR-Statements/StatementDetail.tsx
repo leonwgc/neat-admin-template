@@ -203,7 +203,11 @@ const StatementDetail: React.FC = () => {
     <div className="ar-statements">
       <TopBar
         title="Agoda提前3天仅境外预付单早 (90610000462546)"
-        cat={<Space size={8}>Customer AR / AR Statements</Space>}
+        cat={
+          <Space size={8} split=">">
+            <span>Customer AR</span><span>AR Statements</span>
+          </Space>
+        }
         extra={
           <Button
             type="primary"
