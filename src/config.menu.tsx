@@ -94,7 +94,7 @@ export const menus: MenuItem[] = [
         get label() {
           return 'Dispute Audit List';
         },
-        route: '/app/ar-statements/detail',
+        route: '/app/ar-statements/:statementId',
         hidden: true,
       },
       {

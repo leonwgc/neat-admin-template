@@ -4,6 +4,7 @@
  */
 
 import { lazy, ComponentType, LazyExoticComponent } from 'react';
+import { matchPath } from 'react-router';
 import { MenuItem } from '~/config.menu';
 
 /**
@@ -77,15 +78,25 @@ export const getRouteElement = (
   path: string,
   componentMap: RouteComponentMap,
 ): JSX.Element | null => {
-  const Component = componentMap[path];
-  if (!Component) {
+  const ExactComponent = componentMap[path];
+  if (ExactComponent) {
+    return <ExactComponent />;
+  }
+
+  const dynamicRoute = Object.entries(componentMap).find(([routePath]) =>
+    matchPath({ path: routePath, end: true }, path),
+  );
+
+  if (!dynamicRoute) {
     if (process.env.NODE_ENV !== 'production') {
       // eslint-disable-next-line no-console
       console.warn(`No component found for route: ${path}`);
     }
     return null;
   }
-  return <Component />;
+
+  const DynamicComponent = componentMap[dynamicRoute[0]];
+  return <DynamicComponent />;
 };
 
 /**
@@ -99,7 +110,7 @@ export const routeComponentMap: RouteComponentMap = {
 
   // Customer AR
   '/app/ar-statements': lazyLoad('pages/AR-Statements'),
-  '/app/ar-statements/detail': lazyLoad(
+  '/app/ar-statements/:statementId': lazyLoad(
     'pages/AR-Statements/StatementDetail',
   ),
 
