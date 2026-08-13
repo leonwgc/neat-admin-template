@@ -19,6 +19,7 @@ import { TopBar } from '../../components/TopBar';
 import useTable from '../../hooks/useTable';
 import { getStateDetailList } from './api';
 import './index.scss';
+import { useParams } from 'react-router';
 
 type ReconciliationStatus = 'MATCH' | 'DISCREPANCY';
 
@@ -175,16 +176,14 @@ const columns: TableColumnsType<DetailRow> = [
 ];
 
 const StatementDetail: React.FC = () => {
+  const { statementId } = useParams();
   const { tableProps, form, submit } = useTable(
     getStateDetailList,
     (values) => {
-      const { dateRange, ...rest } = values;
-      if (dateRange && dateRange?.length === 2) {
-        rest.start = dateRange[0].format('YYYY-MM-DD');
-        rest.end = dateRange[1].format('YYYY-MM-DD');
-      }
-
-      return rest;
+      return {
+        ...values,
+        statementId,
+      };
     },
     (data) => {
       if (Array.isArray(data)) {
