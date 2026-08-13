@@ -96,7 +96,12 @@ export const routeComponentMap: RouteComponentMap = {
   // Forms
   '/app/forms': lazyLoad('pages/Form/ResponsiveForm'),
   '/app/forms/table': lazyLoad('pages/Table'),
+
+  // Customer AR
   '/app/ar-statements': lazyLoad('pages/AR-Statements'),
+  '/app/ar-statements/detail': lazyLoad(
+    'pages/AR-Statements/StatementDetail',
+  ),
 
   // Component Examples
   '/app/components/image-upload': lazyLoad(
@@ -105,9 +110,7 @@ export const routeComponentMap: RouteComponentMap = {
   '/app/components/image-cropper': lazyLoad(
     'pages/Components/ImageCropperExample',
   ),
-  '/app/components/select-ime-demo': lazyLoad(
-    'pages/Components/SelectIMEDemo',
-  ),
+  '/app/components/select-ime-demo': lazyLoad('pages/Components/SelectIMEDemo'),
 
   // API Request Example
   '/app/api-request/api-demo': lazyLoad('pages/ApiDemo/index'),

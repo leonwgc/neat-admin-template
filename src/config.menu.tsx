@@ -57,7 +57,6 @@ export const menus: MenuItem[] = [
     get label() {
       return 'Customer Settlement File';
     },
-    route: '/app/forms/table',
     icon: <PersonaOutlined />,
     children: [
       {
@@ -81,7 +80,6 @@ export const menus: MenuItem[] = [
     get label() {
       return 'Customer AR';
     },
-    route: '/app/forms/table',
     icon: <HomeOutlined />,
     children: [
       {
@@ -90,6 +88,14 @@ export const menus: MenuItem[] = [
           return 'AR Statements';
         },
         route: '/app/ar-statements',
+      },
+      {
+        key: 'g2-1-1',
+        get label() {
+          return 'Dispute Audit List';
+        },
+        route: '/app/ar-statements/detail',
+        hidden: true,
       },
       {
         key: 'g2-2',

@@ -1,5 +1,5 @@
 import request from '~/req';
-import { listData } from './mock';
+import { listData, listDetailData } from './mock';
 
 export const getStateList = (data) =>
   request.post('/api/ar-statements/state-list', data).catch(() => {
@@ -8,6 +8,17 @@ export const getStateList = (data) =>
       data: {
         result: 'success',
         data: listData,
+      },
+    });
+  });
+
+export const getStateDetailList = (data) =>
+  request.post('/api/ar-statements/state-detail-list', data).catch(() => {
+    return Promise.resolve({
+      code: 200,
+      data: {
+        result: 'success',
+        data: listDetailData,
       },
     });
   });
