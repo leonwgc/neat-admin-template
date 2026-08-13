@@ -15,7 +15,6 @@ import classNames from 'classnames';
 export interface ViewVoiceProps {
   open: boolean;
   invoiceId?: string;
-  imageUrl?: string;
   onClose?: () => void;
 }
 
@@ -36,13 +35,13 @@ const ViewVoice: React.FC<ViewVoiceProps> = ({
       setSrc(data?.imageUrl);
     },
     onFailed: (error) => {
-      toast.error(error?.message || '上传失败');
+      toast.error(error?.message || 'Upload failed');
     },
   });
 
   const handleDownload = () => {
     if (!invoiceId) {
-      toast.error('发票ID不存在');
+      toast.error('Invoice ID does not exist');
       return;
     }
 
@@ -59,12 +58,14 @@ const ViewVoice: React.FC<ViewVoiceProps> = ({
     }
     const image = files[0];
     if (!checkFileType(image, acceptImageTypes)) {
-      toast.error('错误的文件格式');
+      toast.error(
+        'Invalid file format. Please upload a PNG, JPG, or JPEG image.',
+      );
       return;
     }
 
-    if (!checkFileSize(image, 5 * 1024 * 1024)) {
-      toast.error('图片大小不能超过5M');
+    if (!checkFileSize(image, 5)) {
+      toast.error('Image size cannot exceed 5MB.');
       return;
     }
 
@@ -81,8 +82,11 @@ const ViewVoice: React.FC<ViewVoiceProps> = ({
       onClose={onClose}
       title={
         <Flex align="center" gap={8} justify="space-between">
-          <span>发票ID：{invoiceId}</span>
-          <DotStatus text="已开票待确认" style={{ fontSize: 16 }} />
+          <span>Invoice ID：{invoiceId}</span>
+          <DotStatus
+            text="Invoice Issued, Pending Confirmation"
+            style={{ fontSize: 16 }}
+          />
         </Flex>
       }
       width={960}
@@ -92,11 +96,11 @@ const ViewVoice: React.FC<ViewVoiceProps> = ({
       footer={
         <div className="invoice-drawer__footer">
           <Button type="tertiary" onClick={handleDownload}>
-            下载发票
+            Download Invoice
           </Button>
 
           <FileInputTrigger accept={acceptImageTypes} onChange={handle}>
-            <Button>重新上传发票</Button>
+            <Button>Re-upload Invoice</Button>
           </FileInputTrigger>
         </div>
       }
