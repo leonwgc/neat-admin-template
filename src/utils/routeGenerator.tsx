@@ -106,7 +106,7 @@ export const routeComponentMap: RouteComponentMap = {
   // AR Dispute Check
   '/app/ar-dispute-check': lazyLoad('pages/AR-Dispute-Check'),
   '/app/ar-dispute-check/:disputeId': lazyLoad(
-    'pages/AR-Dispute-Check/DisputeDetail',
+    'pages/AR-Dispute-Check/Detail',
   ),
 
   // Component Examples

@@ -104,6 +104,14 @@ export const menus: MenuItem[] = [
         },
         route: '/app/ar-dispute-check',
       },
+       {
+        key: 'g2-2-1',
+        get label() {
+          return 'AR Dispute Check';
+        },
+        route: '/app/ar-dispute-check/:disputeId',
+        hidden: true,
+      },
     ],
   },
   // {

@@ -4,269 +4,154 @@
  */
 
 import React from 'react';
-import {
-  Button,
-  Form,
-  Input,
-  Select,
-  Space,
-  Table,
-  Tag,
-  type TableColumnsType,
-} from '@derbysoft/neat-design';
-import { ExportOutlined, SearchOutlined } from '@derbysoft/neat-design-icons';
-import { TopBar } from '../../components/TopBar';
-import useTable from '../../hooks/useTable';
-import { getStateDetailList } from './api';
-import './index.scss';
-import { useParams } from 'react-router';
+import { Button, Card, Descriptions, Space } from '@derbysoft/neat-design';
+import { TopBar } from '~/components/TopBar';
 import { useTitle } from 'ahooks';
+import './Detail.scss';
 
-type ReconciliationStatus = 'MATCH' | 'DISCREPANCY';
+const orderInfo = [
+  { label: 'Ersp', value: 'GQ504094550V7LHRA5CS4' },
+  { label: 'Booking Time', value: '2026-07-20 15:00' },
+  { label: 'Supplier', value: 'ACCOR' },
+  { label: 'Order Status', value: 'Confirmed', valueType: 'status' },
+  { label: 'ChannelResNo', value: 'H250617030352-0-9L5c' },
+  { label: 'Distributor Code', value: 'ALTAYYAR' },
+  { label: 'HotelResNo', value: '5307AER0510' },
+  { label: 'Hotel Code', value: 'B921' },
+  { label: 'Check-in Date', value: '2026-07-20' },
+  { label: 'Check-out Date', value: '2026-07-22' },
+  { label: 'Knights', value: '2' },
+  { label: 'Rooms', value: '1' },
+] as const;
 
-type DetailRow = {
-  channelResNo: string;
-  hotelResNo: string;
-  supplier: string;
-  bookingTime: string;
-  checkInCheckOutDate: string;
-  orderStatus: string;
-  customerOrderAmount: string;
-  dsOrderAmount: string;
-  discrepancyAmount: string;
-  transactionFxRate: string;
-  autoReconciliationResult: string;
-  reconciliationResult: string;
-  reviewResult: string;
-  adjustmentRemark: string;
-  reason: string;
-};
+const reconciliationInfo = [
+  {
+    label: 'Associated Statement',
+    value: 'Agoda提前3天仅境外预付单早',
+    action: 'View',
+  },
+  { label: 'Statement ID', value: '90610000462546' },
+  { label: 'Transaction / Settlement', value: 'USD/CNY' },
+  { label: 'Transaction FX Rate', value: '6.77' },
+  { label: 'Customer Order Amount', value: '567.89', suffix: 'USD' },
+  { label: 'DS Order Amount', value: '3844.62', suffix: 'CNY' },
+  { label: 'Discrepancy Amount', value: '5307AER0510' },
+  { label: 'Reconciliation Result', value: 'True' },
+  {
+    label: 'Auto Reconciliation Result',
+    value: 'DISCREPANCY',
+    valueType: 'pill-red',
+  },
+  { label: 'Review Result', value: 'Pending Review', valueType: 'pill-yellow' },
+  { label: 'Reviewer', value: 'Robert Fox' },
+  { label: 'Adjustment', value: '—' },
+  { label: 'Remark', value: '—' },
+] as const;
 
 const Detail: React.FC = () => {
-  const { statementId } = useParams();
   useTitle('Customer AR');
 
-  const { tableProps, form, submit } = useTable(
-    getStateDetailList,
-    (values) => {
-      return {
-        ...values,
-        statementId,
-      };
-    },
-    (data) => {
-      if (Array.isArray(data)) {
-        return {
-          list: data,
-          total: data.length,
-        };
-      }
-      return {
-        list: [],
-        total: 0,
-      };
-    },
-  );
-
-  const columns: TableColumnsType<DetailRow> = [
-    {
-      dataIndex: 'ersp',
-      title: 'Ersp',
-      key: 'ersp',
-      width: 200,
-      fixed: 'left',
-    },
-    {
-      title: 'ChannelResNo',
-      dataIndex: 'channelResNo',
-      key: 'channelResNo',
-      width: 200,
-    },
-    {
-      title: 'HotelResNo',
-      dataIndex: 'hotelResNo',
-      key: 'hotelResNo',
-      width: 220,
-    },
-    {
-      title: 'Supplier',
-      dataIndex: 'supplier',
-      key: 'supplier',
-      width: 140,
-    },
-    {
-      title: 'Booking Time',
-      dataIndex: 'bookingTime',
-      key: 'bookingTime',
-      width: 180,
-    },
-    {
-      title: 'Check-in/Check-out Date',
-      dataIndex: 'checkInCheckOutDate',
-      key: 'checkInCheckOutDate',
-      width: 190,
-    },
-    {
-      title: 'Order Status',
-      dataIndex: 'orderStatus',
-      key: 'orderStatus',
-      width: 130,
-    },
-    {
-      title: 'Customer Order Amount',
-      dataIndex: 'customerOrderAmount',
-      key: 'customerOrderAmount',
-      width: 180,
-    },
-    {
-      title: 'DS Order Amount',
-      dataIndex: 'dsOrderAmount',
-      key: 'dsOrderAmount',
-      width: 165,
-    },
-    {
-      title: 'Discrepancy Amount',
-      dataIndex: 'discrepancyAmount',
-      key: 'discrepancyAmount',
-      width: 180,
-    },
-    {
-      title: 'Transaction FX Rate',
-      dataIndex: 'transactionFxRate',
-      key: 'transactionFxRate',
-      width: 170,
-    },
-    {
-      title: 'Auto Reconciliation Result',
-      dataIndex: 'autoReconciliationResult',
-      key: 'autoReconciliationResult',
-      width: 180,
-      render: (value: ReconciliationStatus) => (
-        <span
-          className={
-            value === 'MATCH'
-              ? 'status-pill status-pill--match'
-              : 'status-pill status-pill--discrepancy'
-          }
-        >
-          <Tag color={value === 'MATCH' ? 'neutral' : 'red'}> {value}</Tag>
+  const renderValue = (item: {
+    value: string;
+    valueType?: string;
+    suffix?: string;
+    action?: string;
+  }) => {
+    if (item.valueType === 'status') {
+      return (
+        <span className="ar-dispute-detail__status">
+          <span className="ar-dispute-detail__status-dot" />
+          {item.value}
         </span>
-      ),
-    },
-    {
-      title: 'Reconciliation Result',
-      dataIndex: 'reconciliationResult',
-      key: 'reconciliationResult',
-      width: 170,
-    },
-    {
-      title: 'Review Result',
-      dataIndex: 'reviewResult',
-      key: 'reviewResult',
-      width: 150,
-      render: (value: string) => {
-        if (value === 'Pending Review') {
-          return (
-            <span className="status-pill status-pill--pending">{value}</span>
-          );
-        }
-        if (value === 'Approved') {
-          return (
-            <span className="status-pill status-pill--approved">{value}</span>
-          );
-        }
-        if (value === 'Rejected') {
-          return (
-            <span className="status-pill status-pill--rejected">{value}</span>
-          );
-        }
-        return (
-          <span className="status-pill status-pill--default">{value}</span>
-        );
-      },
-    },
-    {
-      title: 'Adjustment / Remark',
-      dataIndex: 'adjustmentRemark',
-      key: 'adjustmentRemark',
-      width: 170,
-    },
-    {
-      title: 'Action',
-      key: 'action',
-      fixed: 'right',
-      width: 130,
-      render: () => (
-        <button type="button" className="table-actions__link">
-          Order Details
-        </button>
-      ),
-    },
-  ];
+      );
+    }
+
+    if (item.valueType === 'pill-red') {
+      return (
+        <span className="ar-dispute-detail__pill ar-dispute-detail__pill--red">
+          {item.value}
+        </span>
+      );
+    }
+
+    if (item.valueType === 'pill-yellow') {
+      return (
+        <span className="ar-dispute-detail__pill ar-dispute-detail__pill--yellow">
+          {item.value}
+        </span>
+      );
+    }
+
+    if (item.suffix) {
+      return (
+        <span className="ar-dispute-detail__value-with-suffix">
+          {item.value}
+          <span className="ar-dispute-detail__suffix">{item.suffix}</span>
+        </span>
+      );
+    }
+
+    return item.value;
+  };
 
   return (
-    <div className="ar-statements">
+    <div className="ar-dispute-detail">
       <TopBar
-        title="Agoda提前3天仅境外预付单早 (90610000462546)"
+        title="Order Details - GQ504094550V7LHRA5CS4"
         cat={
           <Space size={8} split=">">
             <span>Customer AR</span>
-            <span>AR Statements</span>
+            <span>AR Dispute Audit</span>
           </Space>
         }
         extra={
-          <Button
-            type="primary"
-            icon={<ExportOutlined />}
-            className="ar-statements__upload-btn"
-          >
-            Export Statement Details
-          </Button>
+          <div className="ar-dispute-detail__header-actions">
+            <Button className="ar-dispute-detail__ghost-btn">
+              Back to List
+            </Button>
+            <Button className="ar-dispute-detail__secondary-btn">
+              Reject Dispute
+            </Button>
+            <Button type="primary">Approve Dispute</Button>
+          </div>
         }
       />
 
-      <Form
-        className="ar-statements__toolbar"
-        form={form}
-        onValuesChange={() => {
-          submit();
-        }}
-      >
-        <Space size={16} align="center">
-          <Form.Item name="reconciliationResult">
-            <Select
-              defaultValue="All"
-              style={{ width: 320 }}
-              options={[
-                { label: 'Statement Name', value: 'Statement Name' },
-                { label: 'Agoda', value: 'Agoda' },
-              ]}
-            />
-          </Form.Item>
+      <div className="ar-dispute-detail__content">
+        <Card title="Order Info" className="ar-dispute-detail__card">
+          <div className="ar-dispute-detail__grid">
+            {orderInfo.map((item) => (
+              <div key={item.label} className="ar-dispute-detail__row">
+                <div className="ar-dispute-detail__label">{item.label}</div>
+                <div className="ar-dispute-detail__value">{renderValue(item)}</div>
+              </div>
+            ))}
+          </div>
+        </Card>
 
-          <Space.Compact block>
-            <Form.Item name="filter">
-              <Select
-                defaultValue="Ersp"
-                style={{ width: 158 }}
-                options={[
-                  { label: 'Ersp', value: 'Ersp' },
-                  { label: 'Agoda', value: 'Agoda' },
-                ]}
-              />
-            </Form.Item>
-            <Form.Item name="search">
-              <Input
-                style={{ width: 322 }}
-                placeholder="Search..."
-                suffix={<SearchOutlined />}
-              />
-            </Form.Item>
-          </Space.Compact>
-        </Space>
-      </Form>
-
-      <Table {...tableProps} columns={columns} />
+        <Card title="Reconciliation Info" className="ar-dispute-detail__card">
+          <div className="ar-dispute-detail__grid">
+            {reconciliationInfo.map((item) => (
+              <div key={item.label} className="ar-dispute-detail__row">
+                <div className="ar-dispute-detail__label">{item.label}</div>
+                <div className="ar-dispute-detail__value">
+                  <span className="ar-dispute-detail__desc-content">
+                    {renderValue(item)}
+                    {item.action ? (
+                      <button
+                        type="button"
+                        className="ar-dispute-detail__link-btn"
+                      >
+                        {item.action}
+                      </button>
+                    ) : null}
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </Card>
+      </div>
     </div>
   );
 };

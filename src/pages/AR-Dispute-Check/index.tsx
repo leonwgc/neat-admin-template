@@ -219,7 +219,7 @@ const ARDisputeCheck: React.FC = () => {
           <Button
             type="link"
             onClick={() =>
-              navigate(`/app/ar-statements/${record.customerEntityCode}`)
+              navigate(`/app/ar-dispute-check/${record.customerEntityCode}`)
             }
           >
             Order Details
