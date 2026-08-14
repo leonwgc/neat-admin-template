@@ -4,7 +4,6 @@
  */
 
 import { lazy, ComponentType, LazyExoticComponent } from 'react';
-import { matchPath } from 'react-router';
 import { MenuItem } from '~/config.menu';
 
 /**
@@ -78,25 +77,15 @@ export const getRouteElement = (
   path: string,
   componentMap: RouteComponentMap,
 ): JSX.Element | null => {
-  const ExactComponent = componentMap[path];
-  if (ExactComponent) {
-    return <ExactComponent />;
-  }
-
-  const dynamicRoute = Object.entries(componentMap).find(([routePath]) =>
-    matchPath({ path: routePath, end: true }, path),
-  );
-
-  if (!dynamicRoute) {
+  const Component = componentMap[path];
+  if (!Component) {
     if (process.env.NODE_ENV !== 'production') {
       // eslint-disable-next-line no-console
       console.warn(`No component found for route: ${path}`);
     }
     return null;
   }
-
-  const DynamicComponent = componentMap[dynamicRoute[0]];
-  return <DynamicComponent />;
+  return <Component />;
 };
 
 /**
@@ -115,13 +104,13 @@ export const routeComponentMap: RouteComponentMap = {
   ),
 
   // Component Examples
-  '/app/components/image-upload': lazyLoad(
-    'pages/Components/ImageUploadExample',
-  ),
-  '/app/components/image-cropper': lazyLoad(
-    'pages/Components/ImageCropperExample',
-  ),
-  '/app/components/select-ime-demo': lazyLoad('pages/Components/SelectIMEDemo'),
+  // '/app/components/image-upload': lazyLoad(
+  //   'pages/Components/ImageUploadExample',
+  // ),
+  // '/app/components/image-cropper': lazyLoad(
+  //   'pages/Components/ImageCropperExample',
+  // ),
+  // '/app/components/select-ime-demo': lazyLoad('pages/Components/SelectIMEDemo'),
 
   // API Request Example
   '/app/api-request/api-demo': lazyLoad('pages/ApiDemo/index'),
