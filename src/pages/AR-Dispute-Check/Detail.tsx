@@ -1,5 +1,5 @@
 /**
- * @file src/pages/AR-Statements/StatementDetail.tsx
+ * @file src/pages/AR-Dispute-Check/Detail.tsx
  * @author leon.wang
  */
 
@@ -42,7 +42,7 @@ type DetailRow = {
   reason: string;
 };
 
-const StatementDetail: React.FC = () => {
+const Detail: React.FC = () => {
   const { statementId } = useParams();
   useTitle('Customer AR');
 
@@ -271,4 +271,4 @@ const StatementDetail: React.FC = () => {
   );
 };
 
-export default StatementDetail;
+export default Detail;
