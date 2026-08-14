@@ -27,7 +27,7 @@ import ViewVoice from './ViewVoice';
 import { useNavigate } from 'react-router';
 import useGlobalState from '@derbysoft/zustand-kit';
 import { useMount } from 'ahooks';
-import dayjs from 'dayjs';
+import { dateRangeFormItemProps } from '~/helper';
 
 const summaryCards = [
   {
@@ -260,20 +260,21 @@ const ARStatementsPage: React.FC = () => {
         <Space size={16} align="center">
           <Form.Item
             name="dateRange"
-            normalize={(value) => {
-              if (Array.isArray(value) && value.length === 2) {
-                return value.map((v) => dayjs(v).format('YYYY-MM-DD'));
-              }
-              return value;
-            }}
-            getValueProps={(value) => {
-              if (Array.isArray(value) && value.length === 2) {
-                return {
-                  value: value.map((v) => dayjs(v)),
-                };
-              }
-              return { value };
-            }}
+            {...dateRangeFormItemProps}
+            // normalize={(value) => {
+            //   if (Array.isArray(value) && value.length === 2) {
+            //     return value.map((v) => dayjs(v).format('YYYY-MM-DD'));
+            //   }
+            //   return value;
+            // }}
+            // getValueProps={(value) => {
+            //   if (Array.isArray(value) && value.length === 2) {
+            //     return {
+            //       value: value.map((v) => dayjs(v)),
+            //     };
+            //   }
+            //   return { value };
+            // }}
           >
             <DatePicker.RangePicker format="YYYY-MM-DD" />
           </Form.Item>
