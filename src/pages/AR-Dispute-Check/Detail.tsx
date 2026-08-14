@@ -4,9 +4,10 @@
  */
 
 import React from 'react';
-import { Button, Card, Descriptions, Space } from '@derbysoft/neat-design';
+import { Button, Card, Space } from '@derbysoft/neat-design';
 import { TopBar } from '~/components/TopBar';
 import { useTitle } from 'ahooks';
+import { useParams } from 'react-router';
 import './Detail.scss';
 
 const orderInfo = [
@@ -49,7 +50,8 @@ const reconciliationInfo = [
 ] as const;
 
 const Detail: React.FC = () => {
-  useTitle('Customer AR');
+  const { disputeId } = useParams();
+  useTitle(`Order Details - ${disputeId}`);
 
   const renderValue = (item: {
     value: string;
@@ -97,7 +99,7 @@ const Detail: React.FC = () => {
   return (
     <div className="ar-dispute-detail">
       <TopBar
-        title="Order Details - GQ504094550V7LHRA5CS4"
+        title={`Order Details - ${disputeId}`}
         cat={
           <Space size={8} split=">">
             <span>Customer AR</span>
@@ -123,7 +125,9 @@ const Detail: React.FC = () => {
             {orderInfo.map((item) => (
               <div key={item.label} className="ar-dispute-detail__row">
                 <div className="ar-dispute-detail__label">{item.label}</div>
-                <div className="ar-dispute-detail__value">{renderValue(item)}</div>
+                <div className="ar-dispute-detail__value">
+                  {renderValue(item)}
+                </div>
               </div>
             ))}
           </div>
