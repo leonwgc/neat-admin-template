@@ -78,11 +78,13 @@ interface StatementRow {
   status: StatementStatus;
 }
 
+const persistedTableStateKey = 'ar-statements-table-state';
+
 const ARStatementsPage: React.FC = () => {
   const [activeInvoice, setActiveInvoice] = useState<StatementRow | null>(null);
   const navigate = useNavigate();
   const { filters, setFilters, restoredState } = usePersistedTableState(
-    'ar-statements-table-state',
+    persistedTableStateKey,
   );
 
   useTitle('AR Statements');
