@@ -15,13 +15,19 @@ type ListResult<T> = {
   total: number;
 };
 
+const onBeforeRequestDefault = (v: ObjectType) => v;
+
+type Options = Parameters<typeof useAntdTable>[1] & {
+  getFormData?: (values: ObjectType) => ObjectType;
+  getResponseData?: (
+    data: ObjectType | ObjectType[],
+  ) => ListResult<ObjectType>;
+  onBeforeRequest?: (data: ObjectType) => ObjectType;
+};
+
 const useTable = (
   request: (data: ObjectType) => AxiosPromise<ResponseDataType>,
-  formValuesTransform?: (values: ObjectType) => ObjectType,
-  responseDataTransform?: (
-    data: ObjectType | ObjectType[],
-  ) => ListResult<ObjectType>,
-  options?: Parameters<typeof useAntdTable>[1],
+  options?: Options,
 ) => {
   const { toast, notification } = App.useApp();
   const [form] = Form.useForm();
@@ -30,7 +36,17 @@ const useTable = (
 
   const service = useCallback(
     (
-      { current, pageSize, sorter },
+      {
+        current,
+        pageSize,
+        sorter,
+      }: {
+        current: number;
+        pageSize: number;
+        sorter?: any;
+        filters?: unknown;
+        extra?: unknown;
+      },
       formData = {},
     ): Promise<ListResult<ObjectType>> => {
       setLoading(true);
@@ -41,12 +57,13 @@ const useTable = (
 
       let transformedData = formData;
 
-      if (typeof formValuesTransform === 'function') {
-        transformedData = formValuesTransform(formData);
+      const { getFormData, getResponseData } = options ?? {};
+      if (typeof getFormData === 'function') {
+        transformedData = getFormData(formData);
       }
 
       Object.keys(transformedData).forEach((key) => {
-        if (transformedData[key] !== '') {
+        if (transformedData[key] !== undefined) {
           params[key] = transformedData[key];
         }
       });
@@ -69,11 +86,14 @@ const useTable = (
         });
       }
 
-      return requestFn(params)
+      const { onBeforeRequest = onBeforeRequestDefault } = options ?? {};
+      const p = onBeforeRequest(params);
+
+      return requestFn(p)
         .then(({ data: { data: resData, result } }) => {
           if (result === 'success') {
-            if (typeof responseDataTransform === 'function') {
-              return responseDataTransform(resData);
+            if (typeof getResponseData === 'function') {
+              return getResponseData(resData);
             }
 
             const result = resData as ListObjectType;
@@ -97,7 +117,7 @@ const useTable = (
           };
         });
     },
-    [formValuesTransform, notification, req, responseDataTransform, toast],
+    [notification, options, req, toast],
   );
 
   const {

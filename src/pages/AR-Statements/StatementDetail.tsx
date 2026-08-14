@@ -46,15 +46,14 @@ const StatementDetail: React.FC = () => {
   const { statementId } = useParams();
   useTitle('Customer AR');
 
-  const { tableProps, form, submit } = useTable(
-    getStateDetailList,
-    (values) => {
+  const { tableProps, form, submit } = useTable(getStateDetailList, {
+    onBeforeRequest: (data) => {
       return {
-        ...values,
+        ...data,
         statementId,
       };
     },
-    (data) => {
+    getResponseData: (data) => {
       if (Array.isArray(data)) {
         return {
           list: data,
@@ -66,7 +65,7 @@ const StatementDetail: React.FC = () => {
         total: 0,
       };
     },
-  );
+  });
 
   const columns: TableColumnsType<DetailRow> = [
     {

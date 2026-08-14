@@ -195,10 +195,8 @@ const ARStatementsPage: React.FC = () => {
     },
   ];
 
-  const { tableProps, form, submit } = useTable(
-    getStateList,
-    (values) => values,
-    (data) => {
+  const { tableProps, form, submit } = useTable(getStateList, {
+    getResponseData: (data) => {
       if (Array.isArray(data)) {
         return {
           list: data,
@@ -210,7 +208,7 @@ const ARStatementsPage: React.FC = () => {
         total: 0,
       };
     },
-  );
+  });
 
   useMount(() => {
     form.setFieldsValue(filters);

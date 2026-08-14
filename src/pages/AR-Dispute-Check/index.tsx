@@ -55,10 +55,8 @@ const ARDisputeCheck: React.FC = () => {
 
   useTitle('AR Dispute Check');
 
-  const { tableProps, form, submit } = useTable(
-    getDisputeList,
-    (values) => values,
-    (data) => {
+  const { tableProps, form, submit } = useTable(getDisputeList, {
+    getResponseData: (data) => {
       if (Array.isArray(data)) {
         return {
           list: data,
@@ -70,7 +68,7 @@ const ARDisputeCheck: React.FC = () => {
         total: 0,
       };
     },
-  );
+  });
 
   useMount(() => {
     form.setFieldsValue(filters);
