@@ -103,6 +103,12 @@ export const routeComponentMap: RouteComponentMap = {
     'pages/AR-Statements/StatementDetail',
   ),
 
+  // AR Dispute Check
+  '/app/ar-dispute-check': lazyLoad('pages/AR-Dispute-Check'),
+  '/app/ar-dispute-check/:disputeId': lazyLoad(
+    'pages/AR-Dispute-Check/DisputeDetail',
+  ),
+
   // Component Examples
   // '/app/components/image-upload': lazyLoad(
   //   'pages/Components/ImageUploadExample',

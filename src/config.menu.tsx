@@ -100,9 +100,9 @@ export const menus: MenuItem[] = [
       {
         key: 'g2-2',
         get label() {
-          return 'AR Dispute Audit';
+          return 'AR Dispute Check';
         },
-        route: '/app/forms/table',
+        route: '/app/ar-dispute-check',
       },
     ],
   },
