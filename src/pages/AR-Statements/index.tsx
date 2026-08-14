@@ -176,21 +176,18 @@ const ARStatementsPage: React.FC = () => {
       width: 200,
       render: (_, record) => (
         <div className="table-actions">
-          <button
-            type="button"
-            className="table-actions__link"
+          <Button
+            type="link"
             onClick={() =>
               navigate(`/app/ar-statements/${record.customerEntityCode}`)
             }
           >
             Statement Details
-          </button>
-          <button
-            type="button"
-            className="table-actions__link table-actions__link--alt"
-          >
+          </Button>
+
+          <Button type="link" onClick={() => setActiveInvoice(record)}>
             View Invoice
-          </button>
+          </Button>
         </div>
       ),
     },
