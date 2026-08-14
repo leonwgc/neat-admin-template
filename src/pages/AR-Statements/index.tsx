@@ -299,6 +299,7 @@ const ARStatementsPage: React.FC = () => {
           </Space.Compact>
         </Space>
         <Button
+          type="tertiary"
           icon={<FilterOutlined />}
           className="toolbar-filters__icon-btn"
           aria-label="Filter"
