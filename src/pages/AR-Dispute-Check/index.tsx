@@ -3,10 +3,9 @@
  * @author leon.wang
  */
 
-import React, { useState } from 'react';
+import React from 'react';
 import {
   Button,
-  DatePicker,
   Form,
   Input,
   Select,
@@ -15,19 +14,13 @@ import {
   type TableColumnsType,
 } from '@derbysoft/neat-design';
 import { TopBar } from '~/components/TopBar';
-import './index.scss';
-import {
-  UploadOutlined,
-  FilterOutlined,
-  SearchOutlined,
-} from '@derbysoft/neat-design-icons';
+import { UploadOutlined, SearchOutlined } from '@derbysoft/neat-design-icons';
 import useTable from '~/hooks/useTable';
 import { getDisputeList } from './api';
-import ViewVoice from './ViewVoice';
 import { useNavigate } from 'react-router';
 import useGlobalState from '@derbysoft/zustand-kit';
 import { useMount, useTitle } from 'ahooks';
-import { dateRangeFormItemProps } from '~/helper';
+import './index.scss';
 
 interface StatementRow {
   statementName: string;
