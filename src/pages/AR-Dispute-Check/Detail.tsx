@@ -4,11 +4,17 @@
  */
 
 import React from 'react';
+import { useNavigate } from 'react-router';
 import { Button, Card, Space } from '@derbysoft/neat-design';
 import { TopBar } from '~/components/TopBar';
 import { useTitle } from 'ahooks';
 import { useParams } from 'react-router';
 import './Detail.scss';
+import {
+  ArrowLeftOutlined,
+  ForbiddenOutlined,
+  SuccessOutlined,
+} from '@derbysoft/neat-design-icons';
 
 const orderInfo = [
   { label: 'Ersp', value: 'GQ504094550V7LHRA5CS4' },
@@ -51,6 +57,7 @@ const reconciliationInfo = [
 
 const Detail: React.FC = () => {
   const { disputeId } = useParams();
+  const navigate = useNavigate();
   useTitle(`Order Details - ${disputeId}`);
 
   const renderValue = (item: {
@@ -108,13 +115,23 @@ const Detail: React.FC = () => {
         }
         extra={
           <div className="ar-dispute-detail__header-actions">
-            <Button className="ar-dispute-detail__ghost-btn">
+            <Button
+              type="tertiary"
+              className="ar-dispute-detail__ghost-btn"
+              icon={<ArrowLeftOutlined />}
+              onClick={() => navigate('/app/ar-dispute-check')}
+            >
               Back to List
             </Button>
-            <Button className="ar-dispute-detail__secondary-btn">
+            <Button
+              className="ar-dispute-detail__secondary-btn"
+              icon={<ForbiddenOutlined />}
+            >
               Reject Dispute
             </Button>
-            <Button type="primary">Approve Dispute</Button>
+            <Button type="primary" icon={<SuccessOutlined />}>
+              Approve Dispute
+            </Button>
           </div>
         }
       />
