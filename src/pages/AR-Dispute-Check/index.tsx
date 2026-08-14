@@ -52,7 +52,6 @@ interface StatementRow {
 }
 
 const ARDisputeCheck: React.FC = () => {
-  const [activeInvoice, setActiveInvoice] = useState<StatementRow | null>(null);
   const navigate = useNavigate();
 
   const [filters, setFilters] = useGlobalState(
@@ -232,10 +231,6 @@ const ARDisputeCheck: React.FC = () => {
           >
             Order Details
           </Button>
-
-          <Button type="link" onClick={() => setActiveInvoice(record)}>
-            Review
-          </Button>
         </div>
       ),
     },
@@ -267,10 +262,6 @@ const ARDisputeCheck: React.FC = () => {
         }}
       >
         <Space size={16} align="center">
-          <Form.Item name="dateRange" {...dateRangeFormItemProps}>
-            <DatePicker.RangePicker format="YYYY-MM-DD" />
-          </Form.Item>
-
           <Space.Compact block>
             <Form.Item name="filter">
               <Select
@@ -291,23 +282,12 @@ const ARDisputeCheck: React.FC = () => {
             </Form.Item>
           </Space.Compact>
         </Space>
-        <Button
-          icon={<FilterOutlined />}
-          className="toolbar-filters__icon-btn"
-          aria-label="Filter"
-        />
       </Form>
 
       <Table
         columns={columns}
         {...tableProps}
         rowKey={(record) => `${record.statementName}-${record.invoiceId}`}
-      />
-
-      <ViewVoice
-        open={Boolean(activeInvoice)}
-        invoiceId={activeInvoice?.invoiceId}
-        onClose={() => setActiveInvoice(null)}
       />
     </div>
   );
