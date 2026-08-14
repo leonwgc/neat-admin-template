@@ -29,7 +29,7 @@ export default {
   // Footer
   footer: {
     company: 'DerbySoft Inc.',
-    copyright: 'All rights reserved,',
+    copyright: 'All rights reserved. ',
     privacyPolicy: 'Privacy Policy',
   },
 

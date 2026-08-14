@@ -20,6 +20,7 @@ import useTable from '../../hooks/useTable';
 import { getStateDetailList } from './api';
 import './index.scss';
 import { useParams } from 'react-router';
+import { useTitle } from 'ahooks';
 
 type ReconciliationStatus = 'MATCH' | 'DISCREPANCY';
 
@@ -41,142 +42,10 @@ type DetailRow = {
   reason: string;
 };
 
-const columns: TableColumnsType<DetailRow> = [
-  {
-    dataIndex: 'ersp',
-    title: 'Ersp',
-    key: 'ersp',
-    width: 200,
-    fixed: 'left',
-  },
-  {
-    title: 'ChannelResNo',
-    dataIndex: 'channelResNo',
-    key: 'channelResNo',
-    width: 200,
-  },
-  {
-    title: 'HotelResNo',
-    dataIndex: 'hotelResNo',
-    key: 'hotelResNo',
-    width: 220,
-  },
-  {
-    title: 'Supplier',
-    dataIndex: 'supplier',
-    key: 'supplier',
-    width: 140,
-  },
-  {
-    title: 'Booking Time',
-    dataIndex: 'bookingTime',
-    key: 'bookingTime',
-    width: 180,
-  },
-  {
-    title: 'Check-in/Check-out Date',
-    dataIndex: 'checkInCheckOutDate',
-    key: 'checkInCheckOutDate',
-    width: 190,
-  },
-  {
-    title: 'Order Status',
-    dataIndex: 'orderStatus',
-    key: 'orderStatus',
-    width: 130,
-  },
-  {
-    title: 'Customer Order Amount',
-    dataIndex: 'customerOrderAmount',
-    key: 'customerOrderAmount',
-    width: 180,
-  },
-  {
-    title: 'DS Order Amount',
-    dataIndex: 'dsOrderAmount',
-    key: 'dsOrderAmount',
-    width: 165,
-  },
-  {
-    title: 'Discrepancy Amount',
-    dataIndex: 'discrepancyAmount',
-    key: 'discrepancyAmount',
-    width: 180,
-  },
-  {
-    title: 'Transaction FX Rate',
-    dataIndex: 'transactionFxRate',
-    key: 'transactionFxRate',
-    width: 170,
-  },
-  {
-    title: 'Auto Reconciliation Result',
-    dataIndex: 'autoReconciliationResult',
-    key: 'autoReconciliationResult',
-    width: 180,
-    render: (value: ReconciliationStatus) => (
-      <span
-        className={
-          value === 'MATCH'
-            ? 'status-pill status-pill--match'
-            : 'status-pill status-pill--discrepancy'
-        }
-      >
-        <Tag color={value === 'MATCH' ? 'neutral' : 'red'}> {value}</Tag>
-      </span>
-    ),
-  },
-  {
-    title: 'Reconciliation Result',
-    dataIndex: 'reconciliationResult',
-    key: 'reconciliationResult',
-    width: 170,
-  },
-  {
-    title: 'Review Result',
-    dataIndex: 'reviewResult',
-    key: 'reviewResult',
-    width: 150,
-    render: (value: string) => {
-      if (value === 'Pending Review') {
-        return (
-          <span className="status-pill status-pill--pending">{value}</span>
-        );
-      }
-      if (value === 'Approved') {
-        return (
-          <span className="status-pill status-pill--approved">{value}</span>
-        );
-      }
-      if (value === 'Rejected') {
-        return (
-          <span className="status-pill status-pill--rejected">{value}</span>
-        );
-      }
-      return <span className="status-pill status-pill--default">{value}</span>;
-    },
-  },
-  {
-    title: 'Adjustment / Remark',
-    dataIndex: 'adjustmentRemark',
-    key: 'adjustmentRemark',
-    width: 170,
-  },
-  {
-    title: 'Action',
-    key: 'action',
-    fixed: 'right',
-    width: 130,
-    render: () => (
-      <button type="button" className="table-actions__link">
-        Order Details
-      </button>
-    ),
-  },
-];
-
 const StatementDetail: React.FC = () => {
   const { statementId } = useParams();
+  useTitle('Customer AR');
+
   const { tableProps, form, submit } = useTable(
     getStateDetailList,
     (values) => {
@@ -199,13 +68,150 @@ const StatementDetail: React.FC = () => {
     },
   );
 
+  const columns: TableColumnsType<DetailRow> = [
+    {
+      dataIndex: 'ersp',
+      title: 'Ersp',
+      key: 'ersp',
+      width: 200,
+      fixed: 'left',
+    },
+    {
+      title: 'ChannelResNo',
+      dataIndex: 'channelResNo',
+      key: 'channelResNo',
+      width: 200,
+    },
+    {
+      title: 'HotelResNo',
+      dataIndex: 'hotelResNo',
+      key: 'hotelResNo',
+      width: 220,
+    },
+    {
+      title: 'Supplier',
+      dataIndex: 'supplier',
+      key: 'supplier',
+      width: 140,
+    },
+    {
+      title: 'Booking Time',
+      dataIndex: 'bookingTime',
+      key: 'bookingTime',
+      width: 180,
+    },
+    {
+      title: 'Check-in/Check-out Date',
+      dataIndex: 'checkInCheckOutDate',
+      key: 'checkInCheckOutDate',
+      width: 190,
+    },
+    {
+      title: 'Order Status',
+      dataIndex: 'orderStatus',
+      key: 'orderStatus',
+      width: 130,
+    },
+    {
+      title: 'Customer Order Amount',
+      dataIndex: 'customerOrderAmount',
+      key: 'customerOrderAmount',
+      width: 180,
+    },
+    {
+      title: 'DS Order Amount',
+      dataIndex: 'dsOrderAmount',
+      key: 'dsOrderAmount',
+      width: 165,
+    },
+    {
+      title: 'Discrepancy Amount',
+      dataIndex: 'discrepancyAmount',
+      key: 'discrepancyAmount',
+      width: 180,
+    },
+    {
+      title: 'Transaction FX Rate',
+      dataIndex: 'transactionFxRate',
+      key: 'transactionFxRate',
+      width: 170,
+    },
+    {
+      title: 'Auto Reconciliation Result',
+      dataIndex: 'autoReconciliationResult',
+      key: 'autoReconciliationResult',
+      width: 180,
+      render: (value: ReconciliationStatus) => (
+        <span
+          className={
+            value === 'MATCH'
+              ? 'status-pill status-pill--match'
+              : 'status-pill status-pill--discrepancy'
+          }
+        >
+          <Tag color={value === 'MATCH' ? 'neutral' : 'red'}> {value}</Tag>
+        </span>
+      ),
+    },
+    {
+      title: 'Reconciliation Result',
+      dataIndex: 'reconciliationResult',
+      key: 'reconciliationResult',
+      width: 170,
+    },
+    {
+      title: 'Review Result',
+      dataIndex: 'reviewResult',
+      key: 'reviewResult',
+      width: 150,
+      render: (value: string) => {
+        if (value === 'Pending Review') {
+          return (
+            <span className="status-pill status-pill--pending">{value}</span>
+          );
+        }
+        if (value === 'Approved') {
+          return (
+            <span className="status-pill status-pill--approved">{value}</span>
+          );
+        }
+        if (value === 'Rejected') {
+          return (
+            <span className="status-pill status-pill--rejected">{value}</span>
+          );
+        }
+        return (
+          <span className="status-pill status-pill--default">{value}</span>
+        );
+      },
+    },
+    {
+      title: 'Adjustment / Remark',
+      dataIndex: 'adjustmentRemark',
+      key: 'adjustmentRemark',
+      width: 170,
+    },
+    {
+      title: 'Action',
+      key: 'action',
+      fixed: 'right',
+      width: 130,
+      render: () => (
+        <button type="button" className="table-actions__link">
+          Order Details
+        </button>
+      ),
+    },
+  ];
+
   return (
     <div className="ar-statements">
       <TopBar
         title="Agoda提前3天仅境外预付单早 (90610000462546)"
         cat={
           <Space size={8} split=">">
-            <span>Customer AR</span><span>AR Statements</span>
+            <span>Customer AR</span>
+            <span>AR Statements</span>
           </Space>
         }
         extra={

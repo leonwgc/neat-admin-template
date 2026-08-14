@@ -26,7 +26,7 @@ import { getStateList } from './api';
 import ViewVoice from './ViewVoice';
 import { useNavigate } from 'react-router';
 import useGlobalState from '@derbysoft/zustand-kit';
-import { useMount } from 'ahooks';
+import { useMount, useTitle } from 'ahooks';
 import { dateRangeFormItemProps } from '~/helper';
 
 const summaryCards = [
@@ -87,6 +87,8 @@ const ARStatementsPage: React.FC = () => {
     {},
     { storage: 'sessionStorage' },
   );
+
+  useTitle('AR Statements');
 
   const columns: TableColumnsType<StatementRow> = [
     {
