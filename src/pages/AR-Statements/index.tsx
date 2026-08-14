@@ -25,9 +25,9 @@ import useTable from '~/hooks/useTable';
 import { getStateList } from './api';
 import ViewVoice from './ViewVoice';
 import { useNavigate } from 'react-router';
-import useGlobalState from '@derbysoft/zustand-kit';
 import { useMount, useTitle } from 'ahooks';
 import { dateRangeFormItemProps } from '~/helper';
+import usePersistedTableState from '~/hooks/usePersistedTableState';
 
 const summaryCards = [
   {
@@ -81,11 +81,8 @@ interface StatementRow {
 const ARStatementsPage: React.FC = () => {
   const [activeInvoice, setActiveInvoice] = useState<StatementRow | null>(null);
   const navigate = useNavigate();
-
-  const [filters, setFilters] = useGlobalState(
-    'settings',
-    {},
-    { storage: 'sessionStorage' },
+  const { filters, setFilters, restoredState } = usePersistedTableState(
+    'ar-statements-table-state',
   );
 
   useTitle('AR Statements');
@@ -196,6 +193,18 @@ const ARStatementsPage: React.FC = () => {
   ];
 
   const { tableProps, form, submit } = useTable(getStateList, {
+    defaultParams: [
+      {
+        current: restoredState.current,
+        pageSize: restoredState.pageSize,
+        ...restoredState.formValues,
+      },
+      restoredState.formValues,
+    ],
+    onBeforeRequest(data) {
+      setFilters(data);
+      return data;
+    },
     getResponseData: (data) => {
       if (Array.isArray(data)) {
         return {
@@ -211,7 +220,7 @@ const ARStatementsPage: React.FC = () => {
   });
 
   useMount(() => {
-    form.setFieldsValue(filters);
+    form.setFieldsValue(restoredState.formValues);
   });
 
   return (
@@ -249,8 +258,7 @@ const ARStatementsPage: React.FC = () => {
         className="ar-statements__toolbar"
         form={form}
         initialValues={filters}
-        onValuesChange={(v, allValues) => {
-          setFilters(allValues);
+        onValuesChange={() => {
           submit();
         }}
       >

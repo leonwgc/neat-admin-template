@@ -18,8 +18,8 @@ import { UploadOutlined, SearchOutlined } from '@derbysoft/neat-design-icons';
 import useTable from '~/hooks/useTable';
 import { getDisputeList } from './api';
 import { useNavigate } from 'react-router';
-import useGlobalState from '@derbysoft/zustand-kit';
 import { useMount, useTitle } from 'ahooks';
+import usePersistedTableState from '~/hooks/usePersistedTableState';
 import './index.scss';
 
 interface StatementRow {
@@ -46,16 +46,25 @@ interface StatementRow {
 
 const ARDisputeCheck: React.FC = () => {
   const navigate = useNavigate();
-
-  const [filters, setFilters] = useGlobalState(
-    'settings',
-    {},
-    { storage: 'sessionStorage' },
+  const { filters, setFilters, restoredState } = usePersistedTableState(
+    'ar-dispute-check-table-state',
   );
 
   useTitle('AR Dispute Check');
 
   const { tableProps, form, submit } = useTable(getDisputeList, {
+    defaultParams: [
+      {
+        current: restoredState.current,
+        pageSize: restoredState.pageSize,
+        ...restoredState.formValues,
+      },
+      restoredState.formValues,
+    ],
+    onBeforeRequest(data) {
+      setFilters(data);
+      return data;
+    },
     getResponseData: (data) => {
       if (Array.isArray(data)) {
         return {
@@ -71,7 +80,7 @@ const ARDisputeCheck: React.FC = () => {
   });
 
   useMount(() => {
-    form.setFieldsValue(filters);
+    form.setFieldsValue(restoredState.formValues);
   });
 
   const columns: TableColumnsType<StatementRow> = [
@@ -132,7 +141,7 @@ const ARDisputeCheck: React.FC = () => {
       dataIndex: 'discrepancyAmount',
       key: 'discrepancyAmount',
       width: 170,
-      render: (value?: string, record) => (
+      render: (value: string, record: StatementRow) => (
         <div className="money-cell">
           {value || '0.00'}
           <span>{record.currency || 'CNY'}</span>
