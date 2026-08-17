@@ -265,24 +265,7 @@ const ARStatementsPage: React.FC = () => {
         }}
       >
         <Space size={16} align="center">
-          <Form.Item
-            name="dateRange"
-            {...dateRangeFormItemProps}
-            // normalize={(value) => {
-            //   if (Array.isArray(value) && value.length === 2) {
-            //     return value.map((v) => dayjs(v).format('YYYY-MM-DD'));
-            //   }
-            //   return value;
-            // }}
-            // getValueProps={(value) => {
-            //   if (Array.isArray(value) && value.length === 2) {
-            //     return {
-            //       value: value.map((v) => dayjs(v)),
-            //     };
-            //   }
-            //   return { value };
-            // }}
-          >
+          <Form.Item name="dateRange" {...dateRangeFormItemProps}>
             <DatePicker.RangePicker format="YYYY-MM-DD" />
           </Form.Item>
 
