@@ -47,7 +47,7 @@
     height: 100vh;
     padding: var(--header-height) 0 0px var(--menu-width);
     background: #fff;
-    transition: padding-left $theme-transition-duration ease-in-out;
+    // transition: padding-left $theme-transition-duration ease-in-out;
 
     &--no-sider {
       padding-left: 0;
