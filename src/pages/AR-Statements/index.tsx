@@ -28,6 +28,7 @@ import { useNavigate } from 'react-router';
 import { useMount, useTitle } from 'ahooks';
 import { dateRangeFormItemProps } from '~/helper';
 import usePersistedTableState from '~/hooks/usePersistedTableState';
+import dayjs from 'dayjs';
 
 const summaryCards = [
   {
@@ -83,9 +84,9 @@ const persistedTableStateKey = 'ar-statements-table-state';
 const ARStatementsPage: React.FC = () => {
   const [activeInvoice, setActiveInvoice] = useState<StatementRow | null>(null);
   const navigate = useNavigate();
-  const { filters, setFilters, restoredState } = usePersistedTableState(
-    persistedTableStateKey,
-  );
+  // const { filters, setFilters, restoredState } = usePersistedTableState(
+  //   persistedTableStateKey,
+  // );
 
   useTitle('AR Statements');
 
@@ -195,16 +196,38 @@ const ARStatementsPage: React.FC = () => {
   ];
 
   const { tableProps, form, submit } = useTable(getStateList, {
-    defaultParams: [
-      {
-        current: restoredState.current,
-        pageSize: restoredState.pageSize,
-        ...restoredState.formValues,
-      },
-      restoredState.formValues,
-    ],
+    // defaultParams: [
+    //   {
+    //     current: restoredState.current,
+    //     pageSize: restoredState.pageSize,
+    //     ...restoredState.formValues,
+    //   },
+    //   restoredState.formValues,
+    // ],
+    getFormData: (values) => {
+      const { dateRange, ...rest } = values;
+      return {
+        start: dateRange?.[0]
+          ? dayjs(dateRange[0]).format('YYYY-MM-DD')
+          : undefined,
+        end: dateRange?.[1]
+          ? dayjs(dateRange[1]).format('YYYY-MM-DD')
+          : undefined,
+        ...rest,
+      };
+    },
     onBeforeRequest(data) {
-      setFilters(data);
+      // setFilters(data);
+      const { start, end, ...rest } = data;
+      let startDate, endDate;
+      if (start && end) {
+        startDate = dayjs(start);
+        endDate = dayjs(end);
+      }
+      // setFilters({
+      //   ...rest,
+      //   dateRange: [startDate, endDate],
+      // });
       return data;
     },
     getResponseData: (data) => {
@@ -222,7 +245,7 @@ const ARStatementsPage: React.FC = () => {
   });
 
   useMount(() => {
-    form.setFieldsValue(restoredState.formValues);
+    // form.setFieldsValue(restoredState.formValues);
   });
 
   return (
@@ -259,13 +282,13 @@ const ARStatementsPage: React.FC = () => {
       <Form
         className="ar-statements__toolbar"
         form={form}
-        initialValues={filters}
-        onValuesChange={() => {
+        // initialValues={filters}
+        onValuesChange={(c, a) => {
           submit();
         }}
       >
         <Space size={16} align="center">
-          <Form.Item name="dateRange" {...dateRangeFormItemProps}>
+          <Form.Item name="dateRange">
             <DatePicker.RangePicker format="YYYY-MM-DD" />
           </Form.Item>
 

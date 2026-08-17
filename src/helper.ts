@@ -35,13 +35,15 @@ export const downloadFile = (url: string, filename: string) => {
 
 export const dateRangeFormItemProps = {
   normalize: (value) => {
-    if (Array.isArray(value) && value.length === 2) {
-      return value.map((v) => dayjs(v).format('YYYY-MM-DD'));
+    if (Array.isArray(value)) {
+      console.log('value', value);
+      return value.map((v) => (v ? dayjs(v).format('YYYY-MM-DD') : v));
     }
     return value;
   },
   getValueProps: (value) => {
-    if (Array.isArray(value) && value.length === 2) {
+    if (Array.isArray(value)) {
+      console.log('value', value);
       return {
         value: value.map((v) => dayjs(v)),
       };
