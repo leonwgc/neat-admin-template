@@ -16,6 +16,7 @@ import {
 import { TopBar } from '~/components/TopBar';
 import { UploadOutlined, SearchOutlined } from '@derbysoft/neat-design-icons';
 import useTable from '~/hooks/useTable';
+import usePageState from '~/hooks/usePageState';
 import { getDisputeList } from './api';
 import { useNavigate } from 'react-router';
 import { useTitle } from 'ahooks';
@@ -43,12 +44,50 @@ interface StatementRow {
   adjustmentRemark?: string;
 }
 
+interface ARDisputeCheckState {
+  current: string | number;
+  pageSize: string | number;
+  filter: string;
+  search: string;
+}
+
 const ARDisputeCheck: React.FC = () => {
   const navigate = useNavigate();
+  const pageState = usePageState<
+    ARDisputeCheckState,
+    {
+      filter: string;
+      search: string;
+    }
+  >({
+    key: 'ar-dispute-check',
+    initialState: {
+      current: 1,
+      pageSize: 10,
+      filter: 'Statement Name',
+      search: '',
+    },
+    stateToFormValues: (state) => ({
+      filter: state.filter ?? 'Statement Name',
+      search: state.search ?? '',
+    }),
+    formValuesToState: (values) => ({
+      filter: values.filter ?? 'Statement Name',
+      search: values.search ?? '',
+    }),
+    formValuesToRequest: (values) => ({
+      filter: values.filter,
+      search: values.search,
+    }),
+  });
 
   useTitle('AR Dispute Check');
 
-  const { tableProps, form, submit } = useTable(getDisputeList, {
+  const { tableProps, submit } = useTable(getDisputeList, {
+    form: pageState.form,
+    defaultParams: pageState.defaultParams,
+    getFormData: pageState.getFormData,
+    onBeforeRequest: pageState.onBeforeRequest,
     getResponseData: (data) => {
       if (Array.isArray(data)) {
         return {
@@ -234,8 +273,10 @@ const ARDisputeCheck: React.FC = () => {
 
       <Form
         className="ar-statements__toolbar"
-        form={form}
-        onValuesChange={() => {
+        form={pageState.form}
+        initialValues={pageState.formValues}
+        onValuesChange={(changedValues, allValues) => {
+          pageState.onValuesChange(changedValues, allValues);
           submit();
         }}
       >
@@ -243,7 +284,6 @@ const ARDisputeCheck: React.FC = () => {
           <Space.Compact block>
             <Form.Item name="filter">
               <Select
-                defaultValue="Statement Name"
                 style={{ width: 158 }}
                 options={[
                   { label: 'Statement Name', value: 'Statement Name' },
