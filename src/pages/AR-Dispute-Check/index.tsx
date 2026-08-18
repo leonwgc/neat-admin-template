@@ -3,7 +3,7 @@
  * @author leon.wang
  */
 
-import React from 'react';
+import React, { useCallback, useMemo } from 'react';
 import {
   Button,
   Dropdown,
@@ -115,31 +115,39 @@ const ARDisputeCheck: React.FC = () => {
     ...pageState,
   });
 
-  const handleMenuClick: MenuProps['onClick'] = (e) => {
+  const handleMenuClick = (record: StatementRow, e: { key: string }) => {
     if (e.key === 'Approve') {
-      console.log('Approve dispute');
+      // eslint-disable-next-line no-console
+      console.log('Approve dispute', record);
     } else if (e.key === 'Reject') {
-      console.log('Reject dispute');
+      // eslint-disable-next-line no-console
+      console.log('Reject dispute', record);
     }
   };
 
-  const items: MenuProps['items'] = [
-    {
-      label: 'Approve Dispute',
-      key: 'Approve',
-      icon: <SuccessOutlined />,
-    },
-    {
-      label: 'Reject Dispute',
-      key: 'Reject',
-      icon: <ForbiddenOutlined />,
-    },
-  ];
+  const items: MenuProps['items'] = useMemo(
+    () => [
+      {
+        label: 'Approve Dispute',
+        key: 'Approve',
+        icon: <SuccessOutlined />,
+      },
+      {
+        label: 'Reject Dispute',
+        key: 'Reject',
+        icon: <ForbiddenOutlined />,
+      },
+    ],
+    [],
+  );
 
-  const menuProps = {
-    items,
-    onClick: handleMenuClick,
-  };
+  const getMenuProps = useCallback(
+    (record: StatementRow) => ({
+      items,
+      onClick: (e: { key: string }) => handleMenuClick(record, e),
+    }),
+    [items],
+  );
 
   const columns: TableColumnsType<StatementRow> = [
     {
@@ -290,7 +298,7 @@ const ARDisputeCheck: React.FC = () => {
             Order Details
           </Button>
 
-          <Dropdown menu={menuProps} placement="bottomRight">
+          <Dropdown menu={getMenuProps(record)} placement="bottomRight">
             <Button type="primary" size="small">
               Review
             </Button>
