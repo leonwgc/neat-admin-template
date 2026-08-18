@@ -84,10 +84,10 @@ const ARDisputeCheck: React.FC = () => {
   useTitle('AR Dispute Check');
 
   const { tableProps, submit } = useTable(getDisputeList, {
-    form: pageState.form,
-    defaultParams: pageState.defaultParams,
-    getFormData: pageState.getFormData,
-    onBeforeRequest: pageState.onBeforeRequest,
+    // form: pageState.form,
+    // defaultParams: pageState.defaultParams,
+    // getFormData: pageState.getFormData,
+    // onBeforeRequest: pageState.onBeforeRequest,
     getResponseData: (data) => {
       if (Array.isArray(data)) {
         return {
@@ -100,6 +100,7 @@ const ARDisputeCheck: React.FC = () => {
         total: 0,
       };
     },
+    ...pageState,
   });
 
   const columns: TableColumnsType<StatementRow> = [
