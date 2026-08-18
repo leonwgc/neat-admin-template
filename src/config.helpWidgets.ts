@@ -94,9 +94,10 @@ export function initHelpWidgets() {
 
 let instance: ReturnType<typeof initHelpWidgets> | undefined;
 
+// TODO: integrate help widget into the project, currently it is not used
 export default function configureHelpWidgets() {
-  if (!instance) {
-    instance = initHelpWidgets();
-  }
-  return instance;
+  // if (!instance) {
+  //   instance = initHelpWidgets();
+  // }
+  // return instance;
 }
