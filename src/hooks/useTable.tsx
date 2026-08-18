@@ -30,7 +30,8 @@ const useTable = (
   options?: Options,
 ) => {
   const { toast, notification } = App.useApp();
-  const [form] = Form.useForm();
+  const [defaultForm] = Form.useForm();
+  const form = options?.form ?? defaultForm;
   const req = useLatest(request);
   const [loading, setLoading] = useState(true);
 

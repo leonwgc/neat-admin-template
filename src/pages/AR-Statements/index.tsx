@@ -25,8 +25,8 @@ import useTable from '~/hooks/useTable';
 import { getStateList } from './api';
 import ViewVoice from './ViewVoice';
 import { useNavigate } from 'react-router';
-import { useMount, useTitle } from 'ahooks';
-import useUrlState from '@ahooksjs/use-url-state';
+import { useTitle } from 'ahooks';
+import usePageFilters from '~/hooks/usePageFilters';
 import dayjs from 'dayjs';
 
 const summaryCards = [
@@ -79,9 +79,8 @@ interface StatementRow {
 }
 
 interface ARStatementsUrlState {
-  current: number;
-  pageSize: number;
-  // dateRange: string[];
+  current: string | number;
+  pageSize: string | number;
   filter: string;
   search: string;
   startDate?: string;
@@ -91,13 +90,48 @@ interface ARStatementsUrlState {
 const ARStatementsPage: React.FC = () => {
   const [activeInvoice, setActiveInvoice] = useState<StatementRow | null>(null);
   const navigate = useNavigate();
-  const [urlState, setUrlState] = useUrlState<ARStatementsUrlState>({
-    current: 0,
-    pageSize: 10,
-    filter: 'Statement Name',
-    search: '',
-    startDate: '',
-    endDate: '',
+  const pageFilters = usePageFilters<
+    ARStatementsUrlState,
+    {
+      dateRange?: [dayjs.Dayjs | null, dayjs.Dayjs | null];
+      filter: string;
+      search: string;
+    }
+  >({
+    initialState: {
+      current: 1,
+      pageSize: 10,
+      filter: 'Statement Name',
+      search: '',
+      startDate: '',
+      endDate: '',
+    },
+    urlToFormValues: (state) => ({
+      dateRange:
+        state.startDate && state.endDate
+          ? [dayjs(state.startDate), dayjs(state.endDate)]
+          : undefined,
+      filter: state.filter ?? 'Statement Name',
+      search: state.search ?? '',
+    }),
+    formValuesToUrl: (values) => {
+      const [startDate, endDate] = values.dateRange ?? [];
+      return {
+        startDate: startDate?.format('YYYY-MM-DD') ?? '',
+        endDate: endDate?.format('YYYY-MM-DD') ?? '',
+        filter: values.filter,
+        search: values.search,
+      };
+    },
+    formValuesToRequest: (values) => {
+      const { dateRange, ...rest } = values;
+      const [startDate, endDate] = dateRange ?? [];
+      return {
+        ...rest,
+        startDate: startDate?.format('YYYY-MM-DD') ?? '',
+        endDate: endDate?.format('YYYY-MM-DD') ?? '',
+      };
+    },
   });
 
   useTitle('AR Statements');
@@ -207,43 +241,11 @@ const ARStatementsPage: React.FC = () => {
     },
   ];
 
-  const { tableProps, form, submit } = useTable(getStateList, {
-    defaultParams: [
-      {
-        current: Number(urlState.current) || 1,
-        pageSize: Number(urlState.pageSize) || 10,
-      },
-    ],
-    getFormValues: () => {
-      const values = form.getFieldsValue();
-      const { dateRange, ...rest } = values;
-      if (dateRange) {
-        const [startDate, endDate] = dateRange;
-        return {
-          ...rest,
-          startDate: startDate ? startDate.format('YYYY-MM-DD') : '',
-          endDate: endDate ? endDate.format('YYYY-MM-DD') : '',
-        };
-      }
-      return rest;
-    },
-    onBeforeRequest(data) {
-      setUrlState((prev) => ({
-        ...prev,
-        current: String((Number(data.pageNum) || 0) + 1),
-        pageSize: String(data.pageSize ?? 10),
-      }));
-      const { dateRange, ...rest } = data;
-      if (dateRange) {
-        const [startDate, endDate] = dateRange;
-        return {
-          ...rest,
-          startDate: startDate ? startDate.format('YYYY-MM-DD') : '',
-          endDate: endDate ? endDate.format('YYYY-MM-DD') : '',
-        };
-      }
-      return rest;
-    },
+  const { tableProps, submit } = useTable(getStateList, {
+    form: pageFilters.form,
+    defaultParams: pageFilters.defaultParams,
+    getFormData: pageFilters.getFormData,
+    onBeforeRequest: pageFilters.onBeforeRequest,
 
     getResponseData: (data) => {
       if (Array.isArray(data)) {
@@ -257,18 +259,6 @@ const ARStatementsPage: React.FC = () => {
         total: 0,
       };
     },
-  });
-
-  useMount(() => {
-    // Initialize form values based on URL state
-    const { current, pageSize, startDate, endDate, ...rest } = urlState;
-    const initialValues: any = {
-      ...rest,
-    };
-    if (startDate && endDate) {
-      initialValues.dateRange = [dayjs(startDate), dayjs(endDate)];
-    }
-    form.setFieldsValue(initialValues);
   });
 
   return (
@@ -304,21 +294,10 @@ const ARStatementsPage: React.FC = () => {
 
       <Form
         className="ar-statements__toolbar"
-        form={form}
-        onValuesChange={(v) => {
-          if (v.dateRange) {
-            const [startDate, endDate] = v.dateRange;
-            setUrlState((prev) => ({
-              ...prev,
-              startDate: startDate ? startDate.format('YYYY-MM-DD') : '',
-              endDate: endDate ? endDate.format('YYYY-MM-DD') : '',
-            }));
-          } else {
-            setUrlState((prev) => ({
-              ...prev,
-              ...v,
-            }));
-          }
+        form={pageFilters.form}
+        initialValues={pageFilters.formValues}
+        onValuesChange={(changedValues, allValues) => {
+          pageFilters.onValuesChange(changedValues, allValues);
           submit();
         }}
       >
