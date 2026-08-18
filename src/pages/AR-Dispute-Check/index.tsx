@@ -16,7 +16,7 @@ import {
 import { TopBar } from '~/components/TopBar';
 import { UploadOutlined, SearchOutlined } from '@derbysoft/neat-design-icons';
 import useTable from '~/hooks/useTable';
-import usePageState from '~/hooks/usePageState';
+import usePageState, { PageState } from '~/hooks/usePageState';
 import { getDisputeList } from './api';
 import { useNavigate } from 'react-router';
 import { useTitle } from 'ahooks';
@@ -45,20 +45,17 @@ interface StatementRow {
 }
 
 interface ARDisputeCheckState {
-  current: string | number;
-  pageSize: string | number;
   filter: string;
   search: string;
+  statementStatus: string;
+  customerEntity: string;
 }
 
 const ARDisputeCheck: React.FC = () => {
   const navigate = useNavigate();
   const pageState = usePageState<
-    ARDisputeCheckState,
-    {
-      filter: string;
-      search: string;
-    }
+    ARDisputeCheckState & PageState,
+    ARDisputeCheckState
   >({
     key: 'ar-dispute-check',
     initialState: {
@@ -66,18 +63,26 @@ const ARDisputeCheck: React.FC = () => {
       pageSize: 10,
       filter: 'Statement Name',
       search: '',
+      customerEntity: 'All Customer Entity',
+      statementStatus: 'All Statement Status',
     },
     stateToFormValues: (state) => ({
       filter: state.filter ?? 'Statement Name',
       search: state.search ?? '',
+      customerEntity: state.customerEntity ?? 'All Customer Entity',
+      statementStatus: state.statementStatus ?? 'All Statement Status',
     }),
     formValuesToState: (values) => ({
       filter: values.filter ?? 'Statement Name',
       search: values.search ?? '',
+      customerEntity: values.customerEntity ?? 'All Customer Entity',
+      statementStatus: values.statementStatus ?? 'All Statement Status',
     }),
     formValuesToRequest: (values) => ({
       filter: values.filter,
       search: values.search,
+      customerEntity: values.customerEntity,
+      statementStatus: values.statementStatus,
     }),
   });
 
@@ -282,6 +287,26 @@ const ARDisputeCheck: React.FC = () => {
         }}
       >
         <Space size={16} align="center">
+          <Form.Item name="customerEntity">
+            <Select
+              style={{ width: 216 }}
+              options={[
+                { label: 'All Customer Entity', value: 'All Customer Entity' },
+              ]}
+            />
+          </Form.Item>
+
+          <Form.Item name="statementStatus">
+            <Select
+              style={{ width: 216 }}
+              options={[
+                {
+                  label: 'All Statement Status',
+                  value: 'All Statement Status',
+                },
+              ]}
+            />
+          </Form.Item>
           <Space.Compact block>
             <Form.Item name="filter">
               <Select
