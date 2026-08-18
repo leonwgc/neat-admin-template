@@ -6,15 +6,22 @@
 import React from 'react';
 import {
   Button,
+  Dropdown,
   Form,
   Input,
+  MenuProps,
   Select,
   Space,
   Table,
   type TableColumnsType,
 } from '@derbysoft/neat-design';
 import { TopBar } from '~/components/TopBar';
-import { UploadOutlined, SearchOutlined } from '@derbysoft/neat-design-icons';
+import {
+  UploadOutlined,
+  SearchOutlined,
+  SuccessOutlined,
+  ForbiddenOutlined,
+} from '@derbysoft/neat-design-icons';
 import useTable from '~/hooks/useTable';
 import usePageState, { PageState } from '~/hooks/usePageState';
 import { getDisputeList } from './api';
@@ -107,6 +114,32 @@ const ARDisputeCheck: React.FC = () => {
     },
     ...pageState,
   });
+
+  const handleMenuClick: MenuProps['onClick'] = (e) => {
+    if (e.key === 'Approve') {
+      console.log('Approve dispute');
+    } else if (e.key === 'Reject') {
+      console.log('Reject dispute');
+    }
+  };
+
+  const items: MenuProps['items'] = [
+    {
+      label: 'Approve Dispute',
+      key: 'Approve',
+      icon: <SuccessOutlined />,
+    },
+    {
+      label: 'Reject Dispute',
+      key: 'Reject',
+      icon: <ForbiddenOutlined />,
+    },
+  ];
+
+  const menuProps = {
+    items,
+    onClick: handleMenuClick,
+  };
 
   const columns: TableColumnsType<StatementRow> = [
     {
@@ -245,7 +278,7 @@ const ARDisputeCheck: React.FC = () => {
       title: 'Action',
       key: 'action',
       fixed: 'right',
-      width: 200,
+      width: 240,
       render: (_, record) => (
         <div className="table-actions">
           <Button
@@ -256,6 +289,12 @@ const ARDisputeCheck: React.FC = () => {
           >
             Order Details
           </Button>
+
+          <Dropdown menu={menuProps} placement="bottomRight">
+            <Button type="primary" size="small">
+              Review
+            </Button>
+          </Dropdown>
         </div>
       ),
     },
