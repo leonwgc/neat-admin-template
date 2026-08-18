@@ -18,8 +18,7 @@ import { UploadOutlined, SearchOutlined } from '@derbysoft/neat-design-icons';
 import useTable from '~/hooks/useTable';
 import { getDisputeList } from './api';
 import { useNavigate } from 'react-router';
-import { useMount, useTitle } from 'ahooks';
-import usePersistedTableState from '~/hooks/usePersistedTableState';
+import { useTitle } from 'ahooks';
 import './index.scss';
 
 interface StatementRow {
@@ -46,25 +45,10 @@ interface StatementRow {
 
 const ARDisputeCheck: React.FC = () => {
   const navigate = useNavigate();
-  const { filters, setFilters, restoredState } = usePersistedTableState(
-    'ar-dispute-check-table-state',
-  );
 
   useTitle('AR Dispute Check');
 
   const { tableProps, form, submit } = useTable(getDisputeList, {
-    defaultParams: [
-      {
-        current: restoredState.current,
-        pageSize: restoredState.pageSize,
-        ...restoredState.formValues,
-      },
-      restoredState.formValues,
-    ],
-    onBeforeRequest(data) {
-      setFilters(data);
-      return data;
-    },
     getResponseData: (data) => {
       if (Array.isArray(data)) {
         return {
@@ -77,10 +61,6 @@ const ARDisputeCheck: React.FC = () => {
         total: 0,
       };
     },
-  });
-
-  useMount(() => {
-    form.setFieldsValue(restoredState.formValues);
   });
 
   const columns: TableColumnsType<StatementRow> = [
@@ -255,9 +235,7 @@ const ARDisputeCheck: React.FC = () => {
       <Form
         className="ar-statements__toolbar"
         form={form}
-        initialValues={filters}
-        onValuesChange={(v, allValues) => {
-          setFilters(allValues);
+        onValuesChange={() => {
           submit();
         }}
       >
