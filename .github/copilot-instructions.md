@@ -320,6 +320,182 @@ export default FeatureDetail;
 
 路由会自动映射到：`src/pages/{route-path}/index.tsx` 或对应的组件文件。
 
+## 🔄 列表页 URL 状态同步规范
+
+### 适用场景
+
+凡是列表页存在以下任一特征时，必须同步 URL 状态：
+
+- 分页参数需要保留（`current` / `pageSize`）
+- 筛选条件需要支持刷新后恢复
+- 用户需要复制链接或通过浏览器前进后退还原查询状态
+- 列表搜索、日期范围、下拉筛选与查询参数存在紧耦合关系
+
+这类页面应优先使用 `usePageFilters`，不要在页面中手写重复的 `setState + queryString` 逻辑。
+
+### 标准实现方式
+
+1. 页面定义 `UrlState`，必须包含分页基础字段：
+
+```ts
+interface ARStatementsUrlState {
+  current: string | number;
+  pageSize: string | number;
+  filter: string;
+  search: string;
+  startDate?: string;
+  endDate?: string;
+}
+```
+
+2. 使用 `usePageFilters` 统一管理表单值和 URL 状态：
+
+```tsx
+const pageFilters = usePageFilters<
+  ARStatementsUrlState,
+  {
+    dateRange?: [dayjs.Dayjs | null, dayjs.Dayjs | null];
+    filter: string;
+    search: string;
+  }
+>({
+  initialState: {
+    current: 1,
+    pageSize: 10,
+    filter: 'Statement Name',
+    search: '',
+    startDate: '',
+    endDate: '',
+  },
+  urlToFormValues: (state) => ({
+    dateRange:
+      state.startDate && state.endDate
+        ? [dayjs(state.startDate), dayjs(state.endDate)]
+        : undefined,
+    filter: state.filter ?? 'Statement Name',
+    search: state.search ?? '',
+  }),
+  formValuesToUrl: (values) => {
+    const [startDate, endDate] = values.dateRange ?? [];
+    return {
+      startDate: startDate?.format('YYYY-MM-DD') ?? '',
+      endDate: endDate?.format('YYYY-MM-DD') ?? '',
+      filter: values.filter,
+      search: values.search,
+    };
+  },
+  formValuesToRequest: (values) => {
+    const { dateRange, ...rest } = values;
+    const [startDate, endDate] = dateRange ?? [];
+    return {
+      ...rest,
+      startDate: startDate?.format('YYYY-MM-DD') ?? '',
+      endDate: endDate?.format('YYYY-MM-DD') ?? '',
+    };
+  },
+});
+```
+
+3. 表单值变更时使用 `onValuesChange` 同步回 URL；也可在 `Form` 上直接绑定：
+
+```tsx
+<Form
+  form={pageFilters.form}
+  initialValues={pageFilters.formValues}
+  onValuesChange={pageFilters.onValuesChange}
+>
+  <Form.Item name="search">
+    <Input />
+  </Form.Item>
+</Form>
+```
+
+4. 列表请求和分页参数接入 `useTable`：
+
+```tsx
+const { tableProps, submit } = useTable(getStateList, {
+  form: pageFilters.form,
+  defaultParams: pageFilters.defaultParams,
+  getFormData: pageFilters.getFormData,
+  onBeforeRequest: pageFilters.onBeforeRequest,
+});
+```
+
+### 规范要求
+
+#### 1) URL 状态必须保留分页信息
+
+所有列表页的 URL state 都必须带有：
+
+- `current`
+- `pageSize`
+
+否则分页在刷新后无法恢复。
+
+#### 2) `urlToFormValues` 必须做默认值兜底
+
+不要直接把 `undefined` 写入表单，应该使用空字符串、默认值或 `undefined` 统一归一化，例如：
+
+```ts
+filter: state.filter ?? 'Statement Name',
+search: state.search ?? '',
+```
+
+#### 3) `formValuesToUrl` 只保留查询状态，不写 UI 临时状态
+
+例如：
+
+- 应写：`search`、`filter`、`startDate`、`endDate`
+- 不应写：弹窗状态、抽屉状态、临时选中项、仅用于视觉展示的字段
+
+#### 4) `formValuesToRequest` 负责表单与接口字段的转换
+
+UI 表单字段和接口字段往往不完全一致，必须通过 `formValuesToRequest` 做转换：
+
+```ts
+formValuesToRequest: (values) => ({
+  keyword: values.search,
+  status: values.filter,
+  startDate: values.dateRange?.[0]?.format('YYYY-MM-DD') ?? '',
+  endDate: values.dateRange?.[1]?.format('YYYY-MM-DD') ?? '',
+})
+```
+
+#### 5) 请求前后要同步分页状态
+
+`onBeforeRequest` 负责把分页信息写回 URL；`requestToUrl` 或默认逻辑应维持：
+
+```ts
+current: String((Number(data.pageNum) || 0) + 1),
+pageSize: String(data.pageSize ?? 10),
+```
+
+这样在点击下一页、切换页码、查询条件改变之后，地址栏状态与真实列表状态保持一致。
+
+### 典型目录实践
+
+- 列表页统一使用 `usePageFilters` 管理筛选和分页状态
+- 列表页统一通过 `useTable` 接收 `defaultParams`、`getFormData` 和 `onBeforeRequest`
+- 表单值转接口参数使用 `formValuesToRequest`
+- 查询状态回写 URL 使用 `formValuesToUrl`
+- URL 还原表单值使用 `urlToFormValues`
+
+### 禁止事项
+
+- 不要在列表页里同时维护一套“React state + URL state + form state”而且互相耦合失控
+- 不要直接把接口参数写进 URL，而不经过 `formValuesToUrl` / `urlToFormValues`
+- 不要在不同页面重复手写分页和筛选参数的序列化/反序列化逻辑
+- 不要忽略 `current` 和 `pageSize`，导致刷新后返回第一页或丢失分页状态
+
+### 参考实现
+
+项目中推荐优先参考：
+
+- `src/hooks/usePageFilters.ts`
+- `src/pages/AR-Statements/index.tsx`
+
+这两处实现已经形成了当前项目的统一模式，后续新增列表页需保持一致。
+
 ## 🌍 国际化 (i18n)
 
 ### 添加翻译
