@@ -26,7 +26,7 @@ import { getStateList } from './api';
 import ViewVoice from './ViewVoice';
 import { useNavigate } from 'react-router';
 import { useTitle } from 'ahooks';
-import usePageFilters from '~/hooks/usePageFilters';
+import usePageFilters from '~/hooks/usePageUrlState';
 import dayjs from 'dayjs';
 
 const summaryCards = [

@@ -1,5 +1,5 @@
 /**
- * @file src/hooks/usePageFilters.ts
+ * @file src/hooks/usePageUrlState.ts
  * @author leon.wang
  */
 
@@ -8,12 +8,12 @@ import useUrlState from '@ahooksjs/use-url-state';
 import type { FormInstance } from 'antd';
 import type { SetStateAction } from 'react';
 
-export interface PageFilterUrlState {
+export interface PageUrlState {
   current: string | number;
   pageSize: string | number;
 }
 
-export interface PageFiltersOptions<UrlState extends PageFilterUrlState, FormValues> {
+export interface PageUrlStateOptions<UrlState extends PageUrlState, FormValues> {
   initialState: UrlState;
   urlToFormValues: (state: Partial<UrlState>) => FormValues;
   formValuesToUrl: (values: Partial<FormValues>) => Partial<UrlState>;
@@ -21,7 +21,7 @@ export interface PageFiltersOptions<UrlState extends PageFilterUrlState, FormVal
   requestToUrl?: (data: ObjectType) => Partial<UrlState>;
 }
 
-export interface PageFiltersResult<UrlState extends PageFilterUrlState, FormValues> {
+export interface PageUrlStateResult<UrlState extends PageUrlState, FormValues> {
   form: FormInstance;
   urlState: Partial<UrlState>;
   setUrlState: (
@@ -37,9 +37,9 @@ export interface PageFiltersResult<UrlState extends PageFilterUrlState, FormValu
   ) => void;
 }
 
-const usePageFilters = <UrlState extends PageFilterUrlState, FormValues>(
-  options: PageFiltersOptions<UrlState, FormValues>,
-): PageFiltersResult<UrlState, FormValues> => {
+const usePageUrlState = <UrlState extends PageUrlState, FormValues>(
+  options: PageUrlStateOptions<UrlState, FormValues>,
+): PageUrlStateResult<UrlState, FormValues> => {
   const [form] = Form.useForm();
   const [urlState, setUrlState] = useUrlState(
     options.initialState as Record<string, unknown>,
@@ -84,4 +84,4 @@ const usePageFilters = <UrlState extends PageFilterUrlState, FormValues>(
   };
 };
 
-export default usePageFilters;
+export default usePageUrlState;

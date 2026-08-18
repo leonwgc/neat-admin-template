@@ -13,10 +13,7 @@ export interface PageState {
   pageSize: string | number;
 }
 
-export interface PageStateOptions<
-  StorageState extends PageState,
-  FormValues,
-> {
+export interface PageStateOptions<StorageState extends PageState, FormValues> {
   key: string;
   initialState: StorageState;
   stateToFormValues: (state: Partial<StorageState>) => FormValues;
@@ -42,16 +39,14 @@ export interface PageStateInStorageResult<
   ) => void;
   urlState: Partial<StorageState>;
   setUrlState: (state: SetStateAction<Partial<StorageState>>) => void;
+  resetState: () => void;
 }
 
-const usePageStateInStorage = <
-  StorageState extends PageState,
-  FormValues,
->(
+const usePageStateInStorage = <StorageState extends PageState, FormValues>(
   options: PageStateOptions<StorageState, FormValues>,
 ): PageStateInStorageResult<StorageState, FormValues> => {
   const [form] = Form.useForm();
-  const [state, setState] = useGlobalState<Partial<StorageState>>(
+  const [state, setState, resetState] = useGlobalState<Partial<StorageState>>(
     options.key,
     options.initialState as Partial<StorageState>,
     {
@@ -61,6 +56,7 @@ const usePageStateInStorage = <
   ) as unknown as [
     Partial<StorageState>,
     (state: SetStateAction<Partial<StorageState>>) => void,
+    () => void,
   ];
 
   const formValues = options.stateToFormValues(state);
@@ -116,6 +112,7 @@ const usePageStateInStorage = <
     },
     urlState: state,
     setUrlState: updateState,
+    resetState,
   };
 };
 
