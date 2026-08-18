@@ -5,15 +5,15 @@
 
 import React, { useCallback, useMemo } from 'react';
 import {
+  App,
   Button,
   Dropdown,
   Form,
   Input,
-  MenuProps,
-  Select,
+  MenuProps, Select,
   Space,
   Table,
-  type TableColumnsType,
+  type TableColumnsType
 } from '@derbysoft/neat-design';
 import { TopBar } from '~/components/TopBar';
 import {
@@ -21,6 +21,7 @@ import {
   SearchOutlined,
   SuccessOutlined,
   ForbiddenOutlined,
+  InfoCircleFilled
 } from '@derbysoft/neat-design-icons';
 import useTable from '~/hooks/useTable';
 import usePageState, { PageState } from '~/hooks/usePageState';
@@ -60,6 +61,7 @@ interface ARDisputeCheckFormState {
 
 const ARDisputeCheck: React.FC = () => {
   const navigate = useNavigate();
+  const { modal } = App.useApp();
   const pageState = usePageState<
     ARDisputeCheckFormState & PageState,
     ARDisputeCheckFormState
@@ -117,9 +119,20 @@ const ARDisputeCheck: React.FC = () => {
 
   const handleMenuClick = (record: StatementRow, e: { key: string }) => {
     if (e.key === 'Approve') {
-      // eslint-disable-next-line no-console
-      console.log('Approve dispute', record);
-    } else if (e.key === 'Reject') {
+      // setApproveRecord(record);
+      modal.confirm({
+        title: 'Confirm Modal',
+        icon: <InfoCircleFilled style={{ color: '#0D7EE0', fontSize: 20 }} />,
+        content: '请慎重，一旦批准后，禁止再操作驳回',
+        onOk() {
+          // eslint-disable-next-line no-console
+          console.log('Approve dispute', record);
+        },
+      });
+      return;
+    }
+
+    if (e.key === 'Reject') {
       // eslint-disable-next-line no-console
       console.log('Reject dispute', record);
     }
