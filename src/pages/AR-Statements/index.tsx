@@ -79,8 +79,8 @@ interface StatementRow {
 }
 
 interface ARStatementsUrlState {
-  current: string;
-  pageSize: string;
+  current: number;
+  pageSize: number;
   // dateRange: string[];
   filter: string;
   search: string;
@@ -91,19 +91,14 @@ interface ARStatementsUrlState {
 const ARStatementsPage: React.FC = () => {
   const [activeInvoice, setActiveInvoice] = useState<StatementRow | null>(null);
   const navigate = useNavigate();
-  const [urlState, setUrlState] = useUrlState<ARStatementsUrlState>(
-    {
-      current: '0',
-      pageSize: '10',
-      filter: 'Statement Name',
-      search: '',
-      startDate: '',
-      endDate: '',
-    },
-    {
-      navigateMode: 'replace',
-    },
-  );
+  const [urlState, setUrlState] = useUrlState<ARStatementsUrlState>({
+    current: 0,
+    pageSize: 10,
+    filter: 'Statement Name',
+    search: '',
+    startDate: '',
+    endDate: '',
+  });
 
   useTitle('AR Statements');
 
