@@ -26,7 +26,7 @@ import { getStateList } from './api';
 import ViewVoice from './ViewVoice';
 import { useNavigate } from 'react-router';
 import { useTitle } from 'ahooks';
-import usePageFilters from '~/hooks/usePageUrlState';
+import usePageState, { PageState } from '~/hooks/usePageState';
 import dayjs from 'dayjs';
 
 const summaryCards = [
@@ -78,9 +78,7 @@ interface StatementRow {
   status: StatementStatus;
 }
 
-interface ARStatementsUrlState {
-  current: string | number;
-  pageSize: string | number;
+interface ARStatementsFormState {
   filter: string;
   search: string;
   startDate?: string;
@@ -90,14 +88,15 @@ interface ARStatementsUrlState {
 const ARStatementsPage: React.FC = () => {
   const [activeInvoice, setActiveInvoice] = useState<StatementRow | null>(null);
   const navigate = useNavigate();
-  const pageFilters = usePageFilters<
-    ARStatementsUrlState,
+  const pageState = usePageState<
+    ARStatementsFormState & PageState,
     {
       dateRange?: [dayjs.Dayjs | null, dayjs.Dayjs | null];
       filter: string;
       search: string;
     }
   >({
+    key: 'ar-statements',
     initialState: {
       current: 1,
       pageSize: 10,
@@ -106,7 +105,7 @@ const ARStatementsPage: React.FC = () => {
       startDate: '',
       endDate: '',
     },
-    urlToFormValues: (state) => ({
+    stateToFormValues: (state) => ({
       dateRange:
         state.startDate && state.endDate
           ? [dayjs(state.startDate), dayjs(state.endDate)]
@@ -114,7 +113,7 @@ const ARStatementsPage: React.FC = () => {
       filter: state.filter ?? 'Statement Name',
       search: state.search ?? '',
     }),
-    formValuesToUrl: (values) => {
+    formValuesToState: (values) => {
       const [startDate, endDate] = values.dateRange ?? [];
       return {
         startDate: startDate?.format('YYYY-MM-DD') ?? '',
@@ -242,10 +241,10 @@ const ARStatementsPage: React.FC = () => {
   ];
 
   const { tableProps, submit } = useTable(getStateList, {
-    form: pageFilters.form,
-    defaultParams: pageFilters.defaultParams,
-    getFormData: pageFilters.getFormData,
-    onBeforeRequest: pageFilters.onBeforeRequest,
+    form: pageState.form,
+    defaultParams: pageState.defaultParams,
+    getFormData: pageState.getFormData,
+    onBeforeRequest: pageState.onBeforeRequest,
 
     getResponseData: (data) => {
       if (Array.isArray(data)) {
@@ -294,10 +293,10 @@ const ARStatementsPage: React.FC = () => {
 
       <Form
         className="ar-statements__toolbar"
-        form={pageFilters.form}
-        initialValues={pageFilters.formValues}
+        form={pageState.form}
+        initialValues={pageState.formValues}
         onValuesChange={(changedValues, allValues) => {
-          pageFilters.onValuesChange(changedValues, allValues);
+          pageState.onValuesChange(changedValues, allValues);
           submit();
         }}
       >

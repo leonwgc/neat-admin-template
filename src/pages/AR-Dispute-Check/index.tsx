@@ -44,7 +44,7 @@ interface StatementRow {
   adjustmentRemark?: string;
 }
 
-interface ARDisputeCheckState {
+interface ARDisputeCheckFormState {
   filter: string;
   search: string;
   statementStatus: string;
@@ -54,8 +54,8 @@ interface ARDisputeCheckState {
 const ARDisputeCheck: React.FC = () => {
   const navigate = useNavigate();
   const pageState = usePageState<
-    ARDisputeCheckState & PageState,
-    ARDisputeCheckState
+    ARDisputeCheckFormState & PageState,
+    ARDisputeCheckFormState
   >({
     key: 'ar-dispute-check',
     initialState: {

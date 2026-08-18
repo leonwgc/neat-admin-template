@@ -26,7 +26,7 @@ type Options = Parameters<typeof useAntdTable>[1] & {
 };
 
 const useTable = (
-  request: (data: ObjectType) => AxiosPromise<ResponseDataType>,
+  request: (data: ObjectType) => Promise<any> | AxiosPromise<ResponseDataType>,
   options?: Options,
 ) => {
   const { toast, notification } = App.useApp();

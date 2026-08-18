@@ -30,7 +30,7 @@ export interface PageStateInStorageResult<
   state: Partial<StorageState>;
   setState: (state: SetStateAction<Partial<StorageState>>) => void;
   formValues: FormValues;
-  defaultParams: [ObjectType, FormValues];
+  defaultParams: [{ current: number; pageSize: number } & ObjectType, FormValues];
   getFormData: (values: ObjectType) => ObjectType;
   onBeforeRequest: (data: ObjectType) => ObjectType;
   onValuesChange: (
@@ -88,7 +88,7 @@ const usePageStateInStorage = <StorageState extends PageState, FormValues>(
       {
         current: Number(state.current) || 1,
         pageSize: Number(state.pageSize) || 10,
-      },
+      } as { current: number; pageSize: number } & ObjectType,
       formValues,
     ],
     getFormData: (values) =>
