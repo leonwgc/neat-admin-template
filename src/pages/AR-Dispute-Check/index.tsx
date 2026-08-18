@@ -10,10 +10,11 @@ import {
   Dropdown,
   Form,
   Input,
-  MenuProps, Select,
+  MenuProps,
+  Select,
   Space,
   Table,
-  type TableColumnsType
+  type TableColumnsType,
 } from '@derbysoft/neat-design';
 import { TopBar } from '~/components/TopBar';
 import {
@@ -21,13 +22,14 @@ import {
   SearchOutlined,
   SuccessOutlined,
   ForbiddenOutlined,
-  InfoCircleFilled
+  InfoCircleFilled,
 } from '@derbysoft/neat-design-icons';
 import useTable from '~/hooks/useTable';
 import usePageState, { PageState } from '~/hooks/usePageState';
 import { getDisputeList } from './api';
 import { useNavigate } from 'react-router';
 import { useTitle } from 'ahooks';
+import RejectConfirmContent from './RejectConfirmContent';
 import './index.scss';
 
 interface StatementRow {
@@ -117,26 +119,43 @@ const ARDisputeCheck: React.FC = () => {
     ...pageState,
   });
 
-  const handleMenuClick = (record: StatementRow, e: { key: string }) => {
-    if (e.key === 'Approve') {
-      // setApproveRecord(record);
-      modal.confirm({
-        title: 'Confirm Modal',
-        icon: <InfoCircleFilled style={{ color: '#0D7EE0', fontSize: 20 }} />,
-        content: '请慎重，一旦批准后，禁止再操作驳回',
-        onOk() {
-          // eslint-disable-next-line no-console
-          console.log('Approve dispute', record);
-        },
-      });
-      return;
-    }
+  const handleMenuClick = useCallback(
+    (record: StatementRow, e: { key: string }) => {
+      if (e.key === 'Approve') {
+        modal.confirm({
+          title: 'Confirm Modal',
+          icon: <InfoCircleFilled style={{ color: '#0D7EE0', fontSize: 20 }} />,
+          content: '请慎重，一旦批准后，禁止再操作驳回',
+          onOk() {
+            // eslint-disable-next-line no-console
+            console.log('Approve dispute', record);
+          },
+        });
+        return;
+      }
 
-    if (e.key === 'Reject') {
-      // eslint-disable-next-line no-console
-      console.log('Reject dispute', record);
-    }
-  };
+      if (e.key === 'Reject') {
+        let remark = '';
+        modal.confirm({
+          title: 'Confirm Modal',
+          icon: <InfoCircleFilled style={{ color: '#0D7EE0', fontSize: 20 }} />,
+          content: (
+            <RejectConfirmContent
+              onRemarkChange={(value) => {
+                remark = value;
+              }}
+            />
+          ),
+          okButtonProps: { danger: true },
+          onOk() {
+            // eslint-disable-next-line no-console
+            console.log('Reject dispute', record, { remark });
+          },
+        });
+      }
+    },
+    [modal],
+  );
 
   const items: MenuProps['items'] = useMemo(
     () => [
@@ -159,7 +178,7 @@ const ARDisputeCheck: React.FC = () => {
       items,
       onClick: (e: { key: string }) => handleMenuClick(record, e),
     }),
-    [items],
+    [handleMenuClick, items],
   );
 
   const columns: TableColumnsType<StatementRow> = [
