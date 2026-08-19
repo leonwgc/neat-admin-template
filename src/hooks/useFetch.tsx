@@ -18,14 +18,9 @@ type Options = Parameters<typeof useRequest>[1] & {
   onFailed?: (data: unknown, params: unknown, res?: unknown) => void;
 };
 
-export const errorHandler = (
-  error,
-  notificationApi,
-  toastDefaultError,
-  toast,
-) => {
+export const errorHandler = (error, notification, toastDefaultError, toast) => {
   if (error.response?.status >= 500 || !navigator.onLine) {
-    notificationApi.warning({
+    notification.warning({
       message: error?.message || t('common.error.defaultMessage'),
       description: t('common.error.defaultMessageTitle'),
       placement: 'bottomRight',
