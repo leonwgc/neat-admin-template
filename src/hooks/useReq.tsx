@@ -1,5 +1,5 @@
 /**
- * @file src/hooks/useFetch.tsx
+ * @file src/hooks/useReq.tsx
  * @author leon.wang(leon.wang@derbysoft.net)
  */
 
@@ -32,7 +32,7 @@ export const errorHandler = (error, notification, toastDefaultError, toast) => {
   }
 };
 
-const useFetch = (
+const useReq = (
   request: (...params) => AxiosPromise<ResponseDataType>,
   options?: Options,
 ) => {
@@ -64,4 +64,4 @@ const useFetch = (
   });
 };
 
-export default useFetch;
+export default useReq;

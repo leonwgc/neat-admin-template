@@ -8,7 +8,7 @@ import { App, Button, Drawer, Flex } from '@derbysoft/neat-design';
 import DotStatus from '~/components/DotStatus';
 import FileInputTrigger from '~/components/FileInputTrigger';
 import { checkFileSize, checkFileType, downloadFile } from '~/helper';
-import useFetch from '../../hooks/useFetch';
+import useReq from '~/hooks/useReq';
 import { uploadInvoiceImage } from './api';
 import classNames from 'classnames';
 
@@ -30,7 +30,7 @@ const ViewVoice: React.FC<ViewVoiceProps> = ({
 
   const { toast } = App.useApp();
 
-  const { run, loading } = useFetch(uploadInvoiceImage, {
+  const { run, loading } = useReq(uploadInvoiceImage, {
     onSuccess: (data) => {
       setSrc(data?.imageUrl);
     },
