@@ -1,5 +1,3 @@
-import dayjs from 'dayjs';
-
 export const onSuccessHandler =
   (onSuccess?: RequestHandler, onFailed?: RequestHandler) =>
   (data, params?) => {
@@ -31,23 +29,4 @@ export const downloadFile = (url: string, filename: string) => {
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);
-};
-
-export const dateRangeFormItemProps = {
-  normalize: (value) => {
-    if (Array.isArray(value)) {
-      console.log('value', value);
-      return value.map((v) => (v ? dayjs(v).format('YYYY-MM-DD') : v));
-    }
-    return value;
-  },
-  getValueProps: (value) => {
-    if (Array.isArray(value)) {
-      console.log('value', value);
-      return {
-        value: value.map((v) => dayjs(v)),
-      };
-    }
-    return { value };
-  },
 };
