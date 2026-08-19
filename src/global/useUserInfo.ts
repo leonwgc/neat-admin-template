@@ -5,7 +5,7 @@
 
 import { useGlobalState } from '@derbysoft/zustand-kit';
 import { USER_INFO_KEY } from '~/global/store.config';
-import useFetch from '~/hooks/useFetch';
+import useReq from '~/hooks/useReq';
 import { useMount } from 'ahooks';
 import { getUserInfo } from '~/global/api';
 
@@ -15,7 +15,7 @@ const useUserInfo = () => {
     {} as UserInfo,
   );
 
-  const { loading, refresh, run } = useFetch(getUserInfo, {
+  const { loading, refresh, run } = useReq(getUserInfo, {
     manual: true,
     onSuccess: (data) => {
       setGlobalUserInfo(data as UserInfo);
