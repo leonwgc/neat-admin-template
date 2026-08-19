@@ -1,5 +1,5 @@
 /**
- * @file src/hooks/useReq.tsx
+ * @file src/hooks/useFetch.tsx
  * @author leon.wang(leon.wang@derbysoft.net)
  */
 
@@ -17,39 +17,6 @@ type Options = Parameters<typeof useRequest>[1] & {
   toastDefaultError?: boolean; // toast operation failed when onError triggerd
   onFailed?: (data: unknown, params: unknown, res?: unknown) => void;
 };
-
-// type Options<TParams extends unknown[] = any[], TData = unknown> = {
-//   manual?: boolean;
-//   async?: boolean; // default false
-//   toastDefaultError?: boolean; // toast operation failed when onError triggerd
-//   onBefore?: (params: TParams) => void;
-//   onSuccess?: (data: TData, params: TParams) => void;
-//   // handle logical error
-//   onFailed?: (data: TData, params: TParams, res?: TData) => void;
-//   onFinally?: (params: TParams, data?: TData, e?: Error) => void;
-//   defaultParams?: TParams;
-//   refreshDeps?: DependencyList;
-//   refreshDepsAction?: () => void;
-//   loadingDelay?: number;
-//   pollingInterval?: number;
-//   pollingWhenHidden?: boolean;
-//   pollingErrorRetryCount?: number;
-//   refreshOnWindowFocus?: boolean;
-//   focusTimespan?: number;
-//   debounceWait?: number;
-//   debounceLeading?: boolean;
-//   debounceTrailing?: boolean;
-//   debounceMaxWait?: number;
-//   throttleWait?: number;
-//   throttleLeading?: boolean;
-//   throttleTrailing?: boolean;
-//   cacheKey?: string;
-//   cacheTime?: number;
-//   staleTime?: number;
-//   retryCount?: number;
-//   retryInterval?: number;
-//   ready?: boolean;
-// };
 
 export const errorHandler = (
   error,
