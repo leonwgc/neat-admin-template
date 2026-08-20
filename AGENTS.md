@@ -87,4 +87,4 @@ See `src/hooks/useTable.md` for API details.
 - `src/utils/routeGenerator.tsx` — route extraction + component mapping
 - `src/hooks/useTable.tsx` — list page hook
 - `src/global/useUserInfo.ts` — user state + permissions
-- `.github/copilot-instructions.md` — detailed conventions (Chinese)
+- `.github/copilot-instructions.md` — detailed conventions
