@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-React 18 + TypeScript admin project using Neat Design. Not file-system routing — routes are menu-driven.
+React 18 + TypeScript using Neat Design. Not file-system routing — routes are menu-driven.
 
 ## Key Commands
 
