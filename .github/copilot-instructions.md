@@ -1,11 +1,9 @@
-# Neat Admin Template - Copilot Instructions
+# Neat Admin - Copilot Instructions
 
 ## 项目概述
 
-这是一个基于 React 18、TypeScript 和 Neat Design 的企业级管理后台模板。
+这是一个基于 React 18、TypeScript 和 Neat Design 的企业级管理后台。
 项目使用菜单配置驱动路由，支持国际化、权限控制、Session Storage 页面状态和响应式布局。
-
-**作者**: leon.wang
 
 ## 技术栈
 
